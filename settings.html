@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Student Planner | Settings</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <i class="fa-solid fa-graduation-cap"></i>
+      <span>Smart Student Planner</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="planner.html">Planner</a></li>
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="settings.html" class="active-link">Settings</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+
+    <button id="themeToggle" class="theme-btn">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+  </nav>
+
+  <section class="page-banner">
+    <h1>Settings</h1>
+    <p>Customize your planner experience.</p>
+  </section>
+
+  <section class="settings-section">
+    <div class="glass-card">
+      <h2>Appearance</h2>
+      <p>Use the top-right theme button to switch between light mode and dark mode.</p>
+    </div>
+
+    <div class="glass-card">
+      <h2>Preferences</h2>
+      <div class="settings-box">
+        <label><input type="checkbox" checked> Enable deadline reminders</label>
+        <label><input type="checkbox" checked> Enable task progress tracking</label>
+        <label><input type="checkbox"> Enable email notifications</label>
+      </div>
+    </div>
+
+    <div class="glass-card">
+      <h2>Danger Zone</h2>
+      <p>Remove all saved tasks from local storage.</p>
+      <button id="resetTasksBtn" class="danger-btn">Reset All Tasks</button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <h3>Smart Student Planner</h3>
+        <p>Customize your workflow and task management settings.</p>
+      </div>
+
+      <div>
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="planner.html">Planner</a>
+        <a href="profile.html">Profile</a>
+      </div>
+
+      <div>
+        <h4>Connect</h4>
+        <a href="mailto:yourmail@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+        <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        <a href="#"><i class="fa-brands fa-telegram"></i> Telegram</a>
+      </div>
+    </div>
+    <p class="copyright">© 2026 Smart Student Planner. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
