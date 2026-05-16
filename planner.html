@@ -3,149 +3,161 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Student Planner | Home</title>
+  <title>Smart Student Planner | Planner</title>
+  <meta name="description" content="Manage your academic tasks, deadlines, and priorities in one place." />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
+
   <nav class="navbar">
     <div class="logo">
       <i class="fa-solid fa-graduation-cap"></i>
-      <span>Smart Student Planner</span>
+      <span>StudyPlanner</span>
     </div>
-
     <ul class="nav-links">
-      <li><a href="index.html" class="active-link">Home</a></li>
-      <li><a href="planner.html">Planner</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="planner.html" class="active-link">Planner</a></li>
       <li><a href="profile.html">Profile</a></li>
       <li><a href="settings.html">Settings</a></li>
       <li><a href="contact.html">Contact</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
-
-    <button id="themeToggle" class="theme-btn">
+    <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
       <i class="fa-solid fa-moon"></i>
     </button>
   </nav>
 
-  <section class="hero">
-    <div class="hero-text">
-      <span class="small-tag">Student Productivity Platform</span>
-      <h1>Plan Smarter. Work Better. Stay Ahead.</h1>
-      <p>
-        Smart Student Planner is a modern web-based task and deadline management
-        system built for students to organize assignments, projects, and study goals.
-      </p>
-      <div class="hero-buttons">
-        <a href="planner.html" class="primary-btn inline-btn">Open Planner</a>
-        <a href="about.html" class="secondary-btn inline-btn">Learn More</a>
-      </div>
-    </div>
-
-    <div class="hero-image">
-      <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1000&q=80" alt="Student working">
-    </div>
+  <section class="page-banner">
+    <h1>Your Planner</h1>
+    <p>Add tasks, track deadlines, and stay on top of your work.</p>
   </section>
 
-  <section class="features-section">
-    <div class="section-heading">
-      <h2>Main Features</h2>
-      <p>Everything a student needs in one beautiful dashboard</p>
-    </div>
+  <section class="dashboard-section">
 
-    <div class="features-grid">
-      <div class="feature-card">
-        <i class="fa-solid fa-list-check"></i>
-        <h3>Task Management</h3>
-        <p>Add, edit, delete, and manage daily academic tasks with priority and deadlines.</p>
+    <!-- STATS ROW -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3 id="totalTasks">0</h3>
+        <p>Total Tasks</p>
       </div>
-
-      <div class="feature-card">
-        <i class="fa-solid fa-clock"></i>
-        <h3>Deadline Tracking</h3>
-        <p>Stay updated with upcoming submissions and avoid missing important dates.</p>
+      <div class="stat-card">
+        <h3 id="completedTasks">0</h3>
+        <p>Completed</p>
       </div>
-
-      <div class="feature-card">
-        <i class="fa-solid fa-chart-line"></i>
-        <h3>Progress Monitoring</h3>
-        <p>Track completed and pending work with a live progress bar and quick stats.</p>
+      <div class="stat-card">
+        <h3 id="pendingTasks">0</h3>
+        <p>Pending</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="nearestDeadline" style="font-size:1rem;">—</h3>
+        <p>Next Deadline</p>
       </div>
     </div>
-  </section>
 
-  <section class="preview-section">
-    <div class="section-heading">
-      <h2>Why Students Need It</h2>
-      <p>A practical frontend project with real-life usefulness</p>
+    <!-- PROGRESS BAR -->
+    <div class="glass-card" style="margin-bottom:22px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <strong>Overall Progress</strong>
+        <span id="progressText" style="color:var(--muted);font-size:0.9rem;">0% Completed</span>
+      </div>
+      <div class="progress-bar">
+        <div id="progressFill"></div>
+      </div>
+      <p id="countdownText" style="margin-top:8px;font-size:0.88rem;">No upcoming deadlines</p>
     </div>
 
-    <div class="two-col-section">
+    <!-- PLANNER LAYOUT -->
+    <div class="planner-layout">
+
+      <!-- ADD TASK FORM -->
       <div class="glass-card">
-        <h3>What it solves</h3>
-        <p>
-          Many students forget assignments, project deadlines, and exam-related work.
-          This website helps them manage everything in one place with a simple and professional interface.
-        </p>
+        <h2 style="margin-bottom:20px;font-family:'Syne',sans-serif;font-size:1.3rem;">
+          <i class="fa-solid fa-plus" style="color:var(--primary);margin-right:8px;"></i>Add New Task
+        </h2>
+        <form id="taskForm">
+          <input type="text" id="taskTitle" placeholder="Task title (e.g. Math Assignment)" required />
+          <textarea id="taskDesc" placeholder="Description (optional)"></textarea>
+          <div class="form-row">
+            <input type="date" id="taskDate" required style="flex:1;" />
+            <select id="taskPriority" style="flex:1;">
+              <option value="High">🔴 High Priority</option>
+              <option value="Medium" selected>🟡 Medium Priority</option>
+              <option value="Low">🟢 Low Priority</option>
+            </select>
+          </div>
+          <button type="submit" class="primary-btn" style="width:100%;">
+            <i class="fa-solid fa-plus"></i> Add Task
+          </button>
+        </form>
       </div>
 
-      <div class="glass-card">
-        <h3>Built with</h3>
-        <p>
-          HTML for structure, CSS for styling and responsiveness, and JavaScript for
-          dynamic features like task storage, dark mode, filters, and progress tracking.
-        </p>
+      <!-- SIDE COLUMN -->
+      <div class="side-column">
+        <!-- SEARCH + FILTER -->
+        <div class="glass-card">
+          <h3 style="margin-bottom:14px;font-weight:600;">
+            <i class="fa-solid fa-filter" style="color:var(--primary);margin-right:8px;"></i>Search & Filter
+          </h3>
+          <input type="text" id="searchInput" placeholder="Search tasks..." style="margin-bottom:12px;" />
+          <div class="filter-buttons">
+            <button class="filterBtn active" data-filter="all">All</button>
+            <button class="filterBtn" data-filter="completed">✅ Done</button>
+            <button class="filterBtn" data-filter="pending">⏳ Pending</button>
+            <button class="filterBtn" data-filter="High">🔴 High</button>
+            <button class="filterBtn" data-filter="Medium">🟡 Medium</button>
+            <button class="filterBtn" data-filter="Low">🟢 Low</button>
+          </div>
+        </div>
+
+        <!-- TIPS CARD -->
+        <div class="glass-card" style="background:rgba(37,99,235,0.06);">
+          <h4 style="margin-bottom:10px;color:var(--primary);">
+            <i class="fa-solid fa-lightbulb"></i> Quick Tips
+          </h4>
+          <ul class="clean-list" style="font-size:0.88rem;">
+            <li>🔴 High = due within 24 hrs</li>
+            <li>🟡 Medium = due this week</li>
+            <li>🟢 Low = future tasks</li>
+            <li>Click <strong>Complete</strong> to mark done</li>
+          </ul>
+        </div>
       </div>
     </div>
+
+    <!-- TASK LIST -->
+    <div class="glass-card">
+      <h2 style="margin-bottom:20px;font-family:'Syne',sans-serif;font-size:1.3rem;">
+        <i class="fa-solid fa-list" style="color:var(--primary);margin-right:8px;"></i>Your Tasks
+      </h2>
+      <div class="task-list" id="taskList"></div>
+    </div>
+
   </section>
 
   <footer class="footer">
     <div class="footer-grid">
       <div>
-        <h3>Smart Student Planner</h3>
-        <p>A modern academic productivity website for students.</p>
+        <h3><i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>StudyPlanner</h3>
+        <p>A modern academic productivity tool for students who want to stay organized and stress-free.</p>
       </div>
-
-      <div class="glass-card">
-<h2>Add Task</h2>
-
-<form id="taskForm">
-
-<input type="text" id="taskInput" placeholder="Enter Task" required>
-
-<input type="date" id="taskDate" required>
-
-<button type="submit" class="primary-btn">Add Task</button>
-
-</form>
-
-</div>
-
-<div class="glass-card">
-<h2>Task List</h2>
-<ul id="taskList"></ul>
-</div>
-
       <div>
         <h4>Quick Links</h4>
-        <a href="index.html">Home</a>
-        <a href="planner.html">Planner</a>
-        <a href="profile.html">Profile</a>
-        <a href="settings.html">Settings</a>
-      </div> 
-
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="planner.html"><i class="fa-solid fa-list-check"></i> Planner</a>
+        <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
+        <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+      </div>
       <div>
         <h4>Connect</h4>
-        <a href="mailto:yourmail@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
-        <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
-        <a href="#"><i class="fa-brands fa-telegram"></i> Telegram</a>
-        <a href="#"><i class="fa-brands fa-x-twitter"></i> Twitter</a>
+        <a href="mailto:nishagiri297@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="https://linkedin.com/in/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
       </div>
     </div>
-    <p class="copyright">© 2026 Smart Student Planner. All rights reserved.</p>
+    <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
   </footer>
 
   <script src="script.js"></script>
 </body>
 </html>
-
