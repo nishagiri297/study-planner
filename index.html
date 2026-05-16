@@ -3,17 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Student Planner | Home</title>
+  <title>Smart Student Planner | Organize. Focus. Succeed.</title>
+  <meta name="description" content="Smart Student Planner helps students manage assignments, deadlines, and study goals — all in one clean, offline-first dashboard." />
+  <meta property="og:title" content="Smart Student Planner" />
+  <meta property="og:description" content="Manage assignments, deadlines, and study goals in one beautiful dashboard." />
+  <meta property="og:type" content="website" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
+
   <nav class="navbar">
     <div class="logo">
       <i class="fa-solid fa-graduation-cap"></i>
-      <span>Smart Student Planner</span>
-    </div> 
-
+      <span>StudyPlanner</span>
+    </div>
     <ul class="nav-links">
       <li><a href="index.html" class="active-link">Home</a></li>
       <li><a href="planner.html">Planner</a></li>
@@ -22,78 +26,78 @@
       <li><a href="contact.html">Contact</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
-
-    <button id="themeToggle" class="theme-btn">
+    <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
       <i class="fa-solid fa-moon"></i>
     </button>
   </nav>
 
   <section class="hero">
     <div class="hero-text">
-      <span class="small-tag">Student Productivity Platform</span>
-      <h1>Plan Smarter. Work Better. Stay Ahead.</h1>
+      <span class="small-tag"><i class="fa-solid fa-bolt"></i> Student Productivity Platform</span>
+      <h1>Plan <span>Smarter.</span><br>Stay Ahead.</h1>
       <p>
-        Smart Student Planner is a modern web-based task and deadline management
-        system built for students to organize assignments, projects, and study goals.
+        A clean, fast, offline-first task manager built for students.
+        No login. No server. No friction — just you and your goals.
       </p>
       <div class="hero-buttons">
-  <a href="planner.html" class="primary-btn inline-btn">Open Planner</a>
-  <a href="about.html" class="secondary-btn inline-btn">Learn More</a>
-</div>
+        <a href="planner.html" class="primary-btn inline-btn">
+          <i class="fa-solid fa-list-check"></i> Open Planner
+        </a>
+        <a href="about.html" class="secondary-btn inline-btn">
+          <i class="fa-solid fa-circle-info"></i> Learn More
+        </a>
+      </div>
     </div>
-
     <div class="hero-image">
-      <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1000&q=80" alt="Student working">
+      <img
+        src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1000&q=80"
+        alt="Student studying at a desk"
+      />
     </div>
   </section>
 
   <section class="features-section">
     <div class="section-heading">
-      <h2>Main Features</h2>
-      <p>Everything a student needs in one beautiful dashboard</p>
+      <h2>Everything You Need</h2>
+      <p>Built for students who want to stop forgetting and start finishing.</p>
     </div>
-
     <div class="features-grid">
       <div class="feature-card">
         <i class="fa-solid fa-list-check"></i>
         <h3>Task Management</h3>
-        <p>Add, edit, delete, and manage daily academic tasks with priority and deadlines.</p>
+        <p>Add, edit, and prioritize daily academic tasks with deadlines and urgency tracking.</p>
       </div>
-
       <div class="feature-card">
-        <i class="fa-solid fa-clock"></i>
+        <i class="fa-solid fa-hourglass-half"></i>
         <h3>Deadline Tracking</h3>
-        <p>Stay updated with upcoming submissions and avoid missing important dates.</p>
+        <p>Color-coded urgency indicators automatically flag tasks due today, this week, or overdue.</p>
       </div>
-
       <div class="feature-card">
         <i class="fa-solid fa-chart-line"></i>
         <h3>Progress Monitoring</h3>
-        <p>Track completed and pending work with a live progress bar and quick stats.</p>
+        <p>Live progress bar and stats show exactly how much you've completed and what's left.</p>
       </div>
     </div>
   </section>
 
   <section class="preview-section">
     <div class="section-heading">
-      <h2>Why Students Need It</h2>
-      <p>A practical frontend project with real-life usefulness</p>
+      <h2>Why It Works</h2>
+      <p>Simple by design. Powerful by function.</p>
     </div>
-
     <div class="two-col-section">
       <div class="glass-card">
-        <h3>What it solves</h3>
+        <h3><i class="fa-solid fa-wifi-slash" style="color:var(--primary);margin-right:8px;"></i>Works Offline</h3>
         <p>
-          Many students forget assignments, project deadlines, and exam-related work.
-          This website helps them manage everything in one place with a simple and professional interface.
+          Everything saves directly to your browser — no account, no internet required.
+          Your tasks are always there when you need them.
         </p>
       </div>
-
       <div class="glass-card">
-        <h3>Built with</h3>
+        <h3><i class="fa-solid fa-moon" style="color:var(--primary);margin-right:8px;"></i>Dark Mode Ready</h3>
         <p>
-          HTML for structure, CSS for styling and responsiveness, and JavaScript for
-          dynamic features like task storage, dark mode, filters, and progress tracking.
+          Toggle between light and dark mode with one click.
+          Your preference is saved automatically across sessions.
         </p>
       </div>
     </div>
@@ -102,27 +106,24 @@
   <footer class="footer">
     <div class="footer-grid">
       <div>
-        <h3>Smart Student Planner</h3>
-        <p>A modern academic productivity website for students.</p>
+        <h3><i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>StudyPlanner</h3>
+        <p>A modern academic productivity tool for students who want to stay organized and stress-free.</p>
       </div>
-
       <div>
         <h4>Quick Links</h4>
-        <a href="index.html">Home</a>
-        <a href="planner.html">Planner</a>
-        <a href="profile.html">Profile</a>
-        <a href="settings.html">Settings</a>
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="planner.html"><i class="fa-solid fa-list-check"></i> Planner</a>
+        <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
+        <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
       </div>
-
       <div>
         <h4>Connect</h4>
-        <a href="mailto:yourmail@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
-        <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
-        <a href="#"><i class="fa-brands fa-telegram"></i> Telegram</a>
-        <a href="#"><i class="fa-brands fa-x-twitter"></i> Twitter</a>
+        <a href="mailto:nishagiri297@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="https://linkedin.com/in/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
       </div>
     </div>
-    <p class="copyright">© 2026 Smart Student Planner. All rights reserved.</p>
+    <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
   </footer>
 
   <script src="script.js"></script>
