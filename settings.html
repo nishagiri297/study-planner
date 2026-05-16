@@ -8,12 +8,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
+
   <nav class="navbar">
     <div class="logo">
       <i class="fa-solid fa-graduation-cap"></i>
-      <span>Smart Student Planner</span>
+      <span>StudyPlanner</span>
     </div>
-
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="planner.html">Planner</a></li>
@@ -22,8 +22,7 @@
       <li><a href="contact.html">Contact</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
-
-    <button id="themeToggle" class="theme-btn">
+    <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
       <i class="fa-solid fa-moon"></i>
     </button>
   </nav>
@@ -34,51 +33,105 @@
   </section>
 
   <section class="settings-section">
-    <div class="glass-card">
-      <h2>Appearance</h2>
-      <p>Use the top-right theme button to switch between light mode and dark mode.</p>
+
+    <div class="glass-card" style="margin-bottom:22px;">
+      <h2 style="margin-bottom:16px;">
+        <i class="fa-solid fa-palette" style="color:var(--primary);margin-right:8px;"></i>Appearance
+      </h2>
+      <p style="color:var(--muted);margin-bottom:16px;">Toggle dark mode using the button in the top-right corner of the navbar. Your preference is saved automatically.</p>
+      <button id="inlineThemeBtn" class="secondary-btn" style="width:fit-content;">
+        <i class="fa-solid fa-moon"></i> Toggle Dark Mode
+      </button>
     </div>
 
-    <div class="glass-card">
-      <h2>Preferences</h2>
+    <div class="glass-card" style="margin-bottom:22px;">
+      <h2 style="margin-bottom:16px;">
+        <i class="fa-solid fa-sliders" style="color:var(--primary);margin-right:8px;"></i>Preferences
+      </h2>
       <div class="settings-box">
-        <label><input type="checkbox" checked> Enable deadline reminders</label>
-        <label><input type="checkbox" checked> Enable task progress tracking</label>
-        <label><input type="checkbox"> Enable email notifications</label>
+        <label>
+          <input type="checkbox" id="pref-urgency" checked />
+          <span>
+            <strong>Urgency color coding</strong><br>
+            <small style="color:var(--muted);">Show red/amber/green badges based on deadline proximity</small>
+          </span>
+        </label>
+        <label>
+          <input type="checkbox" id="pref-progress" checked />
+          <span>
+            <strong>Progress tracking</strong><br>
+            <small style="color:var(--muted);">Show the progress bar and completion percentage</small>
+          </span>
+        </label>
+        <label>
+          <input type="checkbox" id="pref-countdown" checked />
+          <span>
+            <strong>Deadline countdown</strong><br>
+            <small style="color:var(--muted);">Show days left for the nearest upcoming deadline</small>
+          </span>
+        </label>
       </div>
     </div>
 
-    <div class="glass-card">
-      <h2>Danger Zone</h2>
-      <p>Remove all saved tasks from local storage.</p>
-      <button id="resetTasksBtn" class="danger-btn">Reset All Tasks</button>
+    <div class="glass-card" style="border:1px solid rgba(239,68,68,0.25);">
+      <h2 style="margin-bottom:8px;color:var(--danger);">
+        <i class="fa-solid fa-triangle-exclamation" style="margin-right:8px;"></i>Danger Zone
+      </h2>
+      <p style="color:var(--muted);margin-bottom:18px;">
+        This will permanently delete all your saved tasks. This action cannot be undone.
+      </p>
+      <button id="resetTasksBtn" class="danger-btn">
+        <i class="fa-solid fa-trash"></i> Reset All Tasks
+      </button>
     </div>
+
   </section>
 
   <footer class="footer">
     <div class="footer-grid">
       <div>
-        <h3>Smart Student Planner</h3>
-        <p>Customize your workflow and task management settings.</p>
+        <h3><i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>StudyPlanner</h3>
+        <p>A modern academic productivity tool for students who want to stay organized and stress-free.</p>
       </div>
-
       <div>
         <h4>Quick Links</h4>
-        <a href="index.html">Home</a>
-        <a href="planner.html">Planner</a>
-        <a href="profile.html">Profile</a>
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="planner.html"><i class="fa-solid fa-list-check"></i> Planner</a>
+        <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
       </div>
-
       <div>
         <h4>Connect</h4>
-        <a href="mailto:yourmail@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
-        <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
-        <a href="#"><i class="fa-brands fa-telegram"></i> Telegram</a>
+        <a href="mailto:nishagiri297@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="https://linkedin.com/in/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
       </div>
     </div>
-    <p class="copyright">© 2026 Smart Student Planner. All rights reserved.</p>
+    <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    const inlineBtn = document.getElementById('inlineThemeBtn');
+    if (inlineBtn) {
+      inlineBtn.addEventListener('click', () => {
+        document.getElementById('themeToggle').click();
+      });
+    }
+    const prefs = ['pref-urgency', 'pref-progress', 'pref-countdown'];
+    prefs.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const saved = localStorage.getItem(id);
+      if (saved !== null) el.checked = saved === 'true';
+      el.addEventListener('change', () => {
+        localStorage.setItem(id, el.checked);
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.textContent = el.checked ? 'Setting enabled' : 'Setting disabled';
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 2200);
+      });
+    });
+  </script>
 </body>
 </html>
