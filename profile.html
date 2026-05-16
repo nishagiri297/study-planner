@@ -4,16 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Smart Student Planner | Profile</title>
+  <meta name="description" content="Your academic profile and productivity overview." />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
+
   <nav class="navbar">
     <div class="logo">
       <i class="fa-solid fa-graduation-cap"></i>
-      <span>Smart Student Planner</span>
+      <span>StudyPlanner</span>
     </div>
-
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="planner.html">Planner</a></li>
@@ -22,8 +23,7 @@
       <li><a href="contact.html">Contact</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
-
-    <button id="themeToggle" class="theme-btn">
+    <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
       <i class="fa-solid fa-moon"></i>
     </button>
   </nav>
@@ -35,70 +35,115 @@
 
   <section class="profile-section">
     <div class="profile-card glass-card">
-      <img class="profile-pic" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" alt="Profile">
-      <h2>Nisha</h2>
-      <p class="role-text">B.E. CSE (AI & ML) Student</p>
-      <p><i class="fa-solid fa-building-columns"></i> Chitkara University</p>
-      <p><i class="fa-solid fa-envelope"></i> yourmail@gmail.com</p>
+      <img
+        class="profile-pic"
+        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80"
+        alt="Nisha Giri"
+      />
+      <h2>Nisha Giri</h2>
+      <p class="role-text">B.E. CSE (AI & ML) · 2nd Year</p>
+      <p style="margin-bottom:6px;">
+        <i class="fa-solid fa-building-columns" style="color:var(--primary);margin-right:6px;"></i>
+        Chitkara University, Punjab
+      </p>
+      <p style="margin-bottom:16px;">
+        <i class="fa-solid fa-envelope" style="color:var(--primary);margin-right:6px;"></i>
+        nishagiri297@gmail.com
+      </p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
+        <div style="text-align:center;padding:12px;background:rgba(37,99,235,0.07);border-radius:12px;">
+          <div style="font-size:1.5rem;font-weight:700;color:var(--primary);" id="profileTotal">0</div>
+          <div style="font-size:0.8rem;color:var(--muted);">Total Tasks</div>
+        </div>
+        <div style="text-align:center;padding:12px;background:rgba(16,185,129,0.07);border-radius:12px;">
+          <div style="font-size:1.5rem;font-weight:700;color:#059669;" id="profileDone">0</div>
+          <div style="font-size:0.8rem;color:var(--muted);">Completed</div>
+        </div>
+      </div>
     </div>
 
     <div class="profile-details">
       <div class="glass-card">
-        <h3>About Me</h3>
+        <h3 style="margin-bottom:12px;font-weight:600;">
+          <i class="fa-solid fa-user" style="color:var(--primary);margin-right:8px;"></i>About Me
+        </h3>
         <p>
-          I am a student who wants to manage assignments, project submissions,
-          deadlines, and academic progress in a more organized and professional way.
+          I'm a CSE (AI & ML) student at Chitkara University passionate about building
+          practical web applications. I created StudyPlanner to solve a real problem —
+          students (including me) forget deadlines. This project helped me master
+          DOM manipulation, localStorage, and responsive design.
         </p>
       </div>
 
       <div class="glass-card">
-        <h3>Academic Goals</h3>
+        <h3 style="margin-bottom:12px;font-weight:600;">
+          <i class="fa-solid fa-bullseye" style="color:var(--primary);margin-right:8px;"></i>Academic Goals
+        </h3>
         <ul class="clean-list">
-          <li>Complete assignments on time</li>
-          <li>Improve productivity and time management</li>
-          <li>Track upcoming deadlines</li>
-          <li>Stay consistent with study tasks</li>
+          <li>Submit all assignments before their deadlines</li>
+          <li>Build 3 portfolio-worthy frontend projects this semester</li>
+          <li>Learn React.js and migrate this project to a React app</li>
+          <li>Maintain consistent study streaks using this planner</li>
         </ul>
       </div>
+
       <div class="glass-card">
-        <h3>Skills</h3>
+        <h3 style="margin-bottom:12px;font-weight:600;">
+          <i class="fa-solid fa-code" style="color:var(--primary);margin-right:8px;"></i>Skills
+        </h3>
         <div class="tag-wrap">
-          <span class="tag">HTML</span>
-          <span class="tag">CSS</span>
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS3</span>
           <span class="tag">JavaScript</span>
-          <span class="tag">Frontend Design</span>
-          <span class="tag">Responsive UI</span>
+          <span class="tag">Responsive Design</span>
+          <span class="tag">localStorage API</span>
+          <span class="tag">Git & GitHub</span>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <h3 style="margin-bottom:12px;font-weight:600;">
+          <i class="fa-solid fa-link" style="color:var(--primary);margin-right:8px;"></i>Links
+        </h3>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="https://github.com/nishagiri297" target="_blank" rel="noopener" class="primary-btn" style="font-size:0.88rem;padding:10px 18px;">
+            <i class="fa-brands fa-github"></i> GitHub
+          </a>
+          <a href="https://linkedin.com/in/nishagiri297" target="_blank" rel="noopener" class="secondary-btn" style="font-size:0.88rem;padding:10px 18px;">
+            <i class="fa-brands fa-linkedin"></i> LinkedIn
+          </a>
         </div>
       </div>
     </div>
   </section>
+
   <footer class="footer">
     <div class="footer-grid">
       <div>
-        <h3>Smart Student Planner</h3>
-        <p>Student profile and productivity management website.</p>
+        <h3><i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>StudyPlanner</h3>
+        <p>A modern academic productivity tool for students who want to stay organized and stress-free.</p>
       </div>
-
       <div>
         <h4>Quick Links</h4>
-        <a href="planner.html">Planner</a>
-        <a href="settings.html">Settings</a>
-        <a href="contact.html">Contact</a>
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="planner.html"><i class="fa-solid fa-list-check"></i> Planner</a>
+        <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
       </div>
       <div>
         <h4>Connect</h4>
-        <a href="mailto:yourmail@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
-        <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
-        <a href="#"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="mailto:nishagiri297@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="https://linkedin.com/in/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
       </div>
     </div>
-    <p class="copyright">© 2026 Smart Student Planner. All rights reserved.</p>
+    <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    document.getElementById('profileTotal').textContent = tasks.length;
+    document.getElementById('profileDone').textContent = tasks.filter(t => t.completed).length;
+  </script>
 </body>
 </html>
-  
-
-
- 
