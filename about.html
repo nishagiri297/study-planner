@@ -8,12 +8,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
+
   <nav class="navbar">
     <div class="logo">
       <i class="fa-solid fa-graduation-cap"></i>
-      <span>Smart Student Planner</span>
+      <span>StudyPlanner</span>
     </div>
-
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="planner.html">Planner</a></li>
@@ -22,69 +22,107 @@
       <li><a href="contact.html">Contact</a></li>
       <li><a href="about.html" class="active-link">About</a></li>
     </ul>
-
-    <button id="themeToggle" class="theme-btn">
+    <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
       <i class="fa-solid fa-moon"></i>
     </button>
   </nav>
 
   <section class="page-banner">
-    <h1>About This Project</h1>
-    <p>Know the purpose and technologies behind Smart Student Planner.</p>
+    <h1>About StudyPlanner</h1>
+    <p>Why it exists, what it does, and how it was built.</p>
   </section>
 
   <section class="about-section">
-    <div class="glass-card">
-      <h2>Project Purpose</h2>
-      <p>
-        Smart Student Planner is a frontend web project created to help students
-        organize assignments, project deadlines, and study tasks in a professional and user-friendly interface.
+
+    <div class="glass-card" style="margin-bottom:22px;">
+      <h2><i class="fa-solid fa-rocket" style="margin-right:8px;"></i>The Problem It Solves</h2>
+      <p style="margin-top:12px;line-height:1.75;">
+        Every student has missed a deadline they forgot about — or spent 10 minutes searching
+        through WhatsApp groups for an assignment date. StudyPlanner fixes that.
+        One clean place to add every task, see what's urgent, and track what's done —
+        entirely in your browser with zero accounts or setup required.
       </p>
     </div>
 
-    <div class="glass-card">
-      <h2>Technologies Used</h2>
-      <ul class="clean-list">
-        <li>HTML for webpage structure</li>
-        <li>CSS for styling, responsive layout, and visual design</li>
-        <li>JavaScript for dynamic interactivity and Local Storage</li>
-      </ul>
+    <div class="glass-card" style="margin-bottom:22px;">
+      <h2><i class="fa-solid fa-layer-group" style="margin-right:8px;"></i>What It Does</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:16px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <i class="fa-solid fa-check-circle" style="color:var(--success);margin-top:3px;flex-shrink:0;"></i>
+          <span style="color:var(--muted);font-size:0.93rem;">Add tasks with title, description, deadline, and priority</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <i class="fa-solid fa-check-circle" style="color:var(--success);margin-top:3px;flex-shrink:0;"></i>
+          <span style="color:var(--muted);font-size:0.93rem;">Color-coded urgency — overdue, today, this week, future</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <i class="fa-solid fa-check-circle" style="color:var(--success);margin-top:3px;flex-shrink:0;"></i>
+          <span style="color:var(--muted);font-size:0.93rem;">Live progress bar tracking completion percentage</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <i class="fa-solid fa-check-circle" style="color:var(--success);margin-top:3px;flex-shrink:0;"></i>
+          <span style="color:var(--muted);font-size:0.93rem;">Search and filter tasks by status or priority</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <i class="fa-solid fa-check-circle" style="color:var(--success);margin-top:3px;flex-shrink:0;"></i>
+          <span style="color:var(--muted);font-size:0.93rem;">Persistent storage — data survives page refresh</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <i class="fa-solid fa-check-circle" style="color:var(--success);margin-top:3px;flex-shrink:0;"></i>
+          <span style="color:var(--muted);font-size:0.93rem;">Dark mode with auto-remembered preference</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card" style="margin-bottom:22px;">
+      <h2><i class="fa-solid fa-code" style="margin-right:8px;"></i>Tech Stack</h2>
+      <p style="margin-top:12px;color:var(--muted);line-height:1.75;">
+        Built entirely with vanilla <strong>HTML5</strong>, <strong>CSS3</strong>, and <strong>JavaScript</strong> —
+        no frameworks, no dependencies, no build tools. Data persistence uses the browser's
+        <strong>localStorage API</strong>. Deployed via <strong>GitHub Pages</strong>.
+      </p>
+      <div class="tag-wrap" style="margin-top:16px;">
+        <span class="tag">HTML5</span>
+        <span class="tag">CSS3</span>
+        <span class="tag">Vanilla JS</span>
+        <span class="tag">localStorage</span>
+        <span class="tag">GitHub Pages</span>
+        <span class="tag">Font Awesome</span>
+      </div>
     </div>
 
     <div class="glass-card">
-      <h2>Main Learning Outcomes</h2>
-      <ul class="clean-list">
-        <li>DOM manipulation</li>
-        <li>Event handling</li>
-        <li>Responsive design</li>
-        <li>Local Storage usage</li>
-        <li>Multi-page website linking</li>
-      </ul>
+      <h2><i class="fa-solid fa-user-pen" style="margin-right:8px;"></i>Built By</h2>
+      <p style="margin-top:12px;color:var(--muted);line-height:1.75;">
+        Made by <strong>Nisha Giri</strong>, a B.E. CSE (AI & ML) student at Chitkara University, Punjab.
+        This project is part of her frontend development portfolio.
+        Have suggestions or want to collaborate?
+        <a href="contact.html" style="color:var(--primary);font-weight:600;">Get in touch →</a>
+      </p>
     </div>
+
   </section>
 
   <footer class="footer">
     <div class="footer-grid">
       <div>
-        <h3>Smart Student Planner</h3>
-        <p>A practical and visually appealing real-world student project.</p>
+        <h3><i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>StudyPlanner</h3>
+        <p>A modern academic productivity tool for students who want to stay organized and stress-free.</p>
       </div>
-
       <div>
         <h4>Quick Links</h4>
-        <a href="index.html">Home</a>
-        <a href="planner.html">Planner</a>
-        <a href="contact.html">Contact</a>
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="planner.html"><i class="fa-solid fa-list-check"></i> Planner</a>
+        <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
       </div>
-
       <div>
         <h4>Connect</h4>
-        <a href="mailto:yourmail@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
-        <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
-        <a href="#"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="mailto:nishagiri297@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="https://linkedin.com/in/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
       </div>
     </div>
-    <p class="copyright">© 2026 Smart Student Planner. All rights reserved.</p>
+    <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
   </footer>
 
   <script src="script.js"></script>
