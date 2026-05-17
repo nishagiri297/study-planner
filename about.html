@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Student Planner | About</title>
+  <title>StudyPlanner | About</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
@@ -15,16 +15,25 @@
       <span>StudyPlanner</span>
     </div>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="home.html">Home</a></li>
       <li><a href="planner.html">Planner</a></li>
       <li><a href="profile.html">Profile</a></li>
       <li><a href="settings.html">Settings</a></li>
       <li><a href="contact.html">Contact</a></li>
       <li><a href="about.html" class="active-link">About</a></li>
     </ul>
-    <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
-      <i class="fa-solid fa-moon"></i>
-    </button>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div class="nav-user" id="navUserName">
+        <i class="fa-solid fa-user-circle"></i>
+        <span>User</span>
+      </div>
+      <button class="logout-btn" onclick="logout()">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+      <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
   </nav>
 
   <section class="page-banner">
@@ -35,25 +44,31 @@
   <section class="about-section">
 
     <div class="glass-card" style="margin-bottom:22px;">
-      <h2><i class="fa-solid fa-rocket" style="margin-right:8px;"></i>The Problem It Solves</h2>
+      <h2>
+        <i class="fa-solid fa-rocket" style="margin-right:8px;"></i>
+        The Problem It Solves
+      </h2>
       <p style="margin-top:12px;line-height:1.75;">
-        Every student has missed a deadline they forgot about — or spent 10 minutes searching
-        through WhatsApp groups for an assignment date. StudyPlanner fixes that.
-        One clean place to add every task, see what's urgent, and track what's done —
-        entirely in your browser with zero accounts or setup required.
+        Every student has missed a deadline they forgot about — or spent 10 minutes
+        searching through WhatsApp groups for an assignment date. StudyPlanner fixes that.
+        One clean place to add every task, see what is urgent, and track what is done —
+        entirely in your browser with zero setup required.
       </p>
     </div>
 
     <div class="glass-card" style="margin-bottom:22px;">
-      <h2><i class="fa-solid fa-layer-group" style="margin-right:8px;"></i>What It Does</h2>
+      <h2>
+        <i class="fa-solid fa-layer-group" style="margin-right:8px;"></i>
+        What It Does
+      </h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:16px;">
         <div style="display:flex;gap:10px;align-items:flex-start;">
           <i class="fa-solid fa-check-circle" style="color:var(--success);margin-top:3px;flex-shrink:0;"></i>
-          <span style="color:var(--muted);font-size:0.93rem;">Add tasks with title, description, deadline, and priority</span>
+          <span style="color:var(--muted);font-size:0.93rem;">Add tasks with title, deadline and priority</span>
         </div>
         <div style="display:flex;gap:10px;align-items:flex-start;">
           <i class="fa-solid fa-check-circle" style="color:var(--success);margin-top:3px;flex-shrink:0;"></i>
-          <span style="color:var(--muted);font-size:0.93rem;">Color-coded urgency — overdue, today, this week, future</span>
+          <span style="color:var(--muted);font-size:0.93rem;">Urgency indicators — overdue, today, this week, future</span>
         </div>
         <div style="display:flex;gap:10px;align-items:flex-start;">
           <i class="fa-solid fa-check-circle" style="color:var(--success);margin-top:3px;flex-shrink:0;"></i>
@@ -65,7 +80,7 @@
         </div>
         <div style="display:flex;gap:10px;align-items:flex-start;">
           <i class="fa-solid fa-check-circle" style="color:var(--success);margin-top:3px;flex-shrink:0;"></i>
-          <span style="color:var(--muted);font-size:0.93rem;">Persistent storage — data survives page refresh</span>
+          <span style="color:var(--muted);font-size:0.93rem;">Data saved in browser — survives page refresh</span>
         </div>
         <div style="display:flex;gap:10px;align-items:flex-start;">
           <i class="fa-solid fa-check-circle" style="color:var(--success);margin-top:3px;flex-shrink:0;"></i>
@@ -75,11 +90,15 @@
     </div>
 
     <div class="glass-card" style="margin-bottom:22px;">
-      <h2><i class="fa-solid fa-code" style="margin-right:8px;"></i>Tech Stack</h2>
+      <h2>
+        <i class="fa-solid fa-code" style="margin-right:8px;"></i>
+        Tech Stack
+      </h2>
       <p style="margin-top:12px;color:var(--muted);line-height:1.75;">
-        Built entirely with vanilla <strong>HTML5</strong>, <strong>CSS3</strong>, and <strong>JavaScript</strong> —
-        no frameworks, no dependencies, no build tools. Data persistence uses the browser's
-        <strong>localStorage API</strong>. Deployed via <strong>GitHub Pages</strong>.
+        Built entirely with vanilla <strong>HTML5</strong>, <strong>CSS3</strong>,
+        and <strong>JavaScript</strong> — no frameworks, no build tools.
+        Data persistence uses the browser's <strong>localStorage API</strong>.
+        Deployed via <strong>GitHub Pages</strong>.
       </p>
       <div class="tag-wrap" style="margin-top:16px;">
         <span class="tag">HTML5</span>
@@ -92,12 +111,18 @@
     </div>
 
     <div class="glass-card">
-      <h2><i class="fa-solid fa-user-pen" style="margin-right:8px;"></i>Built By</h2>
+      <h2>
+        <i class="fa-solid fa-user-pen" style="margin-right:8px;"></i>
+        Built By
+      </h2>
       <p style="margin-top:12px;color:var(--muted);line-height:1.75;">
-        Made by <strong>Nisha Giri</strong>, a B.E. CSE (AI & ML) student at Chitkara University, Punjab.
+        Made by <strong>Nisha Giri</strong>, a B.E. CSE (AI & ML) student
+        at Chitkara University, Punjab.
         This project is part of her frontend development portfolio.
         Have suggestions or want to collaborate?
-        <a href="contact.html" style="color:var(--primary);font-weight:600;">Get in touch →</a>
+        <a href="contact.html" style="color:var(--primary);font-weight:600;">
+          Get in touch →
+        </a>
       </p>
     </div>
 
@@ -106,25 +131,45 @@
   <footer class="footer">
     <div class="footer-grid">
       <div>
-        <h3><i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>StudyPlanner</h3>
-        <p>A modern academic productivity tool for students who want to stay organized and stress-free.</p>
+        <h3>
+          <i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>
+          StudyPlanner
+        </h3>
+        <p>A modern academic productivity tool for students.</p>
       </div>
       <div>
         <h4>Quick Links</h4>
-        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="home.html"><i class="fa-solid fa-house"></i> Home</a>
         <a href="planner.html"><i class="fa-solid fa-list-check"></i> Planner</a>
         <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
       </div>
       <div>
         <h4>Connect</h4>
-        <a href="mailto:nishagiri297@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
-        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
-        <a href="https://linkedin.com/in/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+        <a href="mailto:nishagiri297@gmail.com">
+          <i class="fa-solid fa-envelope"></i> Email
+        </a>
+        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github"></i> GitHub
+        </a>
       </div>
     </div>
-    <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
+    <p class="copyright">
+      © 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript
+    </p>
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    const user = JSON.parse(localStorage.getItem('sp_loggedIn'));
+    if (!user) window.location.href = 'index.html';
+    else {
+      document.getElementById('navUserName').querySelector('span').textContent = user.name.split(' ')[0];
+    }
+    function logout() {
+      localStorage.removeItem('sp_loggedIn');
+      window.location.href = 'index.html';
+    }
+  </script>
+
 </body>
 </html>
