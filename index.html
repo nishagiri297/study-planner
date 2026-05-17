@@ -3,129 +3,363 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Student Planner | Organize. Focus. Succeed.</title>
-  <meta name="description" content="Smart Student Planner helps students manage assignments, deadlines, and study goals — all in one clean, offline-first dashboard." />
-  <meta property="og:title" content="Smart Student Planner" />
-  <meta property="og:description" content="Manage assignments, deadlines, and study goals in one beautiful dashboard." />
-  <meta property="og:type" content="website" />
-  <link rel="stylesheet" href="style.css" />
+  <title>StudyPlanner | Welcome</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap');
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(160deg, #0a1628 0%, #0d2347 40%, #0a3d62 70%, #1a1a2e 100%);
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(70px);
+      animation: float-orb var(--dur) ease-in-out infinite;
+      opacity: 0.18;
+    }
+    .orb1 { width:320px;height:320px;background:#2563eb;top:-8%;left:-6%;--dur:9s; }
+    .orb2 { width:220px;height:220px;background:#0ea5e9;top:15%;right:-4%;--dur:11s;animation-delay:-4s; }
+    .orb3 { width:180px;height:180px;background:#6366f1;bottom:15%;left:8%;--dur:8s;animation-delay:-6s; }
+    .orb4 { width:140px;height:140px;background:#3b82f6;bottom:30%;right:15%;--dur:13s;animation-delay:-2s; }
+
+    @keyframes float-orb {
+      0%,100% { transform:translate(0,0) scale(1); }
+      33% { transform:translate(25px,-25px) scale(1.06); }
+      66% { transform:translate(-18px,18px) scale(0.94); }
+    }
+
+    .stars { position:absolute;inset:0;overflow:hidden; }
+    .star {
+      position:absolute;background:white;border-radius:50%;
+      animation:twinkle var(--dur) ease-in-out infinite;opacity:0;
+    }
+    @keyframes twinkle {
+      0%,100%{opacity:0;transform:scale(0.8);}
+      50%{opacity:var(--op);transform:scale(1.2);}
+    }
+
+    .moon {
+      position:absolute;top:7%;left:50%;transform:translateX(-50%);
+      width:85px;height:85px;
+      background:radial-gradient(circle at 35% 35%,#fff9e6,#fde68a);
+      border-radius:50%;
+      box-shadow:0 0 40px rgba(253,230,138,0.4),0 0 80px rgba(253,230,138,0.2);
+      animation:moon-glow 4s ease-in-out infinite;
+    }
+    @keyframes moon-glow {
+      0%,100%{box-shadow:0 0 40px rgba(253,230,138,0.4),0 0 80px rgba(253,230,138,0.2);}
+      50%{box-shadow:0 0 60px rgba(253,230,138,0.6),0 0 120px rgba(253,230,138,0.3);}
+    }
+
+    .bird {
+      position:absolute;
+      animation:fly var(--dur) linear infinite;
+    }
+    @keyframes fly {
+      0%{transform:translateX(-80px) translateY(0);opacity:0;}
+      8%{opacity:0.7;}
+      92%{opacity:0.7;}
+      100%{transform:translateX(110vw) translateY(var(--dy));opacity:0;}
+    }
+
+    .mountains { position:absolute;bottom:0;left:0;right:0; }
+
+    .login-wrapper {
+      position:relative;z-index:10;
+      width:100%;max-width:480px;padding:20px;
+      animation:card-enter 0.9s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    @keyframes card-enter {
+      from{opacity:0;transform:translateY(50px) scale(0.93);}
+      to{opacity:1;transform:translateY(0) scale(1);}
+    }
+
+    .login-card {
+      background:rgba(255,255,255,0.09);
+      backdrop-filter:blur(28px);
+      -webkit-backdrop-filter:blur(28px);
+      border:1px solid rgba(255,255,255,0.18);
+      border-radius:30px;
+      padding:44px 40px 36px;
+      box-shadow:0 32px 80px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+
+    .card-header { text-align:center;margin-bottom:28px; }
+
+    .logo-icon {
+      width:66px;height:66px;
+      background:linear-gradient(135deg,#2563eb,#60a5fa);
+      border-radius:20px;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-size:1.9rem;color:white;margin-bottom:14px;
+      box-shadow:0 8px 28px rgba(37,99,235,0.45);
+      animation:logo-pulse 3s ease-in-out infinite;
+    }
+    @keyframes logo-pulse {
+      0%,100%{box-shadow:0 8px 28px rgba(37,99,235,0.45);}
+      50%{box-shadow:0 8px 40px rgba(37,99,235,0.7);}
+    }
+
+    .card-header h1 {
+      font-family:'Cormorant Garamond',serif;
+      font-size:2.1rem;font-weight:700;color:#fff;
+      letter-spacing:0.01em;margin-bottom:5px;
+    }
+    .card-header p { color:rgba(255,255,255,0.5);font-size:0.87rem;font-weight:300; }
+
+    .tabs {
+      display:flex;background:rgba(0,0,0,0.25);
+      border-radius:13px;padding:4px;margin-bottom:26px;gap:4px;
+    }
+    .tab-btn {
+      flex:1;padding:10px;border:none;background:transparent;
+      color:rgba(255,255,255,0.45);
+      font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;
+      border-radius:10px;cursor:pointer;transition:all 0.25s ease;
+    }
+    .tab-btn.active {
+      background:rgba(255,255,255,0.14);color:#fff;
+      box-shadow:0 2px 10px rgba(0,0,0,0.25);
+    }
+
+    .form-panel{display:none;}
+    .form-panel.active{display:block;}
+
+    .input-group { position:relative;margin-bottom:14px; }
+    .input-group .icon {
+      position:absolute;left:15px;top:50%;transform:translateY(-50%);
+      color:rgba(255,255,255,0.38);font-size:0.88rem;pointer-events:none;
+    }
+    .input-group input {
+      width:100%;padding:13px 16px 13px 42px;
+      background:rgba(255,255,255,0.07);
+      border:1px solid rgba(255,255,255,0.13);
+      border-radius:12px;color:#fff;
+      font-family:'DM Sans',sans-serif;font-size:0.91rem;
+      outline:none;transition:all 0.25s ease;
+    }
+    .input-group input::placeholder{color:rgba(255,255,255,0.32);}
+    .input-group input:focus {
+      border-color:rgba(96,165,250,0.55);
+      background:rgba(255,255,255,0.11);
+      box-shadow:0 0 0 3px rgba(37,99,235,0.18);
+    }
+
+    .input-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+    .submit-btn {
+      width:100%;padding:14px;margin-top:6px;
+      border:none;border-radius:12px;
+      background:linear-gradient(135deg,#2563eb,#60a5fa);
+      color:#fff;font-family:'DM Sans',sans-serif;
+      font-size:0.95rem;font-weight:600;cursor:pointer;
+      letter-spacing:0.02em;
+      box-shadow:0 4px 20px rgba(37,99,235,0.4);
+      transition:all 0.25s ease;
+      display:flex;align-items:center;justify-content:center;gap:10px;
+    }
+    .submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(37,99,235,0.6);}
+    .submit-btn:active{transform:translateY(0);}
+
+    .switch-text {
+      text-align:center;margin-top:14px;
+      color:rgba(255,255,255,0.38);font-size:0.82rem;
+    }
+    .switch-text span{color:#60a5fa;cursor:pointer;font-weight:500;}
+
+    .form-footer {
+      text-align:center;margin-top:18px;
+      color:rgba(255,255,255,0.3);font-size:0.78rem;
+    }
+    .form-footer i{color:#60a5fa;margin-right:3px;}
+
+    .err {
+      color:#fca5a5;font-size:0.8rem;
+      margin-top:-8px;margin-bottom:10px;
+      padding-left:4px;display:none;
+    }
+
+    @media(max-width:520px){
+      .login-card{padding:30px 22px 26px;}
+      .input-row{grid-template-columns:1fr;}
+    }
+  </style>
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="logo">
-      <i class="fa-solid fa-graduation-cap"></i>
-      <span>StudyPlanner</span>
-    </div>
-    <ul class="nav-links">
-      <li><a href="index.html" class="active-link">Home</a></li>
-      <li><a href="planner.html">Planner</a></li>
-      <li><a href="profile.html">Profile</a></li>
-      <li><a href="settings.html">Settings</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-    <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
-      <i class="fa-solid fa-moon"></i>
-    </button>
-  </nav>
+<div class="bg-canvas">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="orb orb4"></div>
+  <div class="stars" id="starsContainer"></div>
+  <div class="moon"></div>
 
-  <section class="hero">
-    <div class="hero-text">
-      <span class="small-tag"><i class="fa-solid fa-bolt"></i> Student Productivity Platform</span>
-      <h1>Plan <span>Smarter.</span><br>Stay Ahead.</h1>
-      <p>
-        A clean, fast, offline-first task manager built for students.
-        No login. No server. No friction — just you and your goals.
-      </p>
-      <div class="hero-buttons">
-        <a href="planner.html" class="primary-btn inline-btn">
-          <i class="fa-solid fa-list-check"></i> Open Planner
-        </a>
-        <a href="about.html" class="secondary-btn inline-btn">
-          <i class="fa-solid fa-circle-info"></i> Learn More
-        </a>
-      </div>
-    </div>
-    <div class="hero-image">
-      <img
-        src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1000&q=80"
-        alt="Student studying at a desk"
-      />
-    </div>
-  </section>
+  <div class="bird" style="top:16%;--dur:20s;--dy:-25px;">
+    <svg width="38" viewBox="0 0 40 20" fill="none"><path d="M0 10 Q10 0 20 10 Q30 0 40 10" stroke="rgba(255,255,255,0.65)" stroke-width="2" fill="none"/></svg>
+  </div>
+  <div class="bird" style="top:22%;--dur:26s;--dy:18px;animation-delay:7s;">
+    <svg width="28" viewBox="0 0 40 20" fill="none"><path d="M0 10 Q10 0 20 10 Q30 0 40 10" stroke="rgba(255,255,255,0.45)" stroke-width="2" fill="none"/></svg>
+  </div>
+  <div class="bird" style="top:12%;--dur:32s;--dy:-8px;animation-delay:15s;">
+    <svg width="20" viewBox="0 0 40 20" fill="none"><path d="M0 10 Q10 0 20 10 Q30 0 40 10" stroke="rgba(255,255,255,0.35)" stroke-width="2" fill="none"/></svg>
+  </div>
 
-  <section class="features-section">
-    <div class="section-heading">
-      <h2>Everything You Need</h2>
-      <p>Built for students who want to stop forgetting and start finishing.</p>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card">
-        <i class="fa-solid fa-list-check"></i>
-        <h3>Task Management</h3>
-        <p>Add, edit, and prioritize daily academic tasks with deadlines and urgency tracking.</p>
-      </div>
-      <div class="feature-card">
-        <i class="fa-solid fa-hourglass-half"></i>
-        <h3>Deadline Tracking</h3>
-        <p>Color-coded urgency indicators automatically flag tasks due today, this week, or overdue.</p>
-      </div>
-      <div class="feature-card">
-        <i class="fa-solid fa-chart-line"></i>
-        <h3>Progress Monitoring</h3>
-        <p>Live progress bar and stats show exactly how much you've completed and what's left.</p>
-      </div>
-    </div>
-  </section>
+  <div class="mountains">
+    <svg viewBox="0 0 1440 320" preserveAspectRatio="none" style="width:100%;height:260px;display:block;">
+      <path d="M0,320 L0,190 L130,110 L260,175 L390,75 L520,155 L650,55 L780,135 L910,40 L1040,125 L1170,65 L1300,145 L1440,100 L1440,320 Z" fill="rgba(4,25,55,0.92)"/>
+    </svg>
+    <svg viewBox="0 0 1440 320" preserveAspectRatio="none" style="width:100%;height:190px;display:block;margin-top:-190px;">
+      <path d="M0,320 L0,240 L200,150 L400,210 L600,110 L800,185 L1000,125 L1200,195 L1440,150 L1440,320 Z" fill="rgba(7,38,78,0.88)"/>
+    </svg>
+    <svg viewBox="0 0 1440 320" preserveAspectRatio="none" style="width:100%;height:130px;display:block;margin-top:-130px;">
+      <path d="M0,320 L0,280 L220,210 L440,260 L660,190 L880,250 L1100,185 L1320,240 L1440,210 L1440,320 Z" fill="rgba(5,22,50,0.95)"/>
+    </svg>
+    <div style="height:50px;background:rgba(4,16,38,0.98);"></div>
+  </div>
+</div>
 
-  <section class="preview-section">
-    <div class="section-heading">
-      <h2>Why It Works</h2>
-      <p>Simple by design. Powerful by function.</p>
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="card-header">
+      <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <h1>StudyPlanner</h1>
+      <p>Your personal academic productivity dashboard</p>
     </div>
-    <div class="two-col-section">
-      <div class="glass-card">
-        <h3><i class="fa-solid fa-wifi-slash" style="color:var(--primary);margin-right:8px;"></i>Works Offline</h3>
-        <p>
-          Everything saves directly to your browser — no account, no internet required.
-          Your tasks are always there when you need them.
-        </p>
-      </div>
-      <div class="glass-card">
-        <h3><i class="fa-solid fa-moon" style="color:var(--primary);margin-right:8px;"></i>Dark Mode Ready</h3>
-        <p>
-          Toggle between light and dark mode with one click.
-          Your preference is saved automatically across sessions.
-        </p>
-      </div>
-    </div>
-  </section>
 
-  <footer class="footer">
-    <div class="footer-grid">
-      <div>
-        <h3><i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>StudyPlanner</h3>
-        <p>A modern academic productivity tool for students who want to stay organized and stress-free.</p>
-      </div>
-      <div>
-        <h4>Quick Links</h4>
-        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
-        <a href="planner.html"><i class="fa-solid fa-list-check"></i> Planner</a>
-        <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
-        <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
-      </div>
-      <div>
-        <h4>Connect</h4>
-        <a href="mailto:nishagiri297@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
-        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
-        <a href="https://linkedin.com/in/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-      </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('login')">Sign In</button>
+      <button class="tab-btn" onclick="switchTab('register')">Register</button>
     </div>
-    <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
-  </footer>
 
-  <script src="script.js"></script>
+    <div class="form-panel active" id="panel-login">
+      <form onsubmit="handleLogin(event)">
+        <div class="input-group">
+          <span class="icon"><i class="fa-solid fa-envelope"></i></span>
+          <input type="email" id="li-email" placeholder="Email address" required />
+        </div>
+        <div class="input-group">
+          <span class="icon"><i class="fa-solid fa-lock"></i></span>
+          <input type="password" id="li-pass" placeholder="Password" required />
+        </div>
+        <p class="err" id="loginErr">Incorrect email or password. Try again.</p>
+        <button type="submit" class="submit-btn">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
+        </button>
+      </form>
+      <p class="switch-text">Don't have an account? <span onclick="switchTab('register')">Register here</span></p>
+    </div>
+
+    <div class="form-panel" id="panel-register">
+      <form onsubmit="handleRegister(event)">
+        <div class="input-row">
+          <div class="input-group">
+            <span class="icon"><i class="fa-solid fa-user"></i></span>
+            <input type="text" id="reg-name" placeholder="Full name" required />
+          </div>
+          <div class="input-group">
+            <span class="icon"><i class="fa-solid fa-envelope"></i></span>
+            <input type="email" id="reg-email" placeholder="Email" required />
+          </div>
+        </div>
+        <div class="input-group">
+          <span class="icon"><i class="fa-solid fa-lock"></i></span>
+          <input type="password" id="reg-pass" placeholder="Create password (min 6 chars)" required minlength="6"/>
+        </div>
+        <div class="input-row">
+          <div class="input-group">
+            <span class="icon"><i class="fa-solid fa-building-columns"></i></span>
+            <input type="text" id="reg-uni" placeholder="University" />
+          </div>
+          <div class="input-group">
+            <span class="icon"><i class="fa-solid fa-book"></i></span>
+            <input type="text" id="reg-course" placeholder="Course (e.g. CSE)" />
+          </div>
+        </div>
+        <p class="err" id="registerErr">This email is already registered.</p>
+        <button type="submit" class="submit-btn">
+          <i class="fa-solid fa-user-plus"></i> Create Account
+        </button>
+      </form>
+      <p class="switch-text">Already have an account? <span onclick="switchTab('login')">Sign In</span></p>
+    </div>
+
+    <p class="form-footer">
+      <i class="fa-solid fa-shield-halved"></i>
+      No server · Data stays in your browser · 100% free
+    </p>
+  </div>
+</div>
+
+<script>
+  const sc = document.getElementById('starsContainer');
+  for (let i = 0; i < 130; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random() * 2.5 + 0.8;
+    s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*72}%;--dur:${2+Math.random()*4}s;--op:${0.3+Math.random()*0.7};animation-delay:${Math.random()*5}s;`;
+    sc.appendChild(s);
+  }
+
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-btn').forEach((b,i) => {
+      b.classList.toggle('active',(tab==='login'&&i===0)||(tab==='register'&&i===1));
+    });
+    document.querySelectorAll('.form-panel').forEach(p=>p.classList.remove('active'));
+    document.getElementById('panel-'+tab).classList.add('active');
+    document.getElementById('loginErr').style.display='none';
+    document.getElementById('registerErr').style.display='none';
+  }
+
+  function getUsers(){ return JSON.parse(localStorage.getItem('sp_users')||'[]'); }
+
+  function handleRegister(e) {
+    e.preventDefault();
+    const name   = document.getElementById('reg-name').value.trim();
+    const email  = document.getElementById('reg-email').value.trim().toLowerCase();
+    const pass   = document.getElementById('reg-pass').value;
+    const uni    = document.getElementById('reg-uni').value.trim()||'Chitkara University';
+    const course = document.getElementById('reg-course').value.trim()||'B.E. CSE (AI & ML)';
+    const errEl  = document.getElementById('registerErr');
+    const users  = getUsers();
+    if(users.find(u=>u.email===email)){errEl.style.display='block';return;}
+    errEl.style.display='none';
+    const user={name,email,pass,uni,course,joinedOn:new Date().toLocaleDateString('en-IN',{year:'numeric',month:'long',day:'numeric'})};
+    users.push(user);
+    localStorage.setItem('sp_users',JSON.stringify(users));
+    localStorage.setItem('sp_loggedIn',JSON.stringify(user));
+    window.location.href='home.html';
+  }
+
+  function handleLogin(e) {
+    e.preventDefault();
+    const email=document.getElementById('li-email').value.trim().toLowerCase();
+    const pass=document.getElementById('li-pass').value;
+    const errEl=document.getElementById('loginErr');
+    const user=getUsers().find(u=>u.email===email&&u.pass===pass);
+    if(!user){errEl.style.display='block';return;}
+    errEl.style.display='none';
+    localStorage.setItem('sp_loggedIn',JSON.stringify(user));
+    window.location.href='home.html';
+  }
+
+  if(localStorage.getItem('sp_loggedIn')) window.location.href='home.html';
+</script>
 </body>
 </html>
