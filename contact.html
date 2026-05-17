@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Student Planner | Contact</title>
+  <title>StudyPlanner | Contact</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
@@ -15,21 +15,30 @@
       <span>StudyPlanner</span>
     </div>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="home.html">Home</a></li>
       <li><a href="planner.html">Planner</a></li>
       <li><a href="profile.html">Profile</a></li>
       <li><a href="settings.html">Settings</a></li>
       <li><a href="contact.html" class="active-link">Contact</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
-    <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
-      <i class="fa-solid fa-moon"></i>
-    </button>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div class="nav-user" id="navUserName">
+        <i class="fa-solid fa-user-circle"></i>
+        <span>User</span>
+      </div>
+      <button class="logout-btn" onclick="logout()">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+      <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
   </nav>
 
   <section class="page-banner">
     <h1>Get In Touch</h1>
-    <p>Have feedback, questions, or want to collaborate? I'd love to hear from you.</p>
+    <p>Have feedback, questions, or want to collaborate?</p>
   </section>
 
   <section class="contact-section">
@@ -54,8 +63,15 @@
 
     <div class="glass-card form-card">
       <h2>Send a Message</h2>
-      <p style="color:var(--muted);margin-bottom:20px;font-size:0.95rem;">I typically respond within 24 hours.</p>
-      <form class="contact-form" action="action="https://formspree.io/f/xpqbvgon"" method="POST" id="contactForm">
+      <p style="color:var(--muted);margin-bottom:20px;font-size:0.95rem;">
+        I typically respond within 24 hours.
+      </p>
+      <form
+        class="contact-form"
+        action="https://formspree.io/f/xpqbvgon"
+        method="POST"
+        id="contactForm"
+      >
         <div class="form-row">
           <input type="text" name="name" placeholder="Your name" required />
           <input type="email" name="email" placeholder="Your email" required />
@@ -76,38 +92,45 @@
   <footer class="footer">
     <div class="footer-grid">
       <div>
-        <h3><i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>StudyPlanner</h3>
-        <p>A modern academic productivity tool for students who want to stay organized and stress-free.</p>
+        <h3>
+          <i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>
+          StudyPlanner
+        </h3>
+        <p>A modern academic productivity tool for students.</p>
       </div>
       <div>
         <h4>Quick Links</h4>
-        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="home.html"><i class="fa-solid fa-house"></i> Home</a>
         <a href="planner.html"><i class="fa-solid fa-list-check"></i> Planner</a>
         <a href="about.html"><i class="fa-solid fa-circle-info"></i> About</a>
       </div>
       <div>
         <h4>Connect</h4>
-        <a href="mailto:nishagiri297@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
-        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
-        <a href="https://linkedin.com/in/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+        <a href="mailto:nishagiri297@gmail.com">
+          <i class="fa-solid fa-envelope"></i> Email
+        </a>
+        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github"></i> GitHub
+        </a>
       </div>
     </div>
-    <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
+    <p class="copyright">
+      © 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript
+    </p>
   </footer>
 
   <script src="script.js"></script>
   <script>
-    const form = document.getElementById('contactForm');
-    if (form) {
-      form.addEventListener('submit', function(e) {
-        if (form.action.includes('YOUR_FORM_ID')) {
-          e.preventDefault();
-          document.getElementById('formStatus').style.display = 'block';
-          document.getElementById('submitBtn').disabled = true;
-          document.getElementById('submitBtn').textContent = '✓ Sent!';
-        }
-      });
+    const user = JSON.parse(localStorage.getItem('sp_loggedIn'));
+    if (!user) window.location.href = 'index.html';
+    else {
+      document.getElementById('navUserName').querySelector('span').textContent = user.name.split(' ')[0];
+    }
+    function logout() {
+      localStorage.removeItem('sp_loggedIn');
+      window.location.href = 'index.html';
     }
   </script>
+
 </body>
 </html>
