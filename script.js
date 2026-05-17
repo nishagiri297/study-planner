@@ -6,23 +6,29 @@
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 let currentFilter = 'all';
 
+// ── PRIORITY SYMBOLS ───────────────────────────────────────────
+const PRIORITY_SYMBOL = {
+  High:   '◆',
+  Medium: '◇',
+  Low:    '○'
+};
+
 // ── DOM REFERENCES ─────────────────────────────────────────────
-const taskForm       = document.getElementById('taskForm');
-const taskTitle      = document.getElementById('taskTitle');
-const taskDesc       = document.getElementById('taskDesc');
-const taskDate       = document.getElementById('taskDate');
-const taskPriority   = document.getElementById('taskPriority');
-const taskList       = document.getElementById('taskList');
-const searchInput    = document.getElementById('searchInput');
-const progressFill   = document.getElementById('progressFill');
-const progressText   = document.getElementById('progressText');
-const countdownText  = document.getElementById('countdownText');
-const themeToggle    = document.getElementById('themeToggle');
-const totalTasksEl   = document.getElementById('totalTasks');
-const completedEl    = document.getElementById('completedTasks');
-const pendingEl      = document.getElementById('pendingTasks');
-const nearestDeadEl  = document.getElementById('nearestDeadline');
-const resetTasksBtn  = document.getElementById('resetTasksBtn');
+const taskForm           = document.getElementById('taskForm');
+const taskTitle          = document.getElementById('taskTitle');
+const taskDate           = document.getElementById('taskDate');
+const taskPrioritySelect = document.getElementById('taskPrioritySelect');
+const taskList           = document.getElementById('taskList');
+const searchInput        = document.getElementById('searchInput');
+const progressFill       = document.getElementById('progressFill');
+const progressText       = document.getElementById('progressText');
+const countdownText      = document.getElementById('countdownText');
+const themeToggle        = document.getElementById('themeToggle');
+const totalTasksEl       = document.getElementById('totalTasks');
+const completedEl        = document.getElementById('completedTasks');
+const pendingEl          = document.getElementById('pendingTasks');
+const nearestDeadEl      = document.getElementById('nearestDeadline');
+const resetTasksBtn      = document.getElementById('resetTasksBtn');
 
 // ── HELPERS ────────────────────────────────────────────────────
 function saveTasks() {
@@ -38,13 +44,11 @@ function formatDate(dateString) {
 
 function getUrgency(dateString, completed) {
   if (completed || !dateString) return null;
-  const now  = new Date();
-  const due  = new Date(dateString + 'T23:59:59');
-  const hrs  = (due - now) / (1000 * 60 * 60);
-  if (hrs < 0)   return { label: 'Overdue',   cls: 'urgency-overdue'  };
-  if (hrs < 24)  return { label: 'Due Today',  cls: 'urgency-critical' };
-  if (hrs < 72)  return { label: 'Due Soon',   cls: 'urgency-warning'  };
-  return             { label: 'On Track',   cls: 'urgency-safe'     };
+  const hrs = (new Date(dateString + 'T23:59:59') - new Date()) / (1000 * 60 * 60);
+  if (hrs < 0)  return { label: 'Overdue',   cls: 'urgency-overdue'  };
+  if (hrs < 24) return { label: 'Due Today',  cls: 'urgency-critical' };
+  if (hrs < 72) return { label: 'Due Soon',   cls: 'urgency-warning'  };
+  return              { label: 'On Track',   cls: 'urgency-safe'     };
 }
 
 function showToast(msg) {
@@ -57,10 +61,10 @@ function showToast(msg) {
 
 function escapeHtml(str) {
   return str
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;');
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 
 // ── RENDER TASKS ───────────────────────────────────────────────
@@ -95,7 +99,7 @@ function renderTasks() {
     return;
   }
 
-  // Sort: pending first, then by date
+  // Sort: pending first, then by date ascending
   filtered.sort((a, b) => {
     if (a.completed !== b.completed) return a.completed ? 1 : -1;
     return new Date(a.date) - new Date(b.date);
@@ -104,23 +108,27 @@ function renderTasks() {
   taskList.innerHTML = '';
 
   filtered.forEach(task => {
-    const urgency = getUrgency(task.date, task.completed);
+    const urgency      = getUrgency(task.date, task.completed);
     const urgencyBadge = urgency
       ? `<span class="urgency-badge ${urgency.cls}">${urgency.label}</span>`
       : '';
+    const sym = PRIORITY_SYMBOL[task.priority] || '○';
 
     const card = document.createElement('div');
     card.className = `task-card ${task.priority.toLowerCase()} ${task.completed ? 'completed' : ''}`;
     card.innerHTML = `
       <h4>${escapeHtml(task.title)}</h4>
-      ${task.description ? `<p>${escapeHtml(task.description)}</p>` : ''}
       <div class="badges">
-        <span class="badge priority">${task.priority} Priority</span>
+        <span class="priority-symbol">${sym} ${task.priority}</span>
         <span class="badge status ${task.completed ? '' : 'pending'}">
           ${task.completed ? '✅ Completed' : '⏳ Pending'}
         </span>
+        ${urgencyBadge}
       </div>
-      <p><strong>Deadline:</strong> ${formatDate(task.date)} ${urgencyBadge}</p>
+      <p style="margin-top:4px;">
+        <i class="fa-regular fa-calendar" style="margin-right:5px;opacity:0.6;"></i>
+        ${formatDate(task.date)}
+      </p>
       <div class="task-actions">
         <button class="complete-btn" onclick="toggleComplete(${task.id})">
           ${task.completed ? '↩ Undo' : '✓ Complete'}
@@ -141,21 +149,23 @@ if (taskForm) {
   if (taskDate) {
     taskDate.setAttribute('min', new Date().toISOString().split('T')[0]);
   }
+
   taskForm.addEventListener('submit', function(e) {
     e.preventDefault();
+    const priority = taskPrioritySelect ? taskPrioritySelect.value : 'Medium';
     const newTask = {
       id:          Date.now(),
       title:       taskTitle.value.trim(),
-      description: taskDesc ? taskDesc.value.trim() : '',
+      description: '',
       date:        taskDate.value,
-      priority:    taskPriority ? taskPriority.value : 'Medium',
+      priority:    priority,
       completed:   false
     };
     tasks.unshift(newTask);
     saveTasks();
     renderTasks();
     taskForm.reset();
-    showToast('Task added successfully!');
+    showToast('Task added! ' + PRIORITY_SYMBOL[priority] + ' ' + priority);
   });
 }
 
@@ -165,10 +175,10 @@ function toggleComplete(id) {
   saveTasks();
   renderTasks();
   const task = tasks.find(t => t.id === id);
-  showToast(task && task.completed ? '✅ Task marked complete!' : '↩ Task marked pending');
+  showToast(task && task.completed ? '✅ Marked complete!' : '↩ Marked pending');
 }
 
-// ── DELETE TASK ────────────────────────────────────────────────
+// ── DELETE ─────────────────────────────────────────────────────
 function deleteTask(id) {
   if (!confirm('Delete this task?')) return;
   tasks = tasks.filter(t => t.id !== id);
@@ -177,15 +187,14 @@ function deleteTask(id) {
   showToast('Task deleted.');
 }
 
-// ── EDIT TASK ──────────────────────────────────────────────────
+// ── EDIT ───────────────────────────────────────────────────────
 function editTask(id) {
-  if (!taskTitle || !taskDate || !taskPriority) return;
+  if (!taskTitle || !taskDate) return;
   const task = tasks.find(t => t.id === id);
   if (!task) return;
-  taskTitle.value    = task.title;
-  if (taskDesc) taskDesc.value = task.description || '';
-  taskDate.value     = task.date;
-  taskPriority.value = task.priority;
+  taskTitle.value = task.title;
+  taskDate.value  = task.date;
+  if (taskPrioritySelect) taskPrioritySelect.value = task.priority;
   tasks = tasks.filter(t => t.id !== id);
   saveTasks();
   renderTasks();
@@ -194,52 +203,54 @@ function editTask(id) {
   showToast('Task loaded for editing.');
 }
 
-// ── PROGRESS BAR ───────────────────────────────────────────────
+// ── PROGRESS ───────────────────────────────────────────────────
 function updateProgress() {
   if (!progressFill || !progressText) return;
-  const total     = tasks.length;
-  const completed = tasks.filter(t => t.completed).length;
-  const pct       = total === 0 ? 0 : Math.round((completed / total) * 100);
+  const total = tasks.length;
+  const done  = tasks.filter(t => t.completed).length;
+  const pct   = total === 0 ? 0 : Math.round((done / total) * 100);
   progressFill.style.width = pct + '%';
-  progressText.textContent = `${pct}% Completed (${completed}/${total} tasks)`;
+  progressText.textContent = `${pct}% Completed (${done}/${total} tasks)`;
 }
 
 // ── COUNTDOWN ──────────────────────────────────────────────────
 function updateCountdown() {
   if (!countdownText) return;
+
   const pending = tasks
     .filter(t => !t.completed && t.date)
     .sort((a, b) => new Date(a.date) - new Date(b.date));
 
   if (pending.length === 0) {
-    countdownText.textContent = "🎉 No upcoming deadlines — you're all caught up!";
+    countdownText.textContent = "🎉 All caught up — no upcoming deadlines!";
     if (nearestDeadEl) nearestDeadEl.textContent = '—';
     return;
   }
 
   const nearest  = pending[0];
-  const due      = new Date(nearest.date + 'T23:59:59');
-  const daysLeft = Math.ceil((due - new Date()) / (1000 * 60 * 60 * 24));
+  const daysLeft = Math.ceil(
+    (new Date(nearest.date + 'T23:59:59') - new Date()) / (1000 * 60 * 60 * 24)
+  );
 
   if (nearestDeadEl) {
-    nearestDeadEl.textContent = nearest.title.length > 12
-      ? nearest.title.slice(0, 12) + '…'
+    nearestDeadEl.textContent = nearest.title.length > 14
+      ? nearest.title.slice(0, 14) + '…'
       : nearest.title;
   }
 
-  if (daysLeft < 0)       countdownText.textContent = `⚠️ "${nearest.title}" deadline has passed!`;
+  if (daysLeft < 0)        countdownText.textContent = `⚠️ "${nearest.title}" is overdue!`;
   else if (daysLeft === 0) countdownText.textContent = `🔴 "${nearest.title}" is due today!`;
   else if (daysLeft === 1) countdownText.textContent = `🟡 "${nearest.title}" is due tomorrow`;
-  else                     countdownText.textContent = `📅 "${nearest.title}" is due in ${daysLeft} days`;
+  else                     countdownText.textContent = `📅 "${nearest.title}" — ${daysLeft} days left`;
 }
 
 // ── STATS ──────────────────────────────────────────────────────
 function updateStats() {
-  const total     = tasks.length;
-  const completed = tasks.filter(t => t.completed).length;
+  const total = tasks.length;
+  const done  = tasks.filter(t => t.completed).length;
   if (totalTasksEl) totalTasksEl.textContent = total;
-  if (completedEl)  completedEl.textContent  = completed;
-  if (pendingEl)    pendingEl.textContent     = total - completed;
+  if (completedEl)  completedEl.textContent  = done;
+  if (pendingEl)    pendingEl.textContent     = total - done;
 }
 
 // ── SEARCH ─────────────────────────────────────────────────────
@@ -257,7 +268,7 @@ document.querySelectorAll('.filterBtn').forEach(btn => {
   });
 });
 
-// ── THEME TOGGLE ───────────────────────────────────────────────
+// ── THEME ──────────────────────────────────────────────────────
 function loadTheme() {
   if (!themeToggle) return;
   const icon  = themeToggle.querySelector('i');
@@ -283,7 +294,7 @@ if (themeToggle) {
 // ── RESET TASKS ────────────────────────────────────────────────
 if (resetTasksBtn) {
   resetTasksBtn.addEventListener('click', function() {
-    if (!confirm('Are you sure? This will permanently delete ALL your tasks.')) return;
+    if (!confirm('Delete ALL tasks permanently?')) return;
     tasks = [];
     saveTasks();
     showToast('All tasks deleted.');
