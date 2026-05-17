@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyPlanner | Home</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">
+      <i class="fa-solid fa-graduation-cap"></i>
+      <span>StudyPlanner</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="home.html" class="active-link">Home</a></li>
+      <li><a href="planner.html">Planner</a></li>
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="settings.html">Settings</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div class="nav-user" id="navUserName">
+        <i class="fa-solid fa-user-circle"></i>
+        <span>User</span>
+      </div>
+      <button class="logout-btn" onclick="logout()">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+      <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-text">
+      <span class="small-tag">
+        <i class="fa-solid fa-bolt"></i> Student Productivity Platform
+      </span>
+      <h1>Plan <span>Smarter.</span><br>Stay Ahead.</h1>
+      <p>
+        A clean, fast, offline-first task manager built for students.
+        No friction — just you and your goals.
+      </p>
+      <div class="hero-buttons">
+        <a href="planner.html" class="primary-btn inline-btn">
+          <i class="fa-solid fa-list-check"></i> Open Planner
+        </a>
+        <a href="about.html" class="secondary-btn inline-btn">
+          <i class="fa-solid fa-circle-info"></i> Learn More
+        </a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img
+        src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1000&q=80"
+        alt="Student studying"
+      />
+    </div>
+  </section>
+
+  <section class="features-section">
+    <div class="section-heading">
+      <h2>Everything You Need</h2>
+      <p>Built for students who want to stop forgetting and start finishing.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="fa-solid fa-list-check"></i>
+        <h3>Task Management</h3>
+        <p>Add and prioritize academic tasks with deadlines and urgency tracking.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-hourglass-half"></i>
+        <h3>Deadline Tracking</h3>
+        <p>Urgency indicators automatically flag tasks due today, this week, or overdue.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-chart-line"></i>
+        <h3>Progress Monitoring</h3>
+        <p>Live progress bar and stats show exactly how much you have completed.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="preview-section">
+    <div class="section-heading">
+      <h2>Why It Works</h2>
+      <p>Simple by design. Powerful by function.</p>
+    </div>
+    <div class="two-col-section">
+      <div class="glass-card">
+        <h3>
+          <i class="fa-solid fa-wifi-slash" style="color:var(--primary);margin-right:8px;"></i>
+          Works Offline
+        </h3>
+        <p>
+          Everything saves directly to your browser — no account needed after login,
+          no internet required for tasks.
+        </p>
+      </div>
+      <div class="glass-card">
+        <h3>
+          <i class="fa-solid fa-moon" style="color:var(--primary);margin-right:8px;"></i>
+          Dark Mode Ready
+        </h3>
+        <p>
+          Toggle between light and dark mode with one click.
+          Your preference is saved automatically.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <h3>
+          <i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>
+          StudyPlanner
+        </h3>
+        <p>A modern academic productivity tool for students who want to stay organized.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <a href="home.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="planner.html"><i class="fa-solid fa-list-check"></i> Planner</a>
+        <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
+        <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <a href="mailto:nishagiri297@gmail.com">
+          <i class="fa-solid fa-envelope"></i> Email
+        </a>
+        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github"></i> GitHub
+        </a>
+        <a href="https://linkedin.com/in/nishagiri297" target="_blank" rel="noopener">
+          <i class="fa-brands fa-linkedin"></i> LinkedIn
+        </a>
+      </div>
+    </div>
+    <p class="copyright">
+      © 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    const user = JSON.parse(localStorage.getItem('sp_loggedIn'));
+    if (!user) window.location.href = 'index.html';
+    else {
+      const el = document.getElementById('navUserName');
+      if (el) el.querySelector('span').textContent = user.name.split(' ')[0];
+    }
+    function logout() {
+      localStorage.removeItem('sp_loggedIn');
+      window.location.href = 'index.html';
+    }
+  </script>
+
+</body>
+</html>
