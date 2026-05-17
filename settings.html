@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Student Planner | Settings</title>
+  <title>StudyPlanner | Settings</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
@@ -15,16 +15,25 @@
       <span>StudyPlanner</span>
     </div>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="home.html">Home</a></li>
       <li><a href="planner.html">Planner</a></li>
       <li><a href="profile.html">Profile</a></li>
       <li><a href="settings.html" class="active-link">Settings</a></li>
       <li><a href="contact.html">Contact</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
-    <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
-      <i class="fa-solid fa-moon"></i>
-    </button>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div class="nav-user" id="navUserName">
+        <i class="fa-solid fa-user-circle"></i>
+        <span>User</span>
+      </div>
+      <button class="logout-btn" onclick="logout()">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+      <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
   </nav>
 
   <section class="page-banner">
@@ -36,9 +45,13 @@
 
     <div class="glass-card" style="margin-bottom:22px;">
       <h2 style="margin-bottom:16px;">
-        <i class="fa-solid fa-palette" style="color:var(--primary);margin-right:8px;"></i>Appearance
+        <i class="fa-solid fa-palette" style="color:var(--primary);margin-right:8px;"></i>
+        Appearance
       </h2>
-      <p style="color:var(--muted);margin-bottom:16px;">Toggle dark mode using the button in the top-right corner of the navbar. Your preference is saved automatically.</p>
+      <p style="color:var(--muted);margin-bottom:16px;">
+        Toggle dark mode using the button in the top-right corner of the navbar.
+        Your preference is saved automatically.
+      </p>
       <button id="inlineThemeBtn" class="secondary-btn" style="width:fit-content;">
         <i class="fa-solid fa-moon"></i> Toggle Dark Mode
       </button>
@@ -46,14 +59,15 @@
 
     <div class="glass-card" style="margin-bottom:22px;">
       <h2 style="margin-bottom:16px;">
-        <i class="fa-solid fa-sliders" style="color:var(--primary);margin-right:8px;"></i>Preferences
+        <i class="fa-solid fa-sliders" style="color:var(--primary);margin-right:8px;"></i>
+        Preferences
       </h2>
       <div class="settings-box">
         <label>
           <input type="checkbox" id="pref-urgency" checked />
           <span>
             <strong>Urgency color coding</strong><br>
-            <small style="color:var(--muted);">Show red/amber/green badges based on deadline proximity</small>
+            <small style="color:var(--muted);">Show badges based on deadline proximity</small>
           </span>
         </label>
         <label>
@@ -75,10 +89,11 @@
 
     <div class="glass-card" style="border:1px solid rgba(239,68,68,0.25);">
       <h2 style="margin-bottom:8px;color:var(--danger);">
-        <i class="fa-solid fa-triangle-exclamation" style="margin-right:8px;"></i>Danger Zone
+        <i class="fa-solid fa-triangle-exclamation" style="margin-right:8px;"></i>
+        Danger Zone
       </h2>
       <p style="color:var(--muted);margin-bottom:18px;">
-        This will permanently delete all your saved tasks. This action cannot be undone.
+        This will permanently delete all your saved tasks. Cannot be undone.
       </p>
       <button id="resetTasksBtn" class="danger-btn">
         <i class="fa-solid fa-trash"></i> Reset All Tasks
@@ -90,33 +105,52 @@
   <footer class="footer">
     <div class="footer-grid">
       <div>
-        <h3><i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>StudyPlanner</h3>
-        <p>A modern academic productivity tool for students who want to stay organized and stress-free.</p>
+        <h3>
+          <i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>
+          StudyPlanner
+        </h3>
+        <p>A modern academic productivity tool for students.</p>
       </div>
       <div>
         <h4>Quick Links</h4>
-        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="home.html"><i class="fa-solid fa-house"></i> Home</a>
         <a href="planner.html"><i class="fa-solid fa-list-check"></i> Planner</a>
         <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
       </div>
       <div>
         <h4>Connect</h4>
-        <a href="mailto:nishagiri297@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
-        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
-        <a href="https://linkedin.com/in/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+        <a href="mailto:nishagiri297@gmail.com">
+          <i class="fa-solid fa-envelope"></i> Email
+        </a>
+        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github"></i> GitHub
+        </a>
       </div>
     </div>
-    <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
+    <p class="copyright">
+      © 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript
+    </p>
   </footer>
 
   <script src="script.js"></script>
   <script>
+    const user = JSON.parse(localStorage.getItem('sp_loggedIn'));
+    if (!user) window.location.href = 'index.html';
+    else {
+      document.getElementById('navUserName').querySelector('span').textContent = user.name.split(' ')[0];
+    }
+    function logout() {
+      localStorage.removeItem('sp_loggedIn');
+      window.location.href = 'index.html';
+    }
+
     const inlineBtn = document.getElementById('inlineThemeBtn');
     if (inlineBtn) {
       inlineBtn.addEventListener('click', () => {
         document.getElementById('themeToggle').click();
       });
     }
+
     const prefs = ['pref-urgency', 'pref-progress', 'pref-countdown'];
     prefs.forEach(id => {
       const el = document.getElementById(id);
@@ -133,5 +167,6 @@
       });
     });
   </script>
+
 </body>
 </html>
