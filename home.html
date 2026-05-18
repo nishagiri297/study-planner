@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
+
   <canvas id="particleCanvas"></canvas>
 
   <nav class="navbar">
@@ -32,21 +33,41 @@
         <i class="fa-solid fa-right-from-bracket"></i> Logout
       </button>
       <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
-        <i class="fa-solid fa-moon"></i>
+        <i class="fa-solid fa-sun"></i>
       </button>
     </div>
   </nav>
 
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-text">
       <span class="small-tag">
         <i class="fa-solid fa-bolt"></i> Student Productivity Platform
       </span>
-      <h1>Plan <span>Smarter.</span><br>Stay Ahead.</h1>
-      <p>
-        A clean, fast, offline-first task manager built for students.
-        No friction — just you and your goals.
+      <h1 class="hero-title">
+        Plan <span class="hero-highlight">Smarter.</span><br>
+        <span class="hero-bold">Stay Ahead.</span>
+      </h1>
+      <p class="hero-sub">
+        A clean, fast, offline-first task manager built for students.<br>
+        No friction — just <strong>you</strong> and your <strong>goals.</strong>
       </p>
+      <div class="hero-stats-row">
+        <div class="hero-stat">
+          <span class="hero-stat-num" id="heroTotal">0</span>
+          <span class="hero-stat-label">Tasks Added</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num" id="heroDone">0</span>
+          <span class="hero-stat-label">Completed</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">100%</span>
+          <span class="hero-stat-label">Free</span>
+        </div>
+      </div>
       <div class="hero-buttons">
         <a href="planner.html" class="primary-btn inline-btn">
           <i class="fa-solid fa-list-check"></i> Open Planner
@@ -64,6 +85,7 @@
     </div>
   </section>
 
+  <!-- FEATURES -->
   <section class="features-section">
     <div class="section-heading">
       <h2>Everything You Need</h2>
@@ -88,6 +110,7 @@
     </div>
   </section>
 
+  <!-- WHY -->
   <section class="preview-section">
     <div class="section-heading">
       <h2>Why It Works</h2>
@@ -120,10 +143,7 @@
   <footer class="footer">
     <div class="footer-grid">
       <div>
-        <h3>
-          <i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>
-          StudyPlanner
-        </h3>
+        <h3><i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>StudyPlanner</h3>
         <p>A modern academic productivity tool for students who want to stay organized.</p>
       </div>
       <div>
@@ -135,20 +155,12 @@
       </div>
       <div>
         <h4>Connect</h4>
-        <a href="mailto:nishagiri297@gmail.com">
-          <i class="fa-solid fa-envelope"></i> Email
-        </a>
-        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener">
-          <i class="fa-brands fa-github"></i> GitHub
-        </a>
-        <a href="https://linkedin.com/in/nishagiri297" target="_blank" rel="noopener">
-          <i class="fa-brands fa-linkedin"></i> LinkedIn
-        </a>
+        <a href="mailto:nishagiri297@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="https://linkedin.com/in/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
       </div>
     </div>
-    <p class="copyright">
-      © 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript
-    </p>
+    <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
   </footer>
 
   <script src="script.js"></script>
@@ -159,6 +171,13 @@
       const el = document.getElementById('navUserName');
       if (el) el.querySelector('span').textContent = user.name.split(' ')[0];
     }
+    // Live hero stats
+    const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    const heroTotal = document.getElementById('heroTotal');
+    const heroDone  = document.getElementById('heroDone');
+    if (heroTotal) heroTotal.textContent = tasks.length;
+    if (heroDone)  heroDone.textContent  = tasks.filter(t => t.completed).length;
+
     function logout() {
       localStorage.removeItem('sp_loggedIn');
       window.location.href = 'index.html';
