@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
+
   <canvas id="particleCanvas"></canvas>
 
   <nav class="navbar">
@@ -45,11 +46,22 @@
   <section class="profile-section">
 
     <div class="profile-card glass-card">
-      <img
-        class="profile-pic"
-        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80"
-        alt="Profile"
-      />
+
+      <div class="profile-photo-wrap">
+        <div class="profile-photo-circle">
+          <img id="profileImg" src="" alt="Profile Photo" />
+          <div class="add-photo-text" id="addPhotoText">
+            <i class="fa-solid fa-camera"></i>
+            <span>Add Photo</span>
+          </div>
+          <input
+            type="file"
+            id="profileFileInput"
+            accept="image/*"
+          />
+        </div>
+      </div>
+
       <h2 id="p-name">—</h2>
       <p class="role-text" id="p-course">—</p>
       <p style="margin-bottom:6px;">
@@ -60,19 +72,22 @@
         <i class="fa-solid fa-envelope" style="color:var(--primary);margin-right:6px;"></i>
         <span id="p-email">—</span>
       </p>
+
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
-        <div style="text-align:center;padding:12px;background:rgba(37,99,235,0.07);border-radius:12px;">
+        <div style="text-align:center;padding:12px;background:rgba(0,180,216,0.07);border-radius:12px;border:1px solid var(--border);">
           <div style="font-size:1.5rem;font-weight:700;color:var(--primary);" id="profileTotal">0</div>
           <div style="font-size:0.8rem;color:var(--muted);">Total Tasks</div>
         </div>
-        <div style="text-align:center;padding:12px;background:rgba(16,185,129,0.07);border-radius:12px;">
-          <div style="font-size:1.5rem;font-weight:700;color:#059669;" id="profileDone">0</div>
+        <div style="text-align:center;padding:12px;background:rgba(16,185,129,0.07);border-radius:12px;border:1px solid rgba(16,185,129,0.15);">
+          <div style="font-size:1.5rem;font-weight:700;color:#34d399;" id="profileDone">0</div>
           <div style="font-size:0.8rem;color:var(--muted);">Completed</div>
         </div>
       </div>
+
     </div>
 
     <div class="profile-details">
+
       <div class="glass-card">
         <h3 style="margin-bottom:12px;font-weight:600;">
           <i class="fa-solid fa-bullseye" style="color:var(--primary);margin-right:8px;"></i>
@@ -127,6 +142,7 @@
           </a>
         </div>
       </div>
+
     </div>
 
   </section>
