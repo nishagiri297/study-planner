@@ -6,6 +6,393 @@
   <title>StudyPlanner | Profile</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ── PROFILE PAGE SPECIFIC ── */
+    .profile-page-wrap {
+      padding: 40px 7% 70px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* TOP SECTION */
+    .profile-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: start;
+      margin-bottom: 40px;
+    }
+
+    .profile-about-block h2 {
+      font-size: 2.8rem;
+      font-weight: normal;
+      color: #fff;
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .profile-about-block h2::after {
+      content: '';
+      display: block;
+      height: 4px;
+      width: 60%;
+      background: linear-gradient(90deg, var(--primary), transparent);
+      border-radius: 2px;
+      margin-top: 6px;
+    }
+
+    .profile-about-text {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.85;
+      max-width: 520px;
+    }
+
+    .profile-about-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .profile-about-text .highlight {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* Photo on right */
+    .profile-photo-right {
+      flex-shrink: 0;
+    }
+
+    .profile-photo-wrap {
+      position: relative;
+      width: 180px;
+      height: 200px;
+    }
+
+    .profile-photo-circle {
+      width: 180px;
+      height: 200px;
+      border-radius: 24px;
+      border: 2px dashed rgba(0,180,216,0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,180,216,0.05);
+      transition: all 0.22s ease;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .profile-photo-circle::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      border: 2px solid transparent;
+      background: linear-gradient(135deg, rgba(0,180,216,0.3), transparent) border-box;
+    }
+
+    .profile-photo-circle:hover {
+      border-color: var(--primary);
+      background: rgba(0,180,216,0.10);
+      box-shadow: 0 0 30px rgba(0,180,216,0.2);
+    }
+
+    .profile-photo-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 22px;
+      display: none;
+    }
+
+    .add-photo-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+    }
+
+    .add-photo-text i {
+      font-size: 2rem;
+      opacity: 0.7;
+    }
+
+    .add-photo-text span {
+      font-size: 0.82rem;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+
+    .profile-photo-circle input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+
+    /* Contact row */
+    .profile-contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+
+    .contact-item i {
+      color: var(--primary);
+      font-size: 1rem;
+    }
+
+    .contact-item a {
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    .contact-item a:hover {
+      color: var(--primary);
+    }
+
+    /* Stats row */
+    .profile-stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .profile-stat-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.22s ease;
+    }
+
+    .profile-stat-box:hover {
+      border-color: rgba(0,180,216,0.3);
+      box-shadow: 0 8px 24px rgba(0,180,216,0.1);
+    }
+
+    .profile-stat-box .stat-num {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      font-family: 'IM Fell English', serif;
+      text-shadow: 0 0 20px rgba(0,180,216,0.4);
+    }
+
+    .profile-stat-box .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Bottom grid */
+    .profile-bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .profile-section-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 26px;
+      transition: all 0.22s ease;
+    }
+
+    .profile-section-card:hover {
+      border-color: rgba(0,180,216,0.3);
+      box-shadow: 0 8px 30px rgba(0,180,216,0.1);
+    }
+
+    .profile-section-card h3 {
+      font-size: 1.2rem;
+      font-weight: normal;
+      color: var(--primary);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Education card */
+    .edu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .edu-name {
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .edu-sub {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 3px;
+    }
+
+    .edu-badge {
+      background: rgba(0,180,216,0.1);
+      color: var(--primary);
+      border: 1px solid rgba(0,180,216,0.2);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* Skills */
+    .skill-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 16px;
+    }
+
+    .skill-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(0,180,216,0.06);
+    }
+
+    .skill-item i {
+      color: var(--primary);
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+
+    /* Goals */
+    .goal-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .goal-item i {
+      color: var(--primary);
+      margin-top: 3px;
+      flex-shrink: 0;
+      font-size: 0.8rem;
+    }
+
+    /* Soft skills */
+    .soft-skill-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .soft-skill-item {
+      background: rgba(0,180,216,0.06);
+      border: 1px solid rgba(0,180,216,0.12);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .soft-skill-item i {
+      color: var(--primary);
+      font-size: 0.85rem;
+    }
+
+    /* Language */
+    .lang-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .lang-badge {
+      background: rgba(0,180,216,0.08);
+      border: 1px solid rgba(0,180,216,0.2);
+      color: var(--primary);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .interest-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .interest-tag {
+      background: rgba(0,180,216,0.06);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.83rem;
+    }
+
+    /* Links */
+    .profile-links-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .profile-top {
+        grid-template-columns: 1fr;
+      }
+      .profile-photo-wrap {
+        margin: 0 auto;
+      }
+      .profile-bottom-grid {
+        grid-template-columns: 1fr;
+      }
+      .profile-stats-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -33,101 +420,183 @@
         <i class="fa-solid fa-right-from-bracket"></i> Logout
       </button>
       <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
-        <i class="fa-solid fa-moon"></i>
+        <i class="fa-solid fa-sun"></i>
       </button>
     </div>
   </nav>
 
-  <section class="page-banner">
-    <h1>Student Profile</h1>
-    <p>Your academic identity and performance overview.</p>
-  </section>
+  <div class="profile-page-wrap">
 
-  <section class="profile-section">
+    <!-- TOP: About + Photo -->
+    <div class="profile-top">
+      <div class="profile-about-block">
+        <h2>About me</h2>
+        <p class="profile-about-text">
+          Hi! My name is <strong id="p-name">Nisha Giri</strong>.<br>
+          I am a <span class="highlight">B.E. CSE (AI & ML)</span> student at
+          <strong id="p-uni">Chitkara University</strong>, Punjab.<br><br>
+          My objective: Build practical, production-ready web applications that solve
+          real student problems. I created StudyPlanner to eliminate deadline anxiety —
+          a problem every student faces.
+        </p>
 
-    <div class="profile-card glass-card">
-
-      <div class="profile-photo-wrap">
-        <div class="profile-photo-circle">
-          <img id="profileImg" src="" alt="Profile Photo" />
-          <div class="add-photo-text" id="addPhotoText">
-            <i class="fa-solid fa-camera"></i>
-            <span>Add Photo</span>
+        <!-- Contact row -->
+        <div class="profile-contact-row">
+          <div class="contact-item">
+            <i class="fa-solid fa-envelope"></i>
+            <a href="mailto:nishagiri297@gmail.com" id="p-email">nishagiri297@gmail.com</a>
           </div>
-          <input
-            type="file"
-            id="profileFileInput"
-            accept="image/*"
-          />
+          <div class="contact-item">
+            <i class="fa-brands fa-github"></i>
+            <a href="https://github.com/nishagiri297" target="_blank" rel="noopener">github.com/nishagiri297</a>
+          </div>
+          <div class="contact-item">
+            <i class="fa-brands fa-linkedin"></i>
+            <a href="https://linkedin.com/in/nishagiri297" target="_blank" rel="noopener">linkedin.com/in/nishagiri297</a>
+          </div>
+          <div class="contact-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Punjab, India</span>
+          </div>
         </div>
       </div>
 
-      <h2 id="p-name">—</h2>
-      <p class="role-text" id="p-course">—</p>
-      <p style="margin-bottom:6px;">
-        <i class="fa-solid fa-building-columns" style="color:var(--primary);margin-right:6px;"></i>
-        <span id="p-uni">—</span>
-      </p>
-      <p style="margin-bottom:16px;">
-        <i class="fa-solid fa-envelope" style="color:var(--primary);margin-right:6px;"></i>
-        <span id="p-email">—</span>
-      </p>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
-        <div style="text-align:center;padding:12px;background:rgba(0,180,216,0.07);border-radius:12px;border:1px solid var(--border);">
-          <div style="font-size:1.5rem;font-weight:700;color:var(--primary);" id="profileTotal">0</div>
-          <div style="font-size:0.8rem;color:var(--muted);">Total Tasks</div>
-        </div>
-        <div style="text-align:center;padding:12px;background:rgba(16,185,129,0.07);border-radius:12px;border:1px solid rgba(16,185,129,0.15);">
-          <div style="font-size:1.5rem;font-weight:700;color:#34d399;" id="profileDone">0</div>
-          <div style="font-size:0.8rem;color:var(--muted);">Completed</div>
+      <!-- Photo -->
+      <div class="profile-photo-right">
+        <div class="profile-photo-wrap">
+          <div class="profile-photo-circle">
+            <img id="profileImg" src="" alt="Profile Photo" />
+            <div class="add-photo-text" id="addPhotoText">
+              <i class="fa-solid fa-camera"></i>
+              <span>Add Photo</span>
+            </div>
+            <input type="file" id="profileFileInput" accept="image/*" />
+          </div>
         </div>
       </div>
-
     </div>
 
-    <div class="profile-details">
-
-      <div class="glass-card">
-        <h3 style="margin-bottom:12px;font-weight:600;">
-          <i class="fa-solid fa-bullseye" style="color:var(--primary);margin-right:8px;"></i>
-          Academic Goals
-        </h3>
-        <ul class="clean-list">
-          <li>Submit all assignments before their deadlines</li>
-          <li>Build portfolio-worthy frontend projects this semester</li>
-          <li>Learn React.js and migrate this project</li>
-          <li>Maintain consistent study streaks using this planner</li>
-        </ul>
+    <!-- STATS ROW -->
+    <div class="profile-stats-row">
+      <div class="profile-stat-box">
+        <div class="stat-num" id="profileTotal">0</div>
+        <div class="stat-label">Total Tasks</div>
       </div>
+      <div class="profile-stat-box">
+        <div class="stat-num" id="profileDone">0</div>
+        <div class="stat-label">Completed</div>
+      </div>
+      <div class="profile-stat-box">
+        <div class="stat-num" id="profilePct">0%</div>
+        <div class="stat-label">Success Rate</div>
+      </div>
+    </div>
 
-      <div class="glass-card">
-        <h3 style="margin-bottom:12px;font-weight:600;">
-          <i class="fa-solid fa-code" style="color:var(--primary);margin-right:8px;"></i>
-          Skills
-        </h3>
-        <div class="tag-wrap">
-          <span class="tag">HTML5</span>
-          <span class="tag">CSS3</span>
-          <span class="tag">JavaScript</span>
-          <span class="tag">Responsive Design</span>
-          <span class="tag">localStorage API</span>
-          <span class="tag">Git & GitHub</span>
+    <!-- BOTTOM GRID -->
+    <div class="profile-bottom-grid">
+
+      <!-- Education -->
+      <div class="profile-section-card">
+        <h3><i class="fa-solid fa-graduation-cap"></i> Education</h3>
+        <div class="edu-item">
+          <div>
+            <div class="edu-name">Chitkara University</div>
+            <div class="edu-sub">B.E. Computer Science (AI & ML)</div>
+          </div>
+          <span class="edu-badge">2023 — Now</span>
+        </div>
+        <div class="edu-item" style="margin-top:14px;">
+          <div>
+            <div class="edu-name">Senior Secondary</div>
+            <div class="edu-sub">Science Stream (PCM)</div>
+          </div>
+          <span class="edu-badge">2021 — 2023</span>
         </div>
       </div>
 
-      <div class="glass-card">
-        <h3 style="margin-bottom:12px;font-weight:600;">
-          <i class="fa-solid fa-link" style="color:var(--primary);margin-right:8px;"></i>
-          Links
-        </h3>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <!-- Technical Skills -->
+      <div class="profile-section-card">
+        <h3><i class="fa-solid fa-code"></i> Technical Skills</h3>
+        <div class="skill-cols">
+          <div class="skill-item"><i class="fa-solid fa-diamond"></i> HTML5</div>
+          <div class="skill-item"><i class="fa-solid fa-diamond"></i> CSS3</div>
+          <div class="skill-item"><i class="fa-solid fa-diamond"></i> JavaScript</div>
+          <div class="skill-item"><i class="fa-solid fa-diamond"></i> Responsive Design</div>
+          <div class="skill-item"><i class="fa-solid fa-diamond"></i> localStorage API</div>
+          <div class="skill-item"><i class="fa-solid fa-diamond"></i> Git & GitHub</div>
+          <div class="skill-item"><i class="fa-solid fa-diamond"></i> UI/UX Design</div>
+          <div class="skill-item"><i class="fa-solid fa-diamond"></i> Python (Basics)</div>
+        </div>
+      </div>
+
+      <!-- Academic Goals -->
+      <div class="profile-section-card">
+        <h3><i class="fa-solid fa-bullseye"></i> Academic Goals</h3>
+        <div class="goal-item">
+          <i class="fa-solid fa-chevron-right"></i>
+          Submit all assignments before their deadlines
+        </div>
+        <div class="goal-item">
+          <i class="fa-solid fa-chevron-right"></i>
+          Build 3 portfolio-worthy frontend projects this semester
+        </div>
+        <div class="goal-item">
+          <i class="fa-solid fa-chevron-right"></i>
+          Learn React.js and migrate this project to a React app
+        </div>
+        <div class="goal-item">
+          <i class="fa-solid fa-chevron-right"></i>
+          Maintain consistent study streaks using this planner
+        </div>
+        <div class="goal-item">
+          <i class="fa-solid fa-chevron-right"></i>
+          Explore AI/ML fundamentals and build one ML project
+        </div>
+      </div>
+
+      <!-- Soft Skills -->
+      <div class="profile-section-card">
+        <h3><i class="fa-solid fa-star"></i> Soft Skills</h3>
+        <div class="soft-skill-grid">
+          <div class="soft-skill-item"><i class="fa-solid fa-users"></i> Teamwork</div>
+          <div class="soft-skill-item"><i class="fa-solid fa-brain"></i> Critical Thinking</div>
+          <div class="soft-skill-item"><i class="fa-solid fa-comments"></i> Communication</div>
+          <div class="soft-skill-item"><i class="fa-solid fa-clock"></i> Time Management</div>
+          <div class="soft-skill-item"><i class="fa-solid fa-lightbulb"></i> Problem Solving</div>
+          <div class="soft-skill-item"><i class="fa-solid fa-pen"></i> Creativity</div>
+        </div>
+      </div>
+
+      <!-- Interests -->
+      <div class="profile-section-card">
+        <h3><i class="fa-solid fa-heart"></i> Interests</h3>
+        <div class="interest-row">
+          <span class="interest-tag">Web Development</span>
+          <span class="interest-tag">AI & Machine Learning</span>
+          <span class="interest-tag">UI/UX Design</span>
+          <span class="interest-tag">Open Source</span>
+          <span class="interest-tag">Design Trends</span>
+          <span class="interest-tag">Technology</span>
+        </div>
+      </div>
+
+      <!-- Languages -->
+      <div class="profile-section-card">
+        <h3><i class="fa-solid fa-language"></i> Languages</h3>
+        <div class="lang-row">
+          <span class="lang-badge">Hindi — Native</span>
+          <span class="lang-badge">English — Proficient</span>
+          <span class="lang-badge">Punjabi — Conversational</span>
+        </div>
+
+        <h3 style="margin-top:22px;"><i class="fa-solid fa-link"></i> Links</h3>
+        <div class="profile-links-row">
           
             href="https://github.com/nishagiri297"
             target="_blank"
             rel="noopener"
             class="primary-btn"
-            style="font-size:0.88rem;padding:10px 18px;"
+            style="font-size:0.85rem;padding:9px 16px;"
           >
             <i class="fa-brands fa-github"></i> GitHub
           </a>
@@ -136,24 +605,27 @@
             target="_blank"
             rel="noopener"
             class="secondary-btn"
-            style="font-size:0.88rem;padding:10px 18px;"
+            style="font-size:0.85rem;padding:9px 16px;"
           >
             <i class="fa-brands fa-linkedin"></i> LinkedIn
+          </a>
+          
+            href="contact.html"
+            class="secondary-btn"
+            style="font-size:0.85rem;padding:9px 16px;"
+          >
+            <i class="fa-solid fa-envelope"></i> Contact Me
           </a>
         </div>
       </div>
 
     </div>
-
-  </section>
+  </div>
 
   <footer class="footer">
     <div class="footer-grid">
       <div>
-        <h3>
-          <i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>
-          StudyPlanner
-        </h3>
+        <h3><i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>StudyPlanner</h3>
         <p>A modern academic productivity tool for students.</p>
       </div>
       <div>
@@ -164,17 +636,11 @@
       </div>
       <div>
         <h4>Connect</h4>
-        <a href="mailto:nishagiri297@gmail.com">
-          <i class="fa-solid fa-envelope"></i> Email
-        </a>
-        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener">
-          <i class="fa-brands fa-github"></i> GitHub
-        </a>
+        <a href="mailto:nishagiri297@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
       </div>
     </div>
-    <p class="copyright">
-      © 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript
-    </p>
+    <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
   </footer>
 
   <script src="script.js"></script>
@@ -183,14 +649,21 @@
     if (!user) window.location.href = 'index.html';
     else {
       document.getElementById('navUserName').querySelector('span').textContent = user.name.split(' ')[0];
-      document.getElementById('p-name').textContent   = user.name;
-      document.getElementById('p-course').textContent = user.course || 'B.E. CSE (AI & ML)';
-      document.getElementById('p-uni').textContent    = user.uni   || 'Chitkara University';
-      document.getElementById('p-email').textContent  = user.email;
+      const nameEl  = document.getElementById('p-name');
+      const uniEl   = document.getElementById('p-uni');
+      const emailEl = document.getElementById('p-email');
+      if (nameEl)  nameEl.textContent  = user.name;
+      if (uniEl)   uniEl.textContent   = user.uni   || 'Chitkara University';
+      if (emailEl) emailEl.textContent = user.email;
     }
     const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-    document.getElementById('profileTotal').textContent = tasks.length;
-    document.getElementById('profileDone').textContent  = tasks.filter(t => t.completed).length;
+    const total = tasks.length;
+    const done  = tasks.filter(t => t.completed).length;
+    const pct   = total === 0 ? 0 : Math.round((done / total) * 100);
+    document.getElementById('profileTotal').textContent = total;
+    document.getElementById('profileDone').textContent  = done;
+    document.getElementById('profilePct').textContent   = pct + '%';
+
     function logout() {
       localStorage.removeItem('sp_loggedIn');
       window.location.href = 'index.html';
