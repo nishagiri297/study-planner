@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
+
   <canvas id="particleCanvas"></canvas>
 
   <nav class="navbar">
@@ -32,7 +33,7 @@
         <i class="fa-solid fa-right-from-bracket"></i> Logout
       </button>
       <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
-        <i class="fa-solid fa-moon"></i>
+        <i class="fa-solid fa-sun"></i>
       </button>
     </div>
   </nav>
@@ -120,11 +121,14 @@
       </div>
       <div>
         <h4>Connect</h4>
-        <a href="mailto:nishagiri297@gmail.com">
+        <a href="mailto:nisha3047.beai25@chitkara.edu.in">
           <i class="fa-solid fa-envelope"></i> Email
         </a>
         <a href="https://github.com/nishagiri297" target="_blank" rel="noopener">
           <i class="fa-brands fa-github"></i> GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener">
+          <i class="fa-brands fa-linkedin"></i> LinkedIn
         </a>
       </div>
     </div>
@@ -138,7 +142,8 @@
     const user = JSON.parse(localStorage.getItem('sp_loggedIn'));
     if (!user) window.location.href = 'index.html';
     else {
-      document.getElementById('navUserName').querySelector('span').textContent = user.name.split(' ')[0];
+      document.getElementById('navUserName')
+        .querySelector('span').textContent = user.name.split(' ')[0];
     }
     function logout() {
       localStorage.removeItem('sp_loggedIn');
