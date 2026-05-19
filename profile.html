@@ -7,14 +7,11 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    /* ── PROFILE PAGE SPECIFIC ── */
     .profile-page-wrap {
       padding: 40px 7% 70px;
       max-width: 1100px;
       margin: 0 auto;
     }
-
-    /* TOP SECTION */
     .profile-top {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -22,16 +19,13 @@
       align-items: start;
       margin-bottom: 40px;
     }
-
     .profile-about-block h2 {
       font-size: 2.8rem;
       font-weight: normal;
       color: #fff;
       margin-bottom: 20px;
-      position: relative;
       display: inline-block;
     }
-
     .profile-about-block h2::after {
       content: '';
       display: block;
@@ -41,35 +35,19 @@
       border-radius: 2px;
       margin-top: 6px;
     }
-
     .profile-about-text {
       color: var(--muted);
       font-size: 0.95rem;
       line-height: 1.85;
       max-width: 520px;
     }
-
-    .profile-about-text strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    .profile-about-text .highlight {
-      color: var(--primary);
-      font-weight: 600;
-    }
-
-    /* Photo on right */
-    .profile-photo-right {
-      flex-shrink: 0;
-    }
-
+    .profile-about-text strong { color: var(--text); font-weight: 600; }
+    .profile-about-text .highlight { color: var(--primary); font-weight: 600; }
     .profile-photo-wrap {
       position: relative;
       width: 180px;
       height: 200px;
     }
-
     .profile-photo-circle {
       width: 180px;
       height: 200px;
@@ -85,22 +63,11 @@
       position: relative;
       cursor: pointer;
     }
-
-    .profile-photo-circle::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 24px;
-      border: 2px solid transparent;
-      background: linear-gradient(135deg, rgba(0,180,216,0.3), transparent) border-box;
-    }
-
     .profile-photo-circle:hover {
       border-color: var(--primary);
       background: rgba(0,180,216,0.10);
       box-shadow: 0 0 30px rgba(0,180,216,0.2);
     }
-
     .profile-photo-circle img {
       width: 100%;
       height: 100%;
@@ -108,7 +75,6 @@
       border-radius: 22px;
       display: none;
     }
-
     .add-photo-text {
       display: flex;
       flex-direction: column;
@@ -116,18 +82,8 @@
       gap: 8px;
       color: var(--primary);
     }
-
-    .add-photo-text i {
-      font-size: 2rem;
-      opacity: 0.7;
-    }
-
-    .add-photo-text span {
-      font-size: 0.82rem;
-      font-weight: 500;
-      opacity: 0.8;
-    }
-
+    .add-photo-text i { font-size: 2rem; opacity: 0.7; }
+    .add-photo-text span { font-size: 0.82rem; font-weight: 500; opacity: 0.8; }
     .profile-photo-circle input[type="file"] {
       position: absolute;
       inset: 0;
@@ -139,8 +95,6 @@
       padding: 0;
       border: none;
     }
-
-    /* Contact row */
     .profile-contact-row {
       display: flex;
       flex-wrap: wrap;
@@ -149,38 +103,22 @@
       padding-top: 20px;
       border-top: 1px solid var(--border);
     }
-
     .contact-item {
       display: flex;
       align-items: center;
       gap: 8px;
       color: var(--muted);
       font-size: 0.88rem;
-      transition: color 0.2s;
     }
-
-    .contact-item i {
-      color: var(--primary);
-      font-size: 1rem;
-    }
-
-    .contact-item a {
-      color: var(--muted);
-      transition: color 0.2s;
-    }
-
-    .contact-item a:hover {
-      color: var(--primary);
-    }
-
-    /* Stats row */
+    .contact-item i { color: var(--primary); font-size: 1rem; }
+    .contact-item a { color: var(--muted); transition: color 0.2s; }
+    .contact-item a:hover { color: var(--primary); }
     .profile-stats-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
       margin-bottom: 32px;
     }
-
     .profile-stat-box {
       background: var(--card);
       border: 1px solid var(--border);
@@ -189,12 +127,10 @@
       text-align: center;
       transition: all 0.22s ease;
     }
-
     .profile-stat-box:hover {
       border-color: rgba(0,180,216,0.3);
       box-shadow: 0 8px 24px rgba(0,180,216,0.1);
     }
-
     .profile-stat-box .stat-num {
       font-size: 2.2rem;
       font-weight: 700;
@@ -202,20 +138,16 @@
       font-family: 'IM Fell English', serif;
       text-shadow: 0 0 20px rgba(0,180,216,0.4);
     }
-
     .profile-stat-box .stat-label {
       font-size: 0.8rem;
       color: var(--muted);
       margin-top: 4px;
     }
-
-    /* Bottom grid */
     .profile-bottom-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 24px;
     }
-
     .profile-section-card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -223,12 +155,10 @@
       padding: 26px;
       transition: all 0.22s ease;
     }
-
     .profile-section-card:hover {
       border-color: rgba(0,180,216,0.3);
       box-shadow: 0 8px 30px rgba(0,180,216,0.1);
     }
-
     .profile-section-card h3 {
       font-size: 1.2rem;
       font-weight: normal;
@@ -240,27 +170,14 @@
       padding-bottom: 12px;
       border-bottom: 1px solid var(--border);
     }
-
-    /* Education card */
     .edu-item {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 12px;
     }
-
-    .edu-name {
-      color: var(--text);
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .edu-sub {
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-top: 3px;
-    }
-
+    .edu-name { color: var(--text); font-weight: 600; font-size: 0.95rem; }
+    .edu-sub  { color: var(--muted); font-size: 0.85rem; margin-top: 3px; }
     .edu-badge {
       background: rgba(0,180,216,0.1);
       color: var(--primary);
@@ -271,14 +188,7 @@
       font-weight: 600;
       white-space: nowrap;
     }
-
-    /* Skills */
-    .skill-cols {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px 16px;
-    }
-
+    .skill-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
     .skill-item {
       display: flex;
       align-items: center;
@@ -288,14 +198,7 @@
       padding: 6px 0;
       border-bottom: 1px solid rgba(0,180,216,0.06);
     }
-
-    .skill-item i {
-      color: var(--primary);
-      font-size: 0.75rem;
-      opacity: 0.7;
-    }
-
-    /* Goals */
+    .skill-item i { color: var(--primary); font-size: 0.75rem; opacity: 0.7; }
     .goal-item {
       display: flex;
       align-items: flex-start;
@@ -305,21 +208,8 @@
       font-size: 0.9rem;
       line-height: 1.5;
     }
-
-    .goal-item i {
-      color: var(--primary);
-      margin-top: 3px;
-      flex-shrink: 0;
-      font-size: 0.8rem;
-    }
-
-    /* Soft skills */
-    .soft-skill-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
+    .goal-item i { color: var(--primary); margin-top: 3px; flex-shrink: 0; font-size: 0.8rem; }
+    .soft-skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .soft-skill-item {
       background: rgba(0,180,216,0.06);
       border: 1px solid rgba(0,180,216,0.12);
@@ -332,19 +222,8 @@
       align-items: center;
       gap: 8px;
     }
-
-    .soft-skill-item i {
-      color: var(--primary);
-      font-size: 0.85rem;
-    }
-
-    /* Language */
-    .lang-row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
+    .soft-skill-item i { color: var(--primary); font-size: 0.85rem; }
+    .lang-row { display: flex; gap: 12px; flex-wrap: wrap; }
     .lang-badge {
       background: rgba(0,180,216,0.08);
       border: 1px solid rgba(0,180,216,0.2);
@@ -354,13 +233,7 @@
       font-size: 0.85rem;
       font-weight: 600;
     }
-
-    .interest-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
+    .interest-row { display: flex; gap: 10px; flex-wrap: wrap; }
     .interest-tag {
       background: rgba(0,180,216,0.06);
       border: 1px solid var(--border);
@@ -369,28 +242,12 @@
       border-radius: 999px;
       font-size: 0.83rem;
     }
-
-    /* Links */
-    .profile-links-row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 16px;
-    }
-
+    .profile-links-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
     @media (max-width: 768px) {
-      .profile-top {
-        grid-template-columns: 1fr;
-      }
-      .profile-photo-wrap {
-        margin: 0 auto;
-      }
-      .profile-bottom-grid {
-        grid-template-columns: 1fr;
-      }
-      .profile-stats-row {
-        grid-template-columns: 1fr 1fr;
-      }
+      .profile-top { grid-template-columns: 1fr; }
+      .profile-photo-wrap { margin: 0 auto; }
+      .profile-bottom-grid { grid-template-columns: 1fr; }
+      .profile-stats-row { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -427,7 +284,6 @@
 
   <div class="profile-page-wrap">
 
-    <!-- TOP: About + Photo -->
     <div class="profile-top">
       <div class="profile-about-block">
         <h2>About me</h2>
@@ -439,20 +295,24 @@
           real student problems. I created StudyPlanner to eliminate deadline anxiety —
           a problem every student faces.
         </p>
-
-        <!-- Contact row -->
         <div class="profile-contact-row">
           <div class="contact-item">
             <i class="fa-solid fa-envelope"></i>
-            <a href="mailto:nishagiri297@gmail.com" id="p-email">nishagiri297@gmail.com</a>
+            <a href="mailto:nisha3047.beai25@chitkara.edu.in">
+              nisha3047.beai25@chitkara.edu.in
+            </a>
           </div>
           <div class="contact-item">
             <i class="fa-brands fa-github"></i>
-            <a href="https://github.com/nishagiri297" target="_blank" rel="noopener">github.com/nishagiri297</a>
+            <a href="https://github.com/nishagiri297" target="_blank" rel="noopener">
+              github.com/nishagiri297
+            </a>
           </div>
           <div class="contact-item">
             <i class="fa-brands fa-linkedin"></i>
-            <a href="https://linkedin.com/in/nishagiri297" target="_blank" rel="noopener">linkedin.com/in/nishagiri297</a>
+            <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener">
+              linkedin.com/in/nisha-7903b8386
+            </a>
           </div>
           <div class="contact-item">
             <i class="fa-solid fa-location-dot"></i>
@@ -461,8 +321,7 @@
         </div>
       </div>
 
-      <!-- Photo -->
-      <div class="profile-photo-right">
+      <div>
         <div class="profile-photo-wrap">
           <div class="profile-photo-circle">
             <img id="profileImg" src="" alt="Profile Photo" />
@@ -476,7 +335,6 @@
       </div>
     </div>
 
-    <!-- STATS ROW -->
     <div class="profile-stats-row">
       <div class="profile-stat-box">
         <div class="stat-num" id="profileTotal">0</div>
@@ -492,10 +350,8 @@
       </div>
     </div>
 
-    <!-- BOTTOM GRID -->
     <div class="profile-bottom-grid">
 
-      <!-- Education -->
       <div class="profile-section-card">
         <h3><i class="fa-solid fa-graduation-cap"></i> Education</h3>
         <div class="edu-item">
@@ -514,7 +370,6 @@
         </div>
       </div>
 
-      <!-- Technical Skills -->
       <div class="profile-section-card">
         <h3><i class="fa-solid fa-code"></i> Technical Skills</h3>
         <div class="skill-cols">
@@ -529,7 +384,6 @@
         </div>
       </div>
 
-      <!-- Academic Goals -->
       <div class="profile-section-card">
         <h3><i class="fa-solid fa-bullseye"></i> Academic Goals</h3>
         <div class="goal-item">
@@ -554,7 +408,6 @@
         </div>
       </div>
 
-      <!-- Soft Skills -->
       <div class="profile-section-card">
         <h3><i class="fa-solid fa-star"></i> Soft Skills</h3>
         <div class="soft-skill-grid">
@@ -567,7 +420,6 @@
         </div>
       </div>
 
-      <!-- Interests -->
       <div class="profile-section-card">
         <h3><i class="fa-solid fa-heart"></i> Interests</h3>
         <div class="interest-row">
@@ -580,7 +432,6 @@
         </div>
       </div>
 
-      <!-- Languages -->
       <div class="profile-section-card">
         <h3><i class="fa-solid fa-language"></i> Languages</h3>
         <div class="lang-row">
@@ -588,32 +439,23 @@
           <span class="lang-badge">English — Proficient</span>
           <span class="lang-badge">Punjabi — Conversational</span>
         </div>
-
         <h3 style="margin-top:22px;"><i class="fa-solid fa-link"></i> Links</h3>
         <div class="profile-links-row">
-          
-            href="https://github.com/nishagiri297"
-            target="_blank"
-            rel="noopener"
-            class="primary-btn"
-            style="font-size:0.85rem;padding:9px 16px;"
-          >
+          <a href="https://github.com/nishagiri297"
+             target="_blank" rel="noopener"
+             class="primary-btn"
+             style="font-size:0.85rem;padding:9px 16px;">
             <i class="fa-brands fa-github"></i> GitHub
           </a>
-          
-            href="https://linkedin.com/in/nishagiri297"
-            target="_blank"
-            rel="noopener"
-            class="secondary-btn"
-            style="font-size:0.85rem;padding:9px 16px;"
-          >
+          <a href="https://www.linkedin.com/in/nisha-7903b8386"
+             target="_blank" rel="noopener"
+             class="secondary-btn"
+             style="font-size:0.85rem;padding:9px 16px;">
             <i class="fa-brands fa-linkedin"></i> LinkedIn
           </a>
-          
-            href="contact.html"
-            class="secondary-btn"
-            style="font-size:0.85rem;padding:9px 16px;"
-          >
+          <a href="contact.html"
+             class="secondary-btn"
+             style="font-size:0.85rem;padding:9px 16px;">
             <i class="fa-solid fa-envelope"></i> Contact Me
           </a>
         </div>
@@ -636,8 +478,15 @@
       </div>
       <div>
         <h4>Connect</h4>
-        <a href="mailto:nishagiri297@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
-        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="mailto:nisha3047.beai25@chitkara.edu.in">
+          <i class="fa-solid fa-envelope"></i> Email
+        </a>
+        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github"></i> GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener">
+          <i class="fa-brands fa-linkedin"></i> LinkedIn
+        </a>
       </div>
     </div>
     <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
@@ -649,12 +498,10 @@
     if (!user) window.location.href = 'index.html';
     else {
       document.getElementById('navUserName').querySelector('span').textContent = user.name.split(' ')[0];
-      const nameEl  = document.getElementById('p-name');
-      const uniEl   = document.getElementById('p-uni');
-      const emailEl = document.getElementById('p-email');
-      if (nameEl)  nameEl.textContent  = user.name;
-      if (uniEl)   uniEl.textContent   = user.uni   || 'Chitkara University';
-      if (emailEl) emailEl.textContent = user.email;
+      const nameEl = document.getElementById('p-name');
+      const uniEl  = document.getElementById('p-uni');
+      if (nameEl) nameEl.textContent = user.name;
+      if (uniEl)  uniEl.textContent  = user.uni || 'Chitkara University';
     }
     const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
     const total = tasks.length;
