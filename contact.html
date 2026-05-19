@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    /* ── CONGRATS OVERLAY ── */
     .congrats-overlay {
       position: fixed;
       inset: 0;
@@ -16,68 +15,54 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      background: rgba(4, 16, 38, 0.92);
+      background: rgba(4,16,38,0.92);
       backdrop-filter: blur(12px);
-      animation: fadeInOverlay 0.4s ease forwards;
     }
-
     .congrats-overlay.show {
       display: flex;
+      animation: fadeInOverlay 0.4s ease forwards;
     }
-
     @keyframes fadeInOverlay {
       from { opacity: 0; }
       to   { opacity: 1; }
     }
-
     .congrats-box {
       text-align: center;
       animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
     }
-
     @keyframes popIn {
       from { opacity: 0; transform: scale(0.7) translateY(30px); }
       to   { opacity: 1; transform: scale(1) translateY(0); }
     }
-
-    /* Teddy SVG container */
     .teddy-wrap {
       width: 160px;
       height: 160px;
       margin: 0 auto 24px;
       position: relative;
     }
-
     .teddy-wrap svg {
       width: 100%;
       height: 100%;
       filter: drop-shadow(0 0 20px rgba(0,180,216,0.5));
     }
-
-    /* Waving arm animation */
     .teddy-arm-right {
       transform-origin: 10px 5px;
       animation: wave-arm 0.6s ease-in-out infinite alternate;
     }
-
     @keyframes wave-arm {
       from { transform: rotate(-15deg); }
       to   { transform: rotate(25deg); }
     }
-
-    /* Floating stars around teddy */
     .teddy-star {
       position: absolute;
       animation: float-star var(--dur) ease-in-out infinite;
       font-size: var(--sz);
       opacity: 0.8;
     }
-
     @keyframes float-star {
       0%,100% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-      50%      { transform: translateY(-12px) rotate(20deg); opacity: 1; }
+      50%     { transform: translateY(-12px) rotate(20deg); opacity: 1; }
     }
-
     .congrats-title {
       font-family: 'IM Fell English', Georgia, serif;
       font-size: 2.2rem;
@@ -85,19 +70,13 @@
       margin-bottom: 10px;
       text-shadow: 0 0 30px rgba(0,180,216,0.5);
     }
-
     .congrats-sub {
       color: rgba(255,255,255,0.6);
       font-size: 0.95rem;
       margin-bottom: 30px;
       line-height: 1.6;
     }
-
-    .congrats-sub span {
-      color: var(--primary, #00b4d8);
-      font-weight: 600;
-    }
-
+    .congrats-sub span { color: #00b4d8; font-weight: 600; }
     .congrats-close {
       background: linear-gradient(135deg, #0077b6, #00b4d8);
       color: #fff;
@@ -114,13 +93,10 @@
       align-items: center;
       gap: 8px;
     }
-
     .congrats-close:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 28px rgba(0,180,216,0.6);
     }
-
-    /* Confetti particles */
     .confetti-container {
       position: fixed;
       inset: 0;
@@ -128,7 +104,6 @@
       z-index: 9998;
       overflow: hidden;
     }
-
     .confetti-piece {
       position: absolute;
       top: -10px;
@@ -139,9 +114,8 @@
       animation: fall var(--dur) linear var(--delay) forwards;
       opacity: 0;
     }
-
     @keyframes fall {
-      0%   { transform: translateX(0) rotate(0deg);   opacity: 1; top: -10px; }
+      0%   { transform: translateX(0) rotate(0deg); opacity: 1; top: -10px; }
       100% { transform: translateX(var(--dx)) rotate(var(--rot)); opacity: 0; top: 110vh; }
     }
   </style>
@@ -154,82 +128,42 @@
   <div class="congrats-overlay" id="congratsOverlay">
     <div class="confetti-container" id="confettiContainer"></div>
     <div class="congrats-box">
-
-      <!-- Cute Animated Teddy Bear SVG -->
       <div class="teddy-wrap">
-        <!-- Floating stars -->
         <span class="teddy-star" style="top:-10px;left:10px;--dur:1.8s;--sz:1.1rem;">⭐</span>
         <span class="teddy-star" style="top:-5px;right:8px;--dur:2.2s;--sz:0.9rem;animation-delay:0.4s;">✨</span>
         <span class="teddy-star" style="bottom:10px;left:0;--dur:2s;--sz:0.8rem;animation-delay:0.8s;">💫</span>
-
         <svg viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
-          <!-- Body -->
           <ellipse cx="60" cy="85" rx="32" ry="35" fill="#00b4d8" opacity="0.9"/>
-
-          <!-- Belly -->
           <ellipse cx="60" cy="90" rx="18" ry="20" fill="rgba(255,255,255,0.15)"/>
-
-          <!-- Left Leg -->
           <ellipse cx="44" cy="118" rx="10" ry="13" fill="#0077b6"/>
-          <!-- Right Leg -->
           <ellipse cx="76" cy="118" rx="10" ry="13" fill="#0077b6"/>
-
-          <!-- Left Foot -->
           <ellipse cx="41" cy="126" rx="12" ry="7" fill="#00b4d8"/>
-          <!-- Right Foot -->
           <ellipse cx="79" cy="126" rx="12" ry="7" fill="#00b4d8"/>
-
-          <!-- Left Arm (still) -->
           <ellipse cx="26" cy="88" rx="9" ry="14" fill="#0077b6" transform="rotate(-20,26,88)"/>
-
-          <!-- Right Arm (waving) -->
           <g class="teddy-arm-right" transform="translate(86,78)">
             <ellipse cx="8" cy="0" rx="9" ry="14" fill="#0077b6" transform="rotate(20,8,0)"/>
-            <!-- Paw -->
             <circle cx="14" cy="-10" r="7" fill="#00b4d8"/>
           </g>
-
-          <!-- Head -->
           <circle cx="60" cy="48" r="28" fill="#00b4d8" opacity="0.95"/>
-
-          <!-- Left Ear -->
           <circle cx="36" cy="26" r="10" fill="#0077b6"/>
           <circle cx="36" cy="26" r="6" fill="#00b4d8" opacity="0.6"/>
-
-          <!-- Right Ear -->
           <circle cx="84" cy="26" r="10" fill="#0077b6"/>
           <circle cx="84" cy="26" r="6" fill="#00b4d8" opacity="0.6"/>
-
-          <!-- Face glow -->
           <circle cx="60" cy="50" r="20" fill="rgba(255,255,255,0.08)"/>
-
-          <!-- Eyes -->
           <circle cx="51" cy="44" r="5" fill="#0a1628"/>
           <circle cx="69" cy="44" r="5" fill="#0a1628"/>
-          <!-- Eye shine -->
           <circle cx="53" cy="42" r="2" fill="white" opacity="0.9"/>
           <circle cx="71" cy="42" r="2" fill="white" opacity="0.9"/>
-
-          <!-- Nose -->
           <ellipse cx="60" cy="52" rx="4" ry="3" fill="#0a1628"/>
-
-          <!-- Smile -->
           <path d="M52 58 Q60 66 68 58" stroke="#0a1628" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-
-          <!-- Cheeks blush -->
           <ellipse cx="45" cy="54" rx="6" ry="4" fill="rgba(255,100,150,0.25)"/>
           <ellipse cx="75" cy="54" rx="6" ry="4" fill="rgba(255,100,150,0.25)"/>
-
-          <!-- Bow tie -->
           <polygon points="52,72 60,76 52,80" fill="#fff" opacity="0.4"/>
           <polygon points="68,72 60,76 68,80" fill="#fff" opacity="0.4"/>
           <circle cx="60" cy="76" r="3" fill="white" opacity="0.6"/>
-
-          <!-- Glow effect -->
           <circle cx="60" cy="48" r="26" fill="none" stroke="rgba(0,180,216,0.3)" stroke-width="2"/>
         </svg>
       </div>
-
       <h2 class="congrats-title">Message Sent! 🎉</h2>
       <p class="congrats-sub">
         Thanks for reaching out!<br>
@@ -274,13 +208,12 @@
   </section>
 
   <section class="contact-section">
-
     <div class="contact-grid">
-      <a href="mailto:nishagiri297@gmail.com"
+      <a href="mailto:nisha3047.beai25@chitkara.edu.in"
          class="glass-card social-card" style="color:inherit;">
         <i class="fa-solid fa-envelope"></i>
         <h3>Email</h3>
-        <p>nishagiri297@gmail.com</p>
+        <p>nisha3047.beai25@chitkara.edu.in</p>
       </a>
       <a href="https://github.com/nishagiri297"
          target="_blank" rel="noopener"
@@ -289,7 +222,7 @@
         <h3>GitHub</h3>
         <p>@nishagiri297</p>
       </a>
-      <a href="https://linkedin.com/in/nishagiri297"
+      <a href="https://www.linkedin.com/in/nisha-7903b8386"
          target="_blank" rel="noopener"
          class="glass-card social-card" style="color:inherit;">
         <i class="fa-brands fa-linkedin"></i>
@@ -320,7 +253,6 @@
         </button>
       </form>
     </div>
-
   </section>
 
   <footer class="footer">
@@ -337,8 +269,15 @@
       </div>
       <div>
         <h4>Connect</h4>
-        <a href="mailto:nishagiri297@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
-        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="mailto:nisha3047.beai25@chitkara.edu.in">
+          <i class="fa-solid fa-envelope"></i> Email
+        </a>
+        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github"></i> GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener">
+          <i class="fa-brands fa-linkedin"></i> LinkedIn
+        </a>
       </div>
     </div>
     <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
@@ -346,29 +285,25 @@
 
   <script src="script.js"></script>
   <script>
-    // ── AUTH ──
     const user = JSON.parse(localStorage.getItem('sp_loggedIn'));
     if (!user) window.location.href = 'index.html';
     else {
       document.getElementById('navUserName')
         .querySelector('span').textContent = user.name.split(' ')[0];
     }
-
-    // ── LOGOUT FIX ──
     function logout() {
       localStorage.removeItem('sp_loggedIn');
       window.location.href = 'index.html';
     }
 
-    // ── CONFETTI ──
     function launchConfetti() {
       const container = document.getElementById('confettiContainer');
       container.innerHTML = '';
       const colors = ['#00b4d8','#60a5fa','#ffffff','#0077b6','#38bdf8','#7dd3fc'];
       for (let i = 0; i < 80; i++) {
-        const el = document.createElement('div');
+        const el    = document.createElement('div');
         el.className = 'confetti-piece';
-        const size = Math.random() * 10 + 6;
+        const size  = Math.random() * 10 + 6;
         el.style.cssText = `
           --w: ${size}px;
           --h: ${size * (Math.random() > 0.5 ? 2.5 : 1)}px;
@@ -384,59 +319,43 @@
       }
     }
 
-    // ── SHOW CONGRATS ──
     function showCongrats() {
       launchConfetti();
       document.getElementById('congratsOverlay').classList.add('show');
     }
 
-    // ── CLOSE CONGRATS ──
     function closeCongratsOverlay() {
       document.getElementById('congratsOverlay').classList.remove('show');
     }
 
-    // ── FORM SUBMIT ──
-    const form     = document.getElementById('contactForm');
+    const form      = document.getElementById('contactForm');
     const submitBtn = document.getElementById('submitBtn');
 
     form.addEventListener('submit', function(e) {
-      // If real Formspree ID → let it submit normally but also show overlay
-      const isRealForm = !form.action.includes('YOUR_FORM_ID');
-
-      if (isRealForm) {
-        // Real Formspree submission
-        e.preventDefault();
-        submitBtn.disabled    = true;
-        submitBtn.innerHTML   = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
-
-        fetch(form.action, {
-          method:  'POST',
-          body:    new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        })
-        .then(res => {
-          if (res.ok) {
-            form.reset();
-            submitBtn.disabled  = false;
-            submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';
-            showCongrats();
-          } else {
-            submitBtn.disabled  = false;
-            submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';
-            alert('Something went wrong. Please try again.');
-          }
-        })
-        .catch(() => {
-          submitBtn.disabled  = false;
-          submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';
-          alert('Network error. Please try again.');
-        });
-      } else {
-        // Demo mode — no real Formspree yet
-        e.preventDefault();
+      e.preventDefault();
+      submitBtn.disabled  = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+      fetch(form.action, {
+        method:  'POST',
+        body:    new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(res => {
+        submitBtn.disabled  = false;
+        submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';
+        if (res.ok) {
+          form.reset();
+          showCongrats();
+        } else {
+          alert('Something went wrong. Please try again.');
+        }
+      })
+      .catch(() => {
+        submitBtn.disabled  = false;
+        submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';
         form.reset();
         showCongrats();
-      }
+      });
     });
   </script>
 
