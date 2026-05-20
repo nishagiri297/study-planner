@@ -6,6 +6,60 @@
   <title>StudyPlanner | Planner</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ── COMPACT FORM FIX ── */
+    .task-form-compact {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .task-form-compact input[type="text"],
+    .task-form-compact input[type="date"],
+    .task-form-compact select {
+      padding: 11px 14px;
+      font-size: 0.88rem;
+      margin: 0;
+      border-radius: 10px;
+    }
+
+    .form-inline-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .add-task-card {
+      padding: 18px 20px !important;
+    }
+
+    .add-task-card h2 {
+      font-size: 1.05rem !important;
+      margin-bottom: 14px !important;
+    }
+
+    /* ── WAVING GRAPH ── */
+    .motivation-graph-wrap {
+      position: relative;
+      width: 100%;
+      height: 180px;
+    }
+
+    #motivationCanvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
+    .graph-label {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+  </style>
 </head>
 <body>
 
@@ -45,6 +99,7 @@
 
   <section class="dashboard-section">
 
+    <!-- STATS -->
     <div class="stats-grid">
       <div class="stat-card">
         <h3 id="totalTasks">0</h3>
@@ -64,12 +119,11 @@
       </div>
     </div>
 
+    <!-- PROGRESS -->
     <div class="glass-card" style="margin-bottom:20px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
         <strong>Overall Progress</strong>
-        <span id="progressText" style="color:var(--muted);font-size:0.88rem;">
-          0% Completed
-        </span>
+        <span id="progressText" style="color:var(--muted);font-size:0.88rem;">0% Completed</span>
       </div>
       <div class="progress-bar">
         <div id="progressFill"></div>
@@ -77,18 +131,20 @@
       <p id="countdownText" style="margin-top:7px;font-size:0.85rem;"></p>
     </div>
 
+    <!-- PLANNER LAYOUT -->
     <div class="planner-layout">
 
-      <div class="glass-card">
-        <h2 style="margin-bottom:18px;font-size:1.25rem;">
-          <i class="fa-solid fa-plus" style="color:var(--primary);margin-right:8px;font-size:1rem;"></i>
+      <!-- ADD TASK — COMPACT -->
+      <div class="glass-card add-task-card">
+        <h2 style="margin-bottom:14px;font-size:1.05rem;">
+          <i class="fa-solid fa-plus" style="color:var(--primary);margin-right:8px;font-size:0.95rem;"></i>
           Add New Task
         </h2>
         <form id="taskForm" class="task-form-compact">
           <input
             type="text"
             id="taskTitle"
-            placeholder="What do you need to do? (e.g. Submit Math Assignment)"
+            placeholder="What do you need to do?"
             required
             style="margin:0;"
           />
@@ -108,15 +164,17 @@
           <button
             type="submit"
             class="primary-btn"
-            style="width:100%;justify-content:center;margin-top:4px;"
+            style="width:100%;justify-content:center;margin-top:2px;padding:11px;"
           >
             <i class="fa-solid fa-plus"></i> Add Task
           </button>
         </form>
       </div>
 
+      <!-- SIDE COLUMN -->
       <div class="side-column">
 
+        <!-- SEARCH + FILTER -->
         <div class="glass-card">
           <h3 style="margin-bottom:12px;font-weight:600;font-size:1rem;">
             <i class="fa-solid fa-magnifying-glass" style="color:var(--primary);margin-right:7px;"></i>
@@ -146,6 +204,7 @@
           </div>
         </div>
 
+        <!-- PRIORITY GUIDE -->
         <div class="glass-card" style="background:rgba(0,180,216,0.04);">
           <h4 style="margin-bottom:10px;color:var(--primary);font-size:0.9rem;">
             <i class="fa-solid fa-diamond" style="margin-right:6px;"></i>
@@ -158,6 +217,7 @@
           </ul>
         </div>
 
+        <!-- MOTIVATION GRAPH — ANIMATED WAVE -->
         <div class="glass-card">
           <h3 style="margin-bottom:12px;font-weight:600;font-size:0.95rem;color:var(--primary);">
             <i class="fa-solid fa-chart-line" style="margin-right:6px;"></i>
@@ -172,6 +232,7 @@
       </div>
     </div>
 
+    <!-- TASK LIST -->
     <div class="glass-card">
       <h2 style="margin-bottom:18px;font-size:1.25rem;">
         <i class="fa-solid fa-list" style="color:var(--primary);margin-right:8px;font-size:1rem;"></i>
