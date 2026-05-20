@@ -43,11 +43,7 @@
     }
     .profile-about-text strong { color: var(--text); font-weight: 600; }
     .profile-about-text .highlight { color: var(--primary); font-weight: 600; }
-    .profile-photo-wrap {
-      position: relative;
-      width: 180px;
-      height: 200px;
-    }
+    .profile-photo-wrap { position: relative; width: 180px; height: 200px; }
     .profile-photo-circle {
       width: 180px;
       height: 200px;
@@ -304,13 +300,15 @@
           </div>
           <div class="contact-item">
             <i class="fa-brands fa-github"></i>
-            <a href="https://github.com/nishagiri297" target="_blank" rel="noopener">
+            <a href="https://github.com/nishagiri297"
+               target="_blank" rel="noopener noreferrer">
               github.com/nishagiri297
             </a>
           </div>
           <div class="contact-item">
             <i class="fa-brands fa-linkedin"></i>
-            <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener">
+            <a href="https://www.linkedin.com/in/nisha-7903b8386"
+               target="_blank" rel="noopener noreferrer">
               linkedin.com/in/nisha-7903b8386
             </a>
           </div>
@@ -442,13 +440,13 @@
         <h3 style="margin-top:22px;"><i class="fa-solid fa-link"></i> Links</h3>
         <div class="profile-links-row">
           <a href="https://github.com/nishagiri297"
-             target="_blank" rel="noopener"
+             target="_blank" rel="noopener noreferrer"
              class="primary-btn"
              style="font-size:0.85rem;padding:9px 16px;">
             <i class="fa-brands fa-github"></i> GitHub
           </a>
           <a href="https://www.linkedin.com/in/nisha-7903b8386"
-             target="_blank" rel="noopener"
+             target="_blank" rel="noopener noreferrer"
              class="secondary-btn"
              style="font-size:0.85rem;padding:9px 16px;">
             <i class="fa-brands fa-linkedin"></i> LinkedIn
@@ -481,10 +479,12 @@
         <a href="mailto:nisha3047.beai25@chitkara.edu.in">
           <i class="fa-solid fa-envelope"></i> Email
         </a>
-        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener">
+        <a href="https://github.com/nishagiri297"
+           target="_blank" rel="noopener noreferrer">
           <i class="fa-brands fa-github"></i> GitHub
         </a>
-        <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener">
+        <a href="https://www.linkedin.com/in/nisha-7903b8386"
+           target="_blank" rel="noopener noreferrer">
           <i class="fa-brands fa-linkedin"></i> LinkedIn
         </a>
       </div>
@@ -510,7 +510,6 @@
     document.getElementById('profileTotal').textContent = total;
     document.getElementById('profileDone').textContent  = done;
     document.getElementById('profilePct').textContent   = pct + '%';
-
     function logout() {
       localStorage.removeItem('sp_loggedIn');
       window.location.href = 'index.html';
