@@ -107,10 +107,7 @@
   <footer class="footer">
     <div class="footer-grid">
       <div>
-        <h3>
-          <i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>
-          StudyPlanner
-        </h3>
+        <h3><i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>StudyPlanner</h3>
         <p>A modern academic productivity tool for students.</p>
       </div>
       <div>
@@ -124,17 +121,17 @@
         <a href="mailto:nisha3047.beai25@chitkara.edu.in">
           <i class="fa-solid fa-envelope"></i> Email
         </a>
-        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener">
+        <a href="https://github.com/nishagiri297"
+           target="_blank" rel="noopener noreferrer">
           <i class="fa-brands fa-github"></i> GitHub
         </a>
-        <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener">
+        <a href="https://www.linkedin.com/in/nisha-7903b8386"
+           target="_blank" rel="noopener noreferrer">
           <i class="fa-brands fa-linkedin"></i> LinkedIn
         </a>
       </div>
     </div>
-    <p class="copyright">
-      © 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript
-    </p>
+    <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
   </footer>
 
   <script src="script.js"></script>
@@ -149,14 +146,12 @@
       localStorage.removeItem('sp_loggedIn');
       window.location.href = 'index.html';
     }
-
     const inlineBtn = document.getElementById('inlineThemeBtn');
     if (inlineBtn) {
       inlineBtn.addEventListener('click', () => {
         document.getElementById('themeToggle').click();
       });
     }
-
     const prefs = ['pref-urgency', 'pref-progress', 'pref-countdown'];
     prefs.forEach(id => {
       const el = document.getElementById(id);
@@ -166,7 +161,7 @@
       el.addEventListener('change', () => {
         localStorage.setItem(id, el.checked);
         const t = document.createElement('div');
-        t.className = 'toast';
+        t.className   = 'toast';
         t.textContent = el.checked ? 'Setting enabled' : 'Setting disabled';
         document.body.appendChild(t);
         setTimeout(() => t.remove(), 2200);
