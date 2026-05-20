@@ -1,18 +1,17 @@
 /* ─────────────────────────────────────────────────────────────
    StudyPlanner · script.js
-   Includes: Particle Network + Motivation Graph + Task Logic
+   Particle Network + Waving Motivation Graph + Task Logic
 ───────────────────────────────────────────────────────────── */
 
-// ── PARTICLE NETWORK ANIMATION ─────────────────────────────────
+// ── PARTICLE NETWORK ───────────────────────────────────────────
 (function initParticles() {
   const canvas = document.getElementById('particleCanvas');
   if (!canvas) return;
-
   const ctx = canvas.getContext('2d');
   let W, H, particles = [];
-  const COUNT     = 80;
-  const MAX_DIST  = 150;
-  const COLOR     = '0,180,216';
+  const COUNT    = 80;
+  const MAX_DIST = 150;
+  const COLOR    = '0,180,216';
 
   function resize() {
     W = canvas.width  = window.innerWidth;
@@ -42,10 +41,8 @@
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
-
     particles.forEach(p => p.update());
 
-    // Draw lines
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx   = particles[i].x - particles[j].x;
@@ -63,11 +60,10 @@
       }
     }
 
-    // Draw dots
     particles.forEach(p => {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${COLOR},0.85)`;
+      ctx.fillStyle  = `rgba(${COLOR},0.85)`;
       ctx.shadowColor = `rgba(${COLOR},0.8)`;
       ctx.shadowBlur  = 6;
       ctx.fill();
@@ -77,150 +73,164 @@
     requestAnimationFrame(draw);
   }
 
-  window.addEventListener('resize', () => { resize(); });
+  window.addEventListener('resize', resize);
   init();
   draw();
 })();
 
-// ── MOTIVATION GRAPH ───────────────────────────────────────────
-(function initMotivationGraph() {
+// ── WAVING MOTIVATION GRAPH ────────────────────────────────────
+(function initWavingGraph() {
   const canvas = document.getElementById('motivationCanvas');
   if (!canvas) return;
-
   const ctx = canvas.getContext('2d');
-  let progress = 0;
-  const totalTasks    = JSON.parse(localStorage.getItem('tasks') || '[]').length;
-  const completedCount = JSON.parse(localStorage.getItem('tasks') || '[]').filter(t => t.completed).length;
-  const pct = totalTasks === 0 ? 0.5 : completedCount / totalTasks;
 
-  // Points that form the motivation curve
-  // Shape based on: starts low, rises, dips, rises more, then drops based on completion
-  const basePoints = [
-    { x: 0.0,  y: 0.85 },
-    { x: 0.08, y: 0.75 },
-    { x: 0.18, y: 0.35 },
-    { x: 0.28, y: 0.50 },
-    { x: 0.38, y: 0.25 },
-    { x: 0.50, y: 0.40 },
-    { x: 0.60, y: 0.22 },
-    { x: 0.72, y: 0.38 },
-    { x: 0.82, y: 0.30 },
-    { x: 0.92, y: 0.15 + (1 - pct) * 0.6 },
-    { x: 1.0,  y: 0.10 + (1 - pct) * 0.7 },
-  ];
+  let time = 0;
 
-  function draw(prog) {
-    const W = canvas.width  = canvas.offsetWidth;
-    const H = canvas.height = canvas.offsetHeight;
-    const PAD = { t: 20, r: 20, b: 30, l: 40 };
+  // Base wave shape — multiple sine waves layered
+  function getWaveY(x, W, H, PAD, t) {
+    const normalX = x / W;
+
+    // Main wave
+    const wave1 = Math.sin(normalX * Math.PI * 3 + t) * 0.12;
+    // Secondary wave
+    const wave2 = Math.sin(normalX * Math.PI * 5 + t * 1.3) * 0.07;
+    // Tertiary small ripple
+    const wave3 = Math.sin(normalX * Math.PI * 8 + t * 0.8) * 0.04;
+
+    // Base curve shape (rises then gently drops)
+    const base = 0.35
+      + Math.sin(normalX * Math.PI) * 0.28
+      - normalX * 0.08;
+
+    const y = base + wave1 + wave2 + wave3;
+
+    // Clamp between 0.05 and 0.92
+    const clamped = Math.max(0.05, Math.min(0.92, y));
+    return PAD.t + clamped * (H - PAD.t - PAD.b);
+  }
+
+  function draw() {
+    const W   = canvas.width  = canvas.offsetWidth;
+    const H   = canvas.height = canvas.offsetHeight;
+    const PAD = { t: 16, r: 16, b: 28, l: 36 };
     const gW  = W - PAD.l - PAD.r;
-    const gH  = H - PAD.t - PAD.b;
 
     ctx.clearRect(0, 0, W, H);
 
     // Grid dots
-    ctx.fillStyle = 'rgba(0,180,216,0.12)';
+    ctx.fillStyle = 'rgba(0,180,216,0.10)';
     for (let gx = 0; gx <= 10; gx++) {
       for (let gy = 0; gy <= 5; gy++) {
         ctx.beginPath();
         ctx.arc(
           PAD.l + (gx / 10) * gW,
-          PAD.t + (gy / 5) * gH,
-          1.5, 0, Math.PI * 2
+          PAD.t + (gy / 5) * (H - PAD.t - PAD.b),
+          1.2, 0, Math.PI * 2
         );
         ctx.fill();
       }
     }
 
     // Axes
-    ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+    ctx.strokeStyle = 'rgba(255,255,255,0.1)';
     ctx.lineWidth   = 1;
     ctx.beginPath();
     ctx.moveTo(PAD.l, PAD.t);
-    ctx.lineTo(PAD.l, PAD.t + gH);
-    ctx.lineTo(PAD.l + gW, PAD.t + gH);
+    ctx.lineTo(PAD.l, H - PAD.b);
+    ctx.lineTo(W - PAD.r, H - PAD.b);
     ctx.stroke();
 
-    // Axis labels
-    ctx.fillStyle = 'rgba(255,255,255,0.3)';
-    ctx.font      = '10px DM Sans, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('TIME', PAD.l + gW / 2, H - 2);
+    // Y axis label
     ctx.save();
-    ctx.translate(10, PAD.t + gH / 2);
+    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+    ctx.font      = '9px DM Sans, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.translate(10, PAD.t + (H - PAD.t - PAD.b) / 2);
     ctx.rotate(-Math.PI / 2);
     ctx.fillText('MOTIVATION', 0, 0);
     ctx.restore();
 
-    // How many points to draw based on progress
-    const visibleCount = Math.max(2, Math.floor(basePoints.length * prog));
-    const pts = basePoints.slice(0, visibleCount);
+    // X axis label
+    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+    ctx.font      = '9px DM Sans, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('TIME', PAD.l + gW / 2, H - 2);
 
-    // Fill area under curve
-    const grad = ctx.createLinearGradient(0, PAD.t, 0, PAD.t + gH);
-    grad.addColorStop(0,   'rgba(0,180,216,0.25)');
-    grad.addColorStop(1,   'rgba(0,180,216,0.02)');
+    // Build wave points
+    const STEPS = 120;
+    const points = [];
+    for (let i = 0; i <= STEPS; i++) {
+      const x = PAD.l + (i / STEPS) * gW;
+      const y = getWaveY(i / STEPS * gW, gW, H, PAD, time);
+      points.push({ x, y });
+    }
+
+    // Gradient fill under wave
+    const grad = ctx.createLinearGradient(0, PAD.t, 0, H - PAD.b);
+    grad.addColorStop(0,   'rgba(0,180,216,0.22)');
+    grad.addColorStop(0.6, 'rgba(0,180,216,0.08)');
+    grad.addColorStop(1,   'rgba(0,180,216,0.01)');
 
     ctx.beginPath();
-    ctx.moveTo(PAD.l + pts[0].x * gW, PAD.t + pts[0].y * gH);
-    for (let i = 1; i < pts.length; i++) {
-      const prev = pts[i - 1];
-      const curr = pts[i];
-      const cpx  = PAD.l + ((prev.x + curr.x) / 2) * gW;
-      const cpy1 = PAD.t + prev.y * gH;
-      const cpy2 = PAD.t + curr.y * gH;
-      ctx.bezierCurveTo(cpx, cpy1, cpx, cpy2, PAD.l + curr.x * gW, PAD.t + curr.y * gH);
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let i = 1; i < points.length; i++) {
+      const prev = points[i - 1];
+      const curr = points[i];
+      const cpx  = (prev.x + curr.x) / 2;
+      ctx.quadraticCurveTo(prev.x, prev.y, cpx, (prev.y + curr.y) / 2);
     }
-    ctx.lineTo(PAD.l + pts[pts.length - 1].x * gW, PAD.t + gH);
-    ctx.lineTo(PAD.l + pts[0].x * gW, PAD.t + gH);
+    ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
+    ctx.lineTo(W - PAD.r, H - PAD.b);
+    ctx.lineTo(PAD.l, H - PAD.b);
     ctx.closePath();
     ctx.fillStyle = grad;
     ctx.fill();
 
-    // Curve line
+    // Wave line
     ctx.beginPath();
-    ctx.moveTo(PAD.l + pts[0].x * gW, PAD.t + pts[0].y * gH);
-    for (let i = 1; i < pts.length; i++) {
-      const prev = pts[i - 1];
-      const curr = pts[i];
-      const cpx  = PAD.l + ((prev.x + curr.x) / 2) * gW;
-      const cpy1 = PAD.t + prev.y * gH;
-      const cpy2 = PAD.t + curr.y * gH;
-      ctx.bezierCurveTo(cpx, cpy1, cpx, cpy2, PAD.l + curr.x * gW, PAD.t + curr.y * gH);
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let i = 1; i < points.length; i++) {
+      const prev = points[i - 1];
+      const curr = points[i];
+      const cpx  = (prev.x + curr.x) / 2;
+      ctx.quadraticCurveTo(prev.x, prev.y, cpx, (prev.y + curr.y) / 2);
     }
-    ctx.strokeStyle = `rgba(0,180,216,${0.6 + prog * 0.4})`;
-    ctx.lineWidth   = 2.5;
-    ctx.shadowColor = 'rgba(0,180,216,0.6)';
-    ctx.shadowBlur  = 8;
+    ctx.strokeStyle = '#00b4d8';
+    ctx.lineWidth   = 2.2;
+    ctx.shadowColor = 'rgba(0,180,216,0.7)';
+    ctx.shadowBlur  = 10;
     ctx.stroke();
     ctx.shadowBlur  = 0;
 
-    // Glowing dot at end of curve
-    if (pts.length > 1) {
-      const last = pts[pts.length - 1];
-      ctx.beginPath();
-      ctx.arc(PAD.l + last.x * gW, PAD.t + last.y * gH, 4, 0, Math.PI * 2);
-      ctx.fillStyle   = '#00b4d8';
-      ctx.shadowColor = 'rgba(0,180,216,0.9)';
-      ctx.shadowBlur  = 12;
-      ctx.fill();
-      ctx.shadowBlur  = 0;
-    }
+    // Glowing dot at end of wave
+    const last = points[points.length - 1];
+    ctx.beginPath();
+    ctx.arc(last.x, last.y, 4.5, 0, Math.PI * 2);
+    ctx.fillStyle   = '#00b4d8';
+    ctx.shadowColor = 'rgba(0,180,216,1)';
+    ctx.shadowBlur  = 16;
+    ctx.fill();
+    ctx.shadowBlur  = 0;
+
+    // Pulse ring around dot
+    const pulse = (Math.sin(time * 3) + 1) / 2;
+    ctx.beginPath();
+    ctx.arc(last.x, last.y, 4.5 + pulse * 6, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(0,180,216,${0.4 - pulse * 0.35})`;
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+
+    time += 0.025;
+    requestAnimationFrame(draw);
   }
 
-  // Animate draw-in
-  function animate() {
-    if (progress < 1) {
-      progress += 0.025;
-      draw(Math.min(progress, 1));
-      requestAnimationFrame(animate);
-    } else {
-      draw(1);
-    }
-  }
-
-  animate();
-  window.addEventListener('resize', () => draw(1));
+  // Wait for layout to settle
+  setTimeout(() => {
+    draw();
+    window.addEventListener('resize', () => {
+      cancelAnimationFrame(draw);
+    });
+  }, 100);
 })();
 
 // ── PROFILE PHOTO UPLOAD ───────────────────────────────────────
@@ -230,10 +240,9 @@
   const addText   = document.getElementById('addPhotoText');
   if (!fileInput || !imgEl) return;
 
-  // Load saved photo
   const saved = localStorage.getItem('sp_profilePhoto');
   if (saved) {
-    imgEl.src          = saved;
+    imgEl.src           = saved;
     imgEl.style.display = 'block';
     if (addText) addText.style.display = 'none';
   }
@@ -302,7 +311,7 @@ function getUrgency(dateString, completed) {
 
 function showToast(msg) {
   const t = document.createElement('div');
-  t.className = 'toast';
+  t.className   = 'toast';
   t.textContent = msg;
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 2200);
@@ -380,12 +389,16 @@ function renderTasks() {
     taskList.appendChild(card);
   });
 
-  updateStats(); updateProgress(); updateCountdown();
+  updateStats();
+  updateProgress();
+  updateCountdown();
 }
 
 // ── ADD TASK ───────────────────────────────────────────────────
 if (taskForm) {
-  if (taskDate) taskDate.setAttribute('min', new Date().toISOString().split('T')[0]);
+  if (taskDate) {
+    taskDate.setAttribute('min', new Date().toISOString().split('T')[0]);
+  }
   taskForm.addEventListener('submit', function(e) {
     e.preventDefault();
     const priority = taskPrioritySelect ? taskPrioritySelect.value : 'Medium';
@@ -398,7 +411,9 @@ if (taskForm) {
       completed:   false
     };
     tasks.unshift(newTask);
-    saveTasks(); renderTasks(); taskForm.reset();
+    saveTasks();
+    renderTasks();
+    taskForm.reset();
     showToast('Task added! ' + PRIORITY_SYMBOL[priority] + ' ' + priority);
   });
 }
@@ -406,7 +421,8 @@ if (taskForm) {
 // ── TOGGLE COMPLETE ────────────────────────────────────────────
 function toggleComplete(id) {
   tasks = tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
-  saveTasks(); renderTasks();
+  saveTasks();
+  renderTasks();
   const task = tasks.find(t => t.id === id);
   showToast(task && task.completed ? '✅ Marked complete!' : '↩ Marked pending');
 }
@@ -415,7 +431,8 @@ function toggleComplete(id) {
 function deleteTask(id) {
   if (!confirm('Delete this task?')) return;
   tasks = tasks.filter(t => t.id !== id);
-  saveTasks(); renderTasks();
+  saveTasks();
+  renderTasks();
   showToast('Task deleted.');
 }
 
@@ -428,7 +445,8 @@ function editTask(id) {
   taskDate.value  = task.date;
   if (taskPrioritySelect) taskPrioritySelect.value = task.priority;
   tasks = tasks.filter(t => t.id !== id);
-  saveTasks(); renderTasks();
+  saveTasks();
+  renderTasks();
   taskTitle.focus();
   window.scrollTo({ top: 0, behavior: 'smooth' });
   showToast('Task loaded for editing.');
@@ -484,7 +502,9 @@ function updateStats() {
 }
 
 // ── SEARCH ─────────────────────────────────────────────────────
-if (searchInput) searchInput.addEventListener('input', renderTasks);
+if (searchInput) {
+  searchInput.addEventListener('input', renderTasks);
+}
 
 // ── FILTER BUTTONS ─────────────────────────────────────────────
 document.querySelectorAll('.filterBtn').forEach(btn => {
