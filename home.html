@@ -78,9 +78,8 @@
     </div>
     <div class="hero-image">
       <img
-        src="https://images.pexels.com/photos/4145153/pexels-photo-4145153.jpeg?auto=compress&cs=tinysrgb&w=1000"
-        alt="Students studying with AI technology"
-        onerror="this.src='https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1000'"
+        src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1000&q=80"
+        alt="Student studying"
       />
     </div>
   </section>
@@ -182,7 +181,7 @@
       const el = document.getElementById('navUserName');
       if (el) el.querySelector('span').textContent = user.name.split(' ')[0];
     }
-    const tasks    = JSON.parse(localStorage.getItem('tasks') || '[]');
+    const tasks     = JSON.parse(localStorage.getItem('tasks') || '[]');
     const heroTotal = document.getElementById('heroTotal');
     const heroDone  = document.getElementById('heroDone');
     if (heroTotal) heroTotal.textContent = tasks.length;
