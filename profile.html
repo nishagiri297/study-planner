@@ -7,243 +7,63 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    .profile-page-wrap {
-      padding: 40px 7% 70px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .profile-top {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 40px;
-      align-items: start;
-      margin-bottom: 40px;
-    }
-    .profile-about-block h2 {
-      font-size: 2.8rem;
-      font-weight: normal;
-      color: #fff;
-      margin-bottom: 20px;
-      display: inline-block;
-    }
-    .profile-about-block h2::after {
-      content: '';
-      display: block;
-      height: 4px;
-      width: 60%;
-      background: linear-gradient(90deg, var(--primary), transparent);
-      border-radius: 2px;
-      margin-top: 6px;
-    }
-    .profile-about-text {
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.85;
-      max-width: 520px;
-    }
-    .profile-about-text strong { color: var(--text); font-weight: 600; }
-    .profile-about-text .highlight { color: var(--primary); font-weight: 600; }
-    .profile-photo-wrap { position: relative; width: 180px; height: 200px; }
+    .profile-page-wrap { padding:40px 7% 70px; max-width:1100px; margin:0 auto; }
+    .profile-top { display:grid; grid-template-columns:1fr auto; gap:40px; align-items:start; margin-bottom:40px; }
+    .profile-about-block h2 { font-size:2.8rem; font-weight:normal; color:#fff; margin-bottom:20px; display:inline-block; }
+    .profile-about-block h2::after { content:''; display:block; height:4px; width:60%; background:linear-gradient(90deg,var(--primary),transparent); border-radius:2px; margin-top:6px; }
+    .profile-about-text { color:var(--muted); font-size:0.95rem; line-height:1.85; max-width:520px; }
+    .profile-about-text strong { color:var(--text); font-weight:600; }
+    .profile-about-text .highlight { color:var(--primary); font-weight:600; }
+    .profile-photo-wrap { position:relative; width:180px; height:200px; }
     .profile-photo-circle {
-      width: 180px;
-      height: 200px;
-      border-radius: 24px;
-      border: 2px dashed rgba(0,180,216,0.4);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,180,216,0.05);
-      transition: all 0.22s ease;
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
+      width:180px; height:200px; border-radius:24px;
+      border:2px dashed rgba(0,180,216,0.4);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      background:rgba(0,180,216,0.05); transition:all 0.22s ease;
+      overflow:hidden; position:relative; cursor:pointer;
     }
-    .profile-photo-circle:hover {
-      border-color: var(--primary);
-      background: rgba(0,180,216,0.10);
-      box-shadow: 0 0 30px rgba(0,180,216,0.2);
-    }
-    .profile-photo-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 22px;
-      display: none;
-    }
-    .add-photo-text {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: var(--primary);
-    }
-    .add-photo-text i { font-size: 2rem; opacity: 0.7; }
-    .add-photo-text span { font-size: 0.82rem; font-weight: 500; opacity: 0.8; }
-    .profile-photo-circle input[type="file"] {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      border: none;
-    }
-    .profile-contact-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 24px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-    }
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-    .contact-item i { color: var(--primary); font-size: 1rem; }
-    .contact-item a { color: var(--muted); transition: color 0.2s; }
-    .contact-item a:hover { color: var(--primary); }
-    .profile-stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-    .profile-stat-box {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      text-align: center;
-      transition: all 0.22s ease;
-    }
-    .profile-stat-box:hover {
-      border-color: rgba(0,180,216,0.3);
-      box-shadow: 0 8px 24px rgba(0,180,216,0.1);
-    }
-    .profile-stat-box .stat-num {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: var(--primary);
-      font-family: 'IM Fell English', serif;
-      text-shadow: 0 0 20px rgba(0,180,216,0.4);
-    }
-    .profile-stat-box .stat-label {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-    .profile-bottom-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-    .profile-section-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 26px;
-      transition: all 0.22s ease;
-    }
-    .profile-section-card:hover {
-      border-color: rgba(0,180,216,0.3);
-      box-shadow: 0 8px 30px rgba(0,180,216,0.1);
-    }
-    .profile-section-card h3 {
-      font-size: 1.2rem;
-      font-weight: normal;
-      color: var(--primary);
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-    .edu-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 12px;
-    }
-    .edu-name { color: var(--text); font-weight: 600; font-size: 0.95rem; }
-    .edu-sub  { color: var(--muted); font-size: 0.85rem; margin-top: 3px; }
-    .edu-badge {
-      background: rgba(0,180,216,0.1);
-      color: var(--primary);
-      border: 1px solid rgba(0,180,216,0.2);
-      padding: 4px 12px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .skill-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
-    .skill-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font-size: 0.88rem;
-      padding: 6px 0;
-      border-bottom: 1px solid rgba(0,180,216,0.06);
-    }
-    .skill-item i { color: var(--primary); font-size: 0.75rem; opacity: 0.7; }
-    .goal-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 12px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-    .goal-item i { color: var(--primary); margin-top: 3px; flex-shrink: 0; font-size: 0.8rem; }
-    .soft-skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .soft-skill-item {
-      background: rgba(0,180,216,0.06);
-      border: 1px solid rgba(0,180,216,0.12);
-      border-radius: 10px;
-      padding: 10px 14px;
-      color: var(--text);
-      font-size: 0.85rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .soft-skill-item i { color: var(--primary); font-size: 0.85rem; }
-    .lang-row { display: flex; gap: 12px; flex-wrap: wrap; }
-    .lang-badge {
-      background: rgba(0,180,216,0.08);
-      border: 1px solid rgba(0,180,216,0.2);
-      color: var(--primary);
-      padding: 6px 16px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-    .interest-row { display: flex; gap: 10px; flex-wrap: wrap; }
-    .interest-tag {
-      background: rgba(0,180,216,0.06);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      padding: 6px 14px;
-      border-radius: 999px;
-      font-size: 0.83rem;
-    }
-    .profile-links-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
-    @media (max-width: 768px) {
-      .profile-top { grid-template-columns: 1fr; }
-      .profile-photo-wrap { margin: 0 auto; }
-      .profile-bottom-grid { grid-template-columns: 1fr; }
-      .profile-stats-row { grid-template-columns: 1fr 1fr; }
+    .profile-photo-circle:hover { border-color:var(--primary); background:rgba(0,180,216,0.10); box-shadow:0 0 30px rgba(0,180,216,0.2); }
+    .profile-photo-circle img { width:100%; height:100%; object-fit:cover; border-radius:22px; display:none; }
+    .add-photo-text { display:flex; flex-direction:column; align-items:center; gap:8px; color:var(--primary); }
+    .add-photo-text i { font-size:2rem; opacity:0.7; }
+    .add-photo-text span { font-size:0.82rem; font-weight:500; opacity:0.8; }
+    .profile-photo-circle input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; margin:0; padding:0; border:none; }
+    .profile-contact-row { display:flex; flex-wrap:wrap; gap:16px; margin-top:24px; padding-top:20px; border-top:1px solid var(--border); }
+    .contact-item { display:flex; align-items:center; gap:8px; color:var(--muted); font-size:0.88rem; }
+    .contact-item i { color:var(--primary); font-size:1rem; }
+    .contact-item a { color:var(--muted); transition:color 0.2s; }
+    .contact-item a:hover { color:var(--primary); }
+    .profile-stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:32px; }
+    .profile-stat-box { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; text-align:center; transition:all 0.22s ease; }
+    .profile-stat-box:hover { border-color:rgba(0,180,216,0.3); box-shadow:0 8px 24px rgba(0,180,216,0.1); }
+    .profile-stat-box .stat-num { font-size:2.2rem; font-weight:700; color:var(--primary); font-family:'IM Fell English',serif; text-shadow:0 0 20px rgba(0,180,216,0.4); }
+    .profile-stat-box .stat-label { font-size:0.8rem; color:var(--muted); margin-top:4px; }
+    .profile-bottom-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+    .profile-section-card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:26px; transition:all 0.22s ease; }
+    .profile-section-card:hover { border-color:rgba(0,180,216,0.3); box-shadow:0 8px 30px rgba(0,180,216,0.1); }
+    .profile-section-card h3 { font-size:1.2rem; font-weight:normal; color:var(--primary); margin-bottom:18px; display:flex; align-items:center; gap:8px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .edu-item { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; }
+    .edu-name { color:var(--text); font-weight:600; font-size:0.95rem; }
+    .edu-sub  { color:var(--muted); font-size:0.85rem; margin-top:3px; }
+    .edu-badge { background:rgba(0,180,216,0.1); color:var(--primary); border:1px solid rgba(0,180,216,0.2); padding:4px 12px; border-radius:999px; font-size:0.75rem; font-weight:600; white-space:nowrap; }
+    .skill-cols { display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; }
+    .skill-item { display:flex; align-items:center; gap:8px; color:var(--muted); font-size:0.88rem; padding:6px 0; border-bottom:1px solid rgba(0,180,216,0.06); }
+    .skill-item i { color:var(--primary); font-size:0.75rem; opacity:0.7; }
+    .goal-item { display:flex; align-items:flex-start; gap:10px; margin-bottom:12px; color:var(--muted); font-size:0.9rem; line-height:1.5; }
+    .goal-item i { color:var(--primary); margin-top:3px; flex-shrink:0; font-size:0.8rem; }
+    .soft-skill-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .soft-skill-item { background:rgba(0,180,216,0.06); border:1px solid rgba(0,180,216,0.12); border-radius:10px; padding:10px 14px; color:var(--text); font-size:0.85rem; font-weight:500; display:flex; align-items:center; gap:8px; }
+    .soft-skill-item i { color:var(--primary); font-size:0.85rem; }
+    .lang-row { display:flex; gap:12px; flex-wrap:wrap; }
+    .lang-badge { background:rgba(0,180,216,0.08); border:1px solid rgba(0,180,216,0.2); color:var(--primary); padding:6px 16px; border-radius:999px; font-size:0.85rem; font-weight:600; }
+    .interest-row { display:flex; gap:10px; flex-wrap:wrap; }
+    .interest-tag { background:rgba(0,180,216,0.06); border:1px solid var(--border); color:var(--muted); padding:6px 14px; border-radius:999px; font-size:0.83rem; }
+    .profile-links-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:16px; }
+    @media(max-width:768px) {
+      .profile-top { grid-template-columns:1fr; }
+      .profile-photo-wrap { margin:0 auto; }
+      .profile-bottom-grid { grid-template-columns:1fr; }
+      .profile-stats-row { grid-template-columns:1fr 1fr; }
     }
   </style>
 </head>
@@ -284,7 +104,7 @@
       <div class="profile-about-block">
         <h2>About me</h2>
         <p class="profile-about-text">
-          Hi! My name is <strong id="p-name">Nisha Giri</strong>.<br>
+          Hi! My name is <strong id="p-name">Nisha</strong>.<br>
           I am a <span class="highlight">B.E. CSE (AI & ML)</span> student at
           <strong id="p-uni">Chitkara University</strong>, Punjab.<br><br>
           My objective: Build practical, production-ready web applications that solve
@@ -300,15 +120,13 @@
           </div>
           <div class="contact-item">
             <i class="fa-brands fa-github"></i>
-            <a href="https://github.com/nishagiri297"
-               target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/nishagiri297" target="_blank" rel="noopener noreferrer">
               github.com/nishagiri297
             </a>
           </div>
           <div class="contact-item">
             <i class="fa-brands fa-linkedin"></i>
-            <a href="https://www.linkedin.com/in/nisha-7903b8386"
-               target="_blank" rel="noopener noreferrer">
+            <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener noreferrer">
               linkedin.com/in/nisha-7903b8386
             </a>
           </div>
@@ -441,19 +259,16 @@
         <div class="profile-links-row">
           <a href="https://github.com/nishagiri297"
              target="_blank" rel="noopener noreferrer"
-             class="primary-btn"
-             style="font-size:0.85rem;padding:9px 16px;">
+             class="primary-btn" style="font-size:0.85rem;padding:9px 16px;">
             <i class="fa-brands fa-github"></i> GitHub
           </a>
           <a href="https://www.linkedin.com/in/nisha-7903b8386"
              target="_blank" rel="noopener noreferrer"
-             class="secondary-btn"
-             style="font-size:0.85rem;padding:9px 16px;">
+             class="secondary-btn" style="font-size:0.85rem;padding:9px 16px;">
             <i class="fa-brands fa-linkedin"></i> LinkedIn
           </a>
           <a href="contact.html"
-             class="secondary-btn"
-             style="font-size:0.85rem;padding:9px 16px;">
+             class="secondary-btn" style="font-size:0.85rem;padding:9px 16px;">
             <i class="fa-solid fa-envelope"></i> Contact Me
           </a>
         </div>
@@ -479,17 +294,15 @@
         <a href="mailto:nisha3047.beai25@chitkara.edu.in">
           <i class="fa-solid fa-envelope"></i> Email
         </a>
-        <a href="https://github.com/nishagiri297"
-           target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener noreferrer">
           <i class="fa-brands fa-github"></i> GitHub
         </a>
-        <a href="https://www.linkedin.com/in/nisha-7903b8386"
-           target="_blank" rel="noopener noreferrer">
+        <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener noreferrer">
           <i class="fa-brands fa-linkedin"></i> LinkedIn
         </a>
       </div>
     </div>
-    <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
+    <p class="copyright">© 2026 StudyPlanner by Nisha · Built with HTML, CSS & JavaScript</p>
   </footer>
 
   <script src="script.js"></script>
@@ -500,8 +313,8 @@
       document.getElementById('navUserName').querySelector('span').textContent = user.name.split(' ')[0];
       const nameEl = document.getElementById('p-name');
       const uniEl  = document.getElementById('p-uni');
-      if (nameEl) nameEl.textContent = user.name;
-      if (uniEl)  uniEl.textContent  = user.uni || 'Chitkara University';
+      if (nameEl) nameEl.textContent = user.name || 'Nisha';
+      if (uniEl)  uniEl.textContent  = user.uni  || 'Chitkara University';
     }
     const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
     const total = tasks.length;
