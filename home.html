@@ -78,8 +78,9 @@
     </div>
     <div class="hero-image">
       <img
-        src="https://ibb.co/93fGCRrj"
-        alt="Student studying"
+        src="https://images.pexels.com/photos/4145153/pexels-photo-4145153.jpeg?auto=compress&cs=tinysrgb&w=1000"
+        alt="Students studying with AI technology"
+        onerror="this.src='https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1000'"
       />
     </div>
   </section>
@@ -119,14 +120,20 @@
           <i class="fa-solid fa-wifi-slash" style="color:var(--primary);margin-right:8px;"></i>
           Works Offline
         </h3>
-        <p>Everything saves directly to your browser — no internet required for tasks.</p>
+        <p>
+          Everything saves directly to your browser — no account needed after login,
+          no internet required for tasks.
+        </p>
       </div>
       <div class="glass-card">
         <h3>
           <i class="fa-solid fa-moon" style="color:var(--primary);margin-right:8px;"></i>
           Dark Mode Ready
         </h3>
-        <p>Toggle between light and dark mode. Your preference is saved automatically.</p>
+        <p>
+          Toggle between light and dark mode with one click.
+          Your preference is saved automatically.
+        </p>
       </div>
     </div>
   </section>
@@ -134,8 +141,11 @@
   <footer class="footer">
     <div class="footer-grid">
       <div>
-        <h3><i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>StudyPlanner</h3>
-        <p>A modern academic productivity tool for students.</p>
+        <h3>
+          <i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>
+          StudyPlanner
+        </h3>
+        <p>A modern academic productivity tool for students who want to stay organized.</p>
       </div>
       <div>
         <h4>Quick Links</h4>
@@ -159,7 +169,9 @@
         </a>
       </div>
     </div>
-    <p class="copyright">© 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript</p>
+    <p class="copyright">
+      © 2026 StudyPlanner by Nisha Giri · Built with HTML, CSS & JavaScript
+    </p>
   </footer>
 
   <script src="script.js"></script>
@@ -170,7 +182,7 @@
       const el = document.getElementById('navUserName');
       if (el) el.querySelector('span').textContent = user.name.split(' ')[0];
     }
-    const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    const tasks    = JSON.parse(localStorage.getItem('tasks') || '[]');
     const heroTotal = document.getElementById('heroTotal');
     const heroDone  = document.getElementById('heroDone');
     if (heroTotal) heroTotal.textContent = tasks.length;
