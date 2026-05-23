@@ -39,7 +39,7 @@
     .profile-stat-box .stat-num { font-size:2.2rem; font-weight:700; color:var(--primary); font-family:'IM Fell English',serif; text-shadow:0 0 20px rgba(0,180,216,0.4); }
     .profile-stat-box .stat-label { font-size:0.8rem; color:var(--muted); margin-top:4px; }
     .profile-bottom-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
-    .profile-section-card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:26px; transition:all 0.22s ease; }
+    .profile-section-card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:26px; transition:all 0.22s ease; position:relative; }
     .profile-section-card:hover { border-color:rgba(0,180,216,0.3); box-shadow:0 8px 30px rgba(0,180,216,0.1); }
     .profile-section-card h3 { font-size:1.2rem; font-weight:normal; color:var(--primary); margin-bottom:18px; display:flex; align-items:center; gap:8px; padding-bottom:12px; border-bottom:1px solid var(--border); }
     .edu-item { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; }
@@ -59,6 +59,77 @@
     .interest-row { display:flex; gap:10px; flex-wrap:wrap; }
     .interest-tag { background:rgba(0,180,216,0.06); border:1px solid var(--border); color:var(--muted); padding:6px 14px; border-radius:999px; font-size:0.83rem; }
     .profile-links-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:16px; }
+
+    /* ── EDIT BUTTON ── */
+    .edit-section-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: rgba(0,180,216,0.1);
+      border: 1px solid rgba(0,180,216,0.25);
+      color: var(--primary);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.22s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .edit-section-btn:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    .save-section-btn {
+      background: rgba(16,185,129,0.15);
+      border: 1px solid rgba(16,185,129,0.3);
+      color: #10b981;
+    }
+    .save-section-btn:hover {
+      background: #10b981;
+      color: #fff;
+    }
+
+    /* ── EDIT INPUTS ── */
+    .edit-input {
+      width: 100%;
+      padding: 8px 12px;
+      background: rgba(0,180,216,0.06);
+      border: 1px solid rgba(0,180,216,0.25);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.88rem;
+      outline: none;
+      margin-bottom: 8px;
+      transition: border-color 0.2s;
+    }
+    .edit-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(0,180,216,0.12);
+    }
+    .edit-textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    .edit-label {
+      font-size: 0.75rem;
+      color: var(--primary);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .edit-hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
     @media(max-width:768px) {
       .profile-top { grid-template-columns:1fr; }
       .profile-photo-wrap { margin:0 auto; }
@@ -100,10 +171,11 @@
 
   <div class="profile-page-wrap">
 
+    <!-- TOP: About + Photo -->
     <div class="profile-top">
       <div class="profile-about-block">
         <h2>About me</h2>
-        <p class="profile-about-text">
+        <p class="profile-about-text" id="aboutText">
           Hi! My name is <strong id="p-name">Nisha</strong>.<br>
           I am a <span class="highlight">B.E. CSE (AI & ML)</span> student at
           <strong id="p-uni">Chitkara University</strong>, Punjab.<br><br>
@@ -114,25 +186,25 @@
         <div class="profile-contact-row">
           <div class="contact-item">
             <i class="fa-solid fa-envelope"></i>
-            <a href="mailto:nisha3047.beai25@chitkara.edu.in">
+            <a href="mailto:nisha3047.beai25@chitkara.edu.in" id="p-email">
               nisha3047.beai25@chitkara.edu.in
             </a>
           </div>
           <div class="contact-item">
             <i class="fa-brands fa-github"></i>
-            <a href="https://github.com/nishagiri297" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/nishagiri297" target="_blank" rel="noopener noreferrer" id="p-github-link">
               github.com/nishagiri297
             </a>
           </div>
           <div class="contact-item">
             <i class="fa-brands fa-linkedin"></i>
-            <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener noreferrer" id="p-linkedin-link">
               linkedin.com/in/nisha-7903b8386
             </a>
           </div>
           <div class="contact-item">
             <i class="fa-solid fa-location-dot"></i>
-            <span>Punjab, India</span>
+            <span id="p-location">Punjab, India</span>
           </div>
         </div>
       </div>
@@ -151,6 +223,7 @@
       </div>
     </div>
 
+    <!-- STATS -->
     <div class="profile-stats-row">
       <div class="profile-stat-box">
         <div class="stat-num" id="profileTotal">0</div>
@@ -166,111 +239,199 @@
       </div>
     </div>
 
+    <!-- BOTTOM GRID -->
     <div class="profile-bottom-grid">
 
-      <div class="profile-section-card">
+      <!-- EDUCATION -->
+      <div class="profile-section-card" id="card-education">
         <h3><i class="fa-solid fa-graduation-cap"></i> Education</h3>
-        <div class="edu-item">
-          <div>
-            <div class="edu-name">Chitkara University</div>
-            <div class="edu-sub">B.E. Computer Science (AI & ML)</div>
+        <button class="edit-section-btn" onclick="toggleEdit('education')">
+          <i class="fa-solid fa-pen"></i> Edit
+        </button>
+
+        <!-- VIEW MODE -->
+        <div id="view-education">
+          <div class="edu-item">
+            <div>
+              <div class="edu-name" id="edu1-name">Chitkara University</div>
+              <div class="edu-sub" id="edu1-sub">B.E. Computer Science (AI & ML)</div>
+            </div>
+            <span class="edu-badge" id="edu1-year">2023 — Now</span>
           </div>
-          <span class="edu-badge">2025-2029 — Now</span>
+          <div class="edu-item" style="margin-top:14px;">
+            <div>
+              <div class="edu-name" id="edu2-name">Senior Secondary</div>
+              <div class="edu-sub" id="edu2-sub">Science Stream (PCM)</div>
+            </div>
+            <span class="edu-badge" id="edu2-year">2021 — 2023</span>
+          </div>
         </div>
-        <div class="edu-item" style="margin-top:14px;">
-          <div>
-            <div class="edu-name">Senior Secondary</div>
-            <div class="edu-sub">Science Stream (PCM)</div>
-          </div>
-          <span class="edu-badge">2022 — 2024</span>
+
+        <!-- EDIT MODE -->
+        <div id="edit-education" style="display:none;">
+          <span class="edit-label">Institution 1</span>
+          <input class="edit-input" id="inp-edu1-name" placeholder="University name" />
+          <input class="edit-input" id="inp-edu1-sub" placeholder="Degree / Course" />
+          <input class="edit-input" id="inp-edu1-year" placeholder="Year (e.g. 2023 — Now)" />
+          <span class="edit-label" style="margin-top:8px;">Institution 2</span>
+          <input class="edit-input" id="inp-edu2-name" placeholder="School name" />
+          <input class="edit-input" id="inp-edu2-sub" placeholder="Stream / Subject" />
+          <input class="edit-input" id="inp-edu2-year" placeholder="Year (e.g. 2021 — 2023)" />
         </div>
       </div>
 
-      <div class="profile-section-card">
+      <!-- TECHNICAL SKILLS -->
+      <div class="profile-section-card" id="card-skills">
         <h3><i class="fa-solid fa-code"></i> Technical Skills</h3>
-        <div class="skill-cols">
-          <div class="skill-item"><i class="fa-solid fa-diamond"></i> HTML5</div>
-          <div class="skill-item"><i class="fa-solid fa-diamond"></i> CSS3</div>
-          <div class="skill-item"><i class="fa-solid fa-diamond"></i> JavaScript</div>
-          <div class="skill-item"><i class="fa-solid fa-diamond"></i> Responsive Design</div>
-          <div class="skill-item"><i class="fa-solid fa-diamond"></i> localStorage API</div>
-          <div class="skill-item"><i class="fa-solid fa-diamond"></i> Git & GitHub</div>
-          <div class="skill-item"><i class="fa-solid fa-diamond"></i> UI/UX Design</div>
-          <div class="skill-item"><i class="fa-solid fa-diamond"></i> Python (Basics)</div>
+        <button class="edit-section-btn" onclick="toggleEdit('skills')">
+          <i class="fa-solid fa-pen"></i> Edit
+        </button>
+
+        <!-- VIEW MODE -->
+        <div id="view-skills">
+          <div class="skill-cols" id="skills-list">
+            <div class="skill-item"><i class="fa-solid fa-diamond"></i> HTML5</div>
+            <div class="skill-item"><i class="fa-solid fa-diamond"></i> CSS3</div>
+            <div class="skill-item"><i class="fa-solid fa-diamond"></i> JavaScript</div>
+            <div class="skill-item"><i class="fa-solid fa-diamond"></i> Responsive Design</div>
+            <div class="skill-item"><i class="fa-solid fa-diamond"></i> localStorage API</div>
+            <div class="skill-item"><i class="fa-solid fa-diamond"></i> Git & GitHub</div>
+            <div class="skill-item"><i class="fa-solid fa-diamond"></i> UI/UX Design</div>
+            <div class="skill-item"><i class="fa-solid fa-diamond"></i> Python (Basics)</div>
+          </div>
+        </div>
+
+        <!-- EDIT MODE -->
+        <div id="edit-skills" style="display:none;">
+          <span class="edit-label">Skills</span>
+          <p class="edit-hint">Enter each skill on a new line</p>
+          <textarea class="edit-input edit-textarea" id="inp-skills"
+            placeholder="HTML5&#10;CSS3&#10;JavaScript&#10;Git & GitHub"></textarea>
         </div>
       </div>
 
-      <div class="profile-section-card">
+      <!-- ACADEMIC GOALS -->
+      <div class="profile-section-card" id="card-goals">
         <h3><i class="fa-solid fa-bullseye"></i> Academic Goals</h3>
-        <div class="goal-item">
-          <i class="fa-solid fa-chevron-right"></i>
-          Submit all assignments before their deadlines
+        <button class="edit-section-btn" onclick="toggleEdit('goals')">
+          <i class="fa-solid fa-pen"></i> Edit
+        </button>
+
+        <!-- VIEW MODE -->
+        <div id="view-goals">
+          <div id="goals-list">
+            <div class="goal-item"><i class="fa-solid fa-chevron-right"></i>Submit all assignments before their deadlines</div>
+            <div class="goal-item"><i class="fa-solid fa-chevron-right"></i>Build 3 portfolio-worthy frontend projects this semester</div>
+            <div class="goal-item"><i class="fa-solid fa-chevron-right"></i>Learn React.js and migrate this project to a React app</div>
+            <div class="goal-item"><i class="fa-solid fa-chevron-right"></i>Maintain consistent study streaks using this planner</div>
+            <div class="goal-item"><i class="fa-solid fa-chevron-right"></i>Explore AI/ML fundamentals and build one ML project</div>
+          </div>
         </div>
-        <div class="goal-item">
-          <i class="fa-solid fa-chevron-right"></i>
-          Build 3 portfolio-worthy frontend projects this semester
-        </div>
-        <div class="goal-item">
-          <i class="fa-solid fa-chevron-right"></i>
-          Learn React.js and migrate this project to a React app
-        </div>
-        <div class="goal-item">
-          <i class="fa-solid fa-chevron-right"></i>
-          Maintain consistent study streaks using this planner
-        </div>
-        <div class="goal-item">
-          <i class="fa-solid fa-chevron-right"></i>
-          Explore AI/ML fundamentals and build one ML project
+
+        <!-- EDIT MODE -->
+        <div id="edit-goals" style="display:none;">
+          <span class="edit-label">Goals</span>
+          <p class="edit-hint">Enter each goal on a new line</p>
+          <textarea class="edit-input edit-textarea" id="inp-goals"
+            placeholder="Submit all assignments before deadlines&#10;Learn React.js&#10;Build ML project"></textarea>
         </div>
       </div>
 
-      <div class="profile-section-card">
+      <!-- SOFT SKILLS -->
+      <div class="profile-section-card" id="card-softskills">
         <h3><i class="fa-solid fa-star"></i> Soft Skills</h3>
-        <div class="soft-skill-grid">
-          <div class="soft-skill-item"><i class="fa-solid fa-users"></i> Teamwork</div>
-          <div class="soft-skill-item"><i class="fa-solid fa-brain"></i> Critical Thinking</div>
-          <div class="soft-skill-item"><i class="fa-solid fa-comments"></i> Communication</div>
-          <div class="soft-skill-item"><i class="fa-solid fa-clock"></i> Time Management</div>
-          <div class="soft-skill-item"><i class="fa-solid fa-lightbulb"></i> Problem Solving</div>
-          <div class="soft-skill-item"><i class="fa-solid fa-pen"></i> Creativity</div>
+        <button class="edit-section-btn" onclick="toggleEdit('softskills')">
+          <i class="fa-solid fa-pen"></i> Edit
+        </button>
+
+        <!-- VIEW MODE -->
+        <div id="view-softskills">
+          <div class="soft-skill-grid" id="softskills-list">
+            <div class="soft-skill-item"><i class="fa-solid fa-users"></i> Teamwork</div>
+            <div class="soft-skill-item"><i class="fa-solid fa-brain"></i> Critical Thinking</div>
+            <div class="soft-skill-item"><i class="fa-solid fa-comments"></i> Communication</div>
+            <div class="soft-skill-item"><i class="fa-solid fa-clock"></i> Time Management</div>
+            <div class="soft-skill-item"><i class="fa-solid fa-lightbulb"></i> Problem Solving</div>
+            <div class="soft-skill-item"><i class="fa-solid fa-pen"></i> Creativity</div>
+          </div>
+        </div>
+
+        <!-- EDIT MODE -->
+        <div id="edit-softskills" style="display:none;">
+          <span class="edit-label">Soft Skills</span>
+          <p class="edit-hint">Enter each skill on a new line</p>
+          <textarea class="edit-input edit-textarea" id="inp-softskills"
+            placeholder="Teamwork&#10;Communication&#10;Critical Thinking"></textarea>
         </div>
       </div>
 
-      <div class="profile-section-card">
+      <!-- INTERESTS -->
+      <div class="profile-section-card" id="card-interests">
         <h3><i class="fa-solid fa-heart"></i> Interests</h3>
-        <div class="interest-row">
-          <span class="interest-tag">Web Development</span>
-          <span class="interest-tag">AI & Machine Learning</span>
-          <span class="interest-tag">UI/UX Design</span>
-          <span class="interest-tag">Open Source</span>
-          <span class="interest-tag">Design Trends</span>
-          <span class="interest-tag">Technology</span>
+        <button class="edit-section-btn" onclick="toggleEdit('interests')">
+          <i class="fa-solid fa-pen"></i> Edit
+        </button>
+
+        <!-- VIEW MODE -->
+        <div id="view-interests">
+          <div class="interest-row" id="interests-list">
+            <span class="interest-tag">Web Development</span>
+            <span class="interest-tag">AI & Machine Learning</span>
+            <span class="interest-tag">UI/UX Design</span>
+            <span class="interest-tag">Open Source</span>
+            <span class="interest-tag">Design Trends</span>
+            <span class="interest-tag">Technology</span>
+          </div>
+        </div>
+
+        <!-- EDIT MODE -->
+        <div id="edit-interests" style="display:none;">
+          <span class="edit-label">Interests</span>
+          <p class="edit-hint">Enter each interest on a new line</p>
+          <textarea class="edit-input edit-textarea" id="inp-interests"
+            placeholder="Web Development&#10;AI & Machine Learning&#10;UI/UX Design"></textarea>
         </div>
       </div>
 
-      <div class="profile-section-card">
+      <!-- LANGUAGES & LINKS -->
+      <div class="profile-section-card" id="card-languages">
         <h3><i class="fa-solid fa-language"></i> Languages</h3>
-        <div class="lang-row">
-          <span class="lang-badge">Hindi — Native</span>
-          <span class="lang-badge">English — Proficient</span>
-          <span class="lang-badge">Punjabi — Conversational</span>
+        <button class="edit-section-btn" onclick="toggleEdit('languages')">
+          <i class="fa-solid fa-pen"></i> Edit
+        </button>
+
+        <!-- VIEW MODE -->
+        <div id="view-languages">
+          <div class="lang-row" id="languages-list">
+            <span class="lang-badge">Hindi — Native</span>
+            <span class="lang-badge">English — Proficient</span>
+            <span class="lang-badge">Punjabi — Conversational</span>
+          </div>
+          <h3 style="margin-top:22px;"><i class="fa-solid fa-link"></i> Links</h3>
+          <div class="profile-links-row">
+            <a href="https://github.com/nishagiri297"
+               target="_blank" rel="noopener noreferrer"
+               class="primary-btn" style="font-size:0.85rem;padding:9px 16px;">
+              <i class="fa-brands fa-github"></i> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/nisha-7903b8386"
+               target="_blank" rel="noopener noreferrer"
+               class="secondary-btn" style="font-size:0.85rem;padding:9px 16px;">
+              <i class="fa-brands fa-linkedin"></i> LinkedIn
+            </a>
+            <a href="contact.html"
+               class="secondary-btn" style="font-size:0.85rem;padding:9px 16px;">
+              <i class="fa-solid fa-envelope"></i> Contact Me
+            </a>
+          </div>
         </div>
-        <h3 style="margin-top:22px;"><i class="fa-solid fa-link"></i> Links</h3>
-        <div class="profile-links-row">
-          <a href="https://github.com/nishagiri297"
-             target="_blank" rel="noopener noreferrer"
-             class="primary-btn" style="font-size:0.85rem;padding:9px 16px;">
-            <i class="fa-brands fa-github"></i> GitHub
-          </a>
-          <a href="https://www.linkedin.com/in/nisha-7903b8386"
-             target="_blank" rel="noopener noreferrer"
-             class="secondary-btn" style="font-size:0.85rem;padding:9px 16px;">
-            <i class="fa-brands fa-linkedin"></i> LinkedIn
-          </a>
-          <a href="contact.html"
-             class="secondary-btn" style="font-size:0.85rem;padding:9px 16px;">
-            <i class="fa-solid fa-envelope"></i> Contact Me
-          </a>
+
+        <!-- EDIT MODE -->
+        <div id="edit-languages" style="display:none;">
+          <span class="edit-label">Languages</span>
+          <p class="edit-hint">Enter each language on a new line (e.g. Hindi — Native)</p>
+          <textarea class="edit-input edit-textarea" id="inp-languages"
+            placeholder="Hindi — Native&#10;English — Proficient&#10;Punjabi — Conversational"></textarea>
         </div>
       </div>
 
@@ -307,6 +468,7 @@
 
   <script src="script.js"></script>
   <script>
+    // ── AUTH ──
     const user = JSON.parse(localStorage.getItem('sp_loggedIn'));
     if (!user) window.location.href = 'index.html';
     else {
@@ -316,6 +478,13 @@
       if (nameEl) nameEl.textContent = user.name || 'Nisha';
       if (uniEl)  uniEl.textContent  = user.uni  || 'Chitkara University';
     }
+
+    function logout() {
+      localStorage.removeItem('sp_loggedIn');
+      window.location.href = 'index.html';
+    }
+
+    // ── STATS ──
     const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
     const total = tasks.length;
     const done  = tasks.filter(t => t.completed).length;
@@ -323,10 +492,218 @@
     document.getElementById('profileTotal').textContent = total;
     document.getElementById('profileDone').textContent  = done;
     document.getElementById('profilePct').textContent   = pct + '%';
-    function logout() {
-      localStorage.removeItem('sp_loggedIn');
-      window.location.href = 'index.html';
+
+    // ── PHOTO UPLOAD ──
+    const fileInput = document.getElementById('profileFileInput');
+    const imgEl     = document.getElementById('profileImg');
+    const addText   = document.getElementById('addPhotoText');
+    const savedPhoto = localStorage.getItem('sp_profilePhoto');
+    if (savedPhoto) {
+      imgEl.src = savedPhoto;
+      imgEl.style.display = 'block';
+      addText.style.display = 'none';
     }
+    fileInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        imgEl.src = e.target.result;
+        imgEl.style.display = 'block';
+        addText.style.display = 'none';
+        localStorage.setItem('sp_profilePhoto', e.target.result);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // ── PROFILE DATA STORAGE ──
+    function getProfileData() {
+      return JSON.parse(localStorage.getItem('sp_profileData') || '{}');
+    }
+    function saveProfileData(key, value) {
+      const data = getProfileData();
+      data[key] = value;
+      localStorage.setItem('sp_profileData', JSON.stringify(data));
+    }
+
+    // ── LOAD SAVED DATA ON PAGE LOAD ──
+    function loadSavedProfileData() {
+      const data = getProfileData();
+
+      // Education
+      if (data.edu1name) document.getElementById('edu1-name').textContent = data.edu1name;
+      if (data.edu1sub)  document.getElementById('edu1-sub').textContent  = data.edu1sub;
+      if (data.edu1year) document.getElementById('edu1-year').textContent = data.edu1year;
+      if (data.edu2name) document.getElementById('edu2-name').textContent = data.edu2name;
+      if (data.edu2sub)  document.getElementById('edu2-sub').textContent  = data.edu2sub;
+      if (data.edu2year) document.getElementById('edu2-year').textContent = data.edu2year;
+
+      // Skills
+      if (data.skills) renderSkills(data.skills);
+
+      // Goals
+      if (data.goals) renderGoals(data.goals);
+
+      // Soft Skills
+      if (data.softskills) renderSoftSkills(data.softskills);
+
+      // Interests
+      if (data.interests) renderInterests(data.interests);
+
+      // Languages
+      if (data.languages) renderLanguages(data.languages);
+    }
+
+    // ── RENDER FUNCTIONS ──
+    function renderSkills(text) {
+      const items = text.split('\n').filter(s => s.trim());
+      const container = document.getElementById('skills-list');
+      container.innerHTML = items.map(s =>
+        `<div class="skill-item"><i class="fa-solid fa-diamond"></i> ${s.trim()}</div>`
+      ).join('');
+    }
+
+    function renderGoals(text) {
+      const items = text.split('\n').filter(s => s.trim());
+      const container = document.getElementById('goals-list');
+      container.innerHTML = items.map(s =>
+        `<div class="goal-item"><i class="fa-solid fa-chevron-right"></i>${s.trim()}</div>`
+      ).join('');
+    }
+
+    function renderSoftSkills(text) {
+      const items = text.split('\n').filter(s => s.trim());
+      const icons = ['fa-users','fa-brain','fa-comments','fa-clock','fa-lightbulb','fa-pen','fa-star','fa-heart'];
+      const container = document.getElementById('softskills-list');
+      container.innerHTML = items.map((s, i) =>
+        `<div class="soft-skill-item"><i class="fa-solid ${icons[i % icons.length]}"></i> ${s.trim()}</div>`
+      ).join('');
+    }
+
+    function renderInterests(text) {
+      const items = text.split('\n').filter(s => s.trim());
+      const container = document.getElementById('interests-list');
+      container.innerHTML = items.map(s =>
+        `<span class="interest-tag">${s.trim()}</span>`
+      ).join('');
+    }
+
+    function renderLanguages(text) {
+      const items = text.split('\n').filter(s => s.trim());
+      const container = document.getElementById('languages-list');
+      container.innerHTML = items.map(s =>
+        `<span class="lang-badge">${s.trim()}</span>`
+      ).join('');
+    }
+
+    // ── TOGGLE EDIT ──
+    function toggleEdit(section) {
+      const viewEl = document.getElementById('view-' + section);
+      const editEl = document.getElementById('edit-' + section);
+      const btn    = document.querySelector('#card-' + section + ' .edit-section-btn');
+      const data   = getProfileData();
+      const isEditing = editEl.style.display !== 'none';
+
+      if (!isEditing) {
+        // ENTER EDIT MODE — populate inputs
+        viewEl.style.display = 'none';
+        editEl.style.display = 'block';
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Save';
+        btn.classList.add('save-section-btn');
+
+        if (section === 'education') {
+          document.getElementById('inp-edu1-name').value = document.getElementById('edu1-name').textContent;
+          document.getElementById('inp-edu1-sub').value  = document.getElementById('edu1-sub').textContent;
+          document.getElementById('inp-edu1-year').value = document.getElementById('edu1-year').textContent;
+          document.getElementById('inp-edu2-name').value = document.getElementById('edu2-name').textContent;
+          document.getElementById('inp-edu2-sub').value  = document.getElementById('edu2-sub').textContent;
+          document.getElementById('inp-edu2-year').value = document.getElementById('edu2-year').textContent;
+        }
+        if (section === 'skills') {
+          const current = data.skills || 'HTML5\nCSS3\nJavaScript\nResponsive Design\nlocalStorage API\nGit & GitHub\nUI/UX Design\nPython (Basics)';
+          document.getElementById('inp-skills').value = current;
+        }
+        if (section === 'goals') {
+          const current = data.goals || 'Submit all assignments before their deadlines\nBuild 3 portfolio-worthy frontend projects this semester\nLearn React.js and migrate this project to a React app\nMaintain consistent study streaks using this planner\nExplore AI/ML fundamentals and build one ML project';
+          document.getElementById('inp-goals').value = current;
+        }
+        if (section === 'softskills') {
+          const current = data.softskills || 'Teamwork\nCritical Thinking\nCommunication\nTime Management\nProblem Solving\nCreativity';
+          document.getElementById('inp-softskills').value = current;
+        }
+        if (section === 'interests') {
+          const current = data.interests || 'Web Development\nAI & Machine Learning\nUI/UX Design\nOpen Source\nDesign Trends\nTechnology';
+          document.getElementById('inp-interests').value = current;
+        }
+        if (section === 'languages') {
+          const current = data.languages || 'Hindi — Native\nEnglish — Proficient\nPunjabi — Conversational';
+          document.getElementById('inp-languages').value = current;
+        }
+
+      } else {
+        // SAVE MODE
+        viewEl.style.display = 'block';
+        editEl.style.display = 'none';
+        btn.innerHTML = '<i class="fa-solid fa-pen"></i> Edit';
+        btn.classList.remove('save-section-btn');
+
+        if (section === 'education') {
+          const e1n = document.getElementById('inp-edu1-name').value.trim();
+          const e1s = document.getElementById('inp-edu1-sub').value.trim();
+          const e1y = document.getElementById('inp-edu1-year').value.trim();
+          const e2n = document.getElementById('inp-edu2-name').value.trim();
+          const e2s = document.getElementById('inp-edu2-sub').value.trim();
+          const e2y = document.getElementById('inp-edu2-year').value.trim();
+          if (e1n) document.getElementById('edu1-name').textContent = e1n;
+          if (e1s) document.getElementById('edu1-sub').textContent  = e1s;
+          if (e1y) document.getElementById('edu1-year').textContent = e1y;
+          if (e2n) document.getElementById('edu2-name').textContent = e2n;
+          if (e2s) document.getElementById('edu2-sub').textContent  = e2s;
+          if (e2y) document.getElementById('edu2-year').textContent = e2y;
+          saveProfileData('edu1name', e1n);
+          saveProfileData('edu1sub',  e1s);
+          saveProfileData('edu1year', e1y);
+          saveProfileData('edu2name', e2n);
+          saveProfileData('edu2sub',  e2s);
+          saveProfileData('edu2year', e2y);
+        }
+        if (section === 'skills') {
+          const val = document.getElementById('inp-skills').value;
+          renderSkills(val);
+          saveProfileData('skills', val);
+        }
+        if (section === 'goals') {
+          const val = document.getElementById('inp-goals').value;
+          renderGoals(val);
+          saveProfileData('goals', val);
+        }
+        if (section === 'softskills') {
+          const val = document.getElementById('inp-softskills').value;
+          renderSoftSkills(val);
+          saveProfileData('softskills', val);
+        }
+        if (section === 'interests') {
+          const val = document.getElementById('inp-interests').value;
+          renderInterests(val);
+          saveProfileData('interests', val);
+        }
+        if (section === 'languages') {
+          const val = document.getElementById('inp-languages').value;
+          renderLanguages(val);
+          saveProfileData('languages', val);
+        }
+
+        // Show toast
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.textContent = '✅ Saved successfully!';
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 2200);
+      }
+    }
+
+    // Load saved data on page load
+    loadSavedProfileData();
   </script>
 
 </body>
