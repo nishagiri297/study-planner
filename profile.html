@@ -4,63 +4,236 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>StudyPlanner | Profile</title>
-  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    .profile-page-wrap { padding:40px 7% 70px; max-width:1100px; margin:0 auto; }
-    .profile-top { display:grid; grid-template-columns:1fr auto; gap:40px; align-items:start; margin-bottom:40px; }
-    .profile-about-block h2 { font-size:2.8rem; font-weight:normal; color:#fff; margin-bottom:20px; display:inline-block; }
-    .profile-about-block h2::after { content:''; display:block; height:4px; width:60%; background:linear-gradient(90deg,var(--primary),transparent); border-radius:2px; margin-top:6px; }
-    .profile-about-text { color:var(--muted); font-size:0.95rem; line-height:1.85; max-width:520px; }
-    .profile-about-text strong { color:var(--text); font-weight:600; }
-    .profile-about-text .highlight { color:var(--primary); font-weight:600; }
-    .profile-photo-wrap { position:relative; width:180px; height:200px; }
-    .profile-photo-circle {
-      width:180px; height:200px; border-radius:24px;
-      border:2px dashed rgba(0,180,216,0.4);
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-      background:rgba(0,180,216,0.05); transition:all 0.22s ease;
-      overflow:hidden; position:relative; cursor:pointer;
+    :root {
+      --primary: #00b4d8;
+      --bg: #0f1117;
+      --card: #1a1d27;
+      --border: rgba(255,255,255,0.08);
+      --text: #e2e8f0;
+      --muted: #8892a4;
     }
-    .profile-photo-circle:hover { border-color:var(--primary); background:rgba(0,180,216,0.10); box-shadow:0 0 30px rgba(0,180,216,0.2); }
-    .profile-photo-circle img { width:100%; height:100%; object-fit:cover; border-radius:22px; display:none; }
-    .add-photo-text { display:flex; flex-direction:column; align-items:center; gap:8px; color:var(--primary); }
-    .add-photo-text i { font-size:2rem; opacity:0.7; }
-    .add-photo-text span { font-size:0.82rem; font-weight:500; opacity:0.8; }
-    .profile-photo-circle input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; margin:0; padding:0; border:none; }
-    .profile-contact-row { display:flex; flex-wrap:wrap; gap:16px; margin-top:24px; padding-top:20px; border-top:1px solid var(--border); }
-    .contact-item { display:flex; align-items:center; gap:8px; color:var(--muted); font-size:0.88rem; }
-    .contact-item i { color:var(--primary); font-size:1rem; }
-    .contact-item a { color:var(--muted); transition:color 0.2s; }
-    .contact-item a:hover { color:var(--primary); }
-    .profile-stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:32px; }
-    .profile-stat-box { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; text-align:center; transition:all 0.22s ease; }
-    .profile-stat-box:hover { border-color:rgba(0,180,216,0.3); box-shadow:0 8px 24px rgba(0,180,216,0.1); }
-    .profile-stat-box .stat-num { font-size:2.2rem; font-weight:700; color:var(--primary); font-family:'IM Fell English',serif; text-shadow:0 0 20px rgba(0,180,216,0.4); }
-    .profile-stat-box .stat-label { font-size:0.8rem; color:var(--muted); margin-top:4px; }
-    .profile-bottom-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
-    .profile-section-card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:26px; transition:all 0.22s ease; position:relative; }
-    .profile-section-card:hover { border-color:rgba(0,180,216,0.3); box-shadow:0 8px 30px rgba(0,180,216,0.1); }
-    .profile-section-card h3 { font-size:1.2rem; font-weight:normal; color:var(--primary); margin-bottom:18px; display:flex; align-items:center; gap:8px; padding-bottom:12px; border-bottom:1px solid var(--border); }
-    .edu-item { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; }
-    .edu-name { color:var(--text); font-weight:600; font-size:0.95rem; }
-    .edu-sub  { color:var(--muted); font-size:0.85rem; margin-top:3px; }
-    .edu-badge { background:rgba(0,180,216,0.1); color:var(--primary); border:1px solid rgba(0,180,216,0.2); padding:4px 12px; border-radius:999px; font-size:0.75rem; font-weight:600; white-space:nowrap; }
-    .skill-cols { display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; }
-    .skill-item { display:flex; align-items:center; gap:8px; color:var(--muted); font-size:0.88rem; padding:6px 0; border-bottom:1px solid rgba(0,180,216,0.06); }
-    .skill-item i { color:var(--primary); font-size:0.75rem; opacity:0.7; }
-    .goal-item { display:flex; align-items:flex-start; gap:10px; margin-bottom:12px; color:var(--muted); font-size:0.9rem; line-height:1.5; }
-    .goal-item i { color:var(--primary); margin-top:3px; flex-shrink:0; font-size:0.8rem; }
-    .soft-skill-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-    .soft-skill-item { background:rgba(0,180,216,0.06); border:1px solid rgba(0,180,216,0.12); border-radius:10px; padding:10px 14px; color:var(--text); font-size:0.85rem; font-weight:500; display:flex; align-items:center; gap:8px; }
-    .soft-skill-item i { color:var(--primary); font-size:0.85rem; }
-    .lang-row { display:flex; gap:12px; flex-wrap:wrap; }
-    .lang-badge { background:rgba(0,180,216,0.08); border:1px solid rgba(0,180,216,0.2); color:var(--primary); padding:6px 16px; border-radius:999px; font-size:0.85rem; font-weight:600; }
-    .interest-row { display:flex; gap:10px; flex-wrap:wrap; }
-    .interest-tag { background:rgba(0,180,216,0.06); border:1px solid var(--border); color:var(--muted); padding:6px 14px; border-radius:999px; font-size:0.83rem; }
-    .profile-links-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:16px; }
 
-    /* ── EDIT BUTTON ── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+    }
+
+    a { text-decoration: none; }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 7%;
+      background: rgba(15,17,23,0.95);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+    }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active-link { color: var(--primary); }
+    .nav-user {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+    .logout-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .logout-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+    .profile-page-wrap {
+      padding: 40px 7% 70px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .profile-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: start;
+      margin-bottom: 40px;
+    }
+    .profile-about-block h2 {
+      font-size: 2.8rem;
+      font-weight: normal;
+      color: #fff;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+    .profile-about-block h2::after {
+      content: '';
+      display: block;
+      height: 4px;
+      width: 60%;
+      background: linear-gradient(90deg, var(--primary), transparent);
+      border-radius: 2px;
+      margin-top: 6px;
+    }
+    .profile-about-text {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.85;
+      max-width: 520px;
+    }
+    .profile-about-text strong { color: var(--text); font-weight: 600; }
+    .profile-about-text .highlight { color: var(--primary); font-weight: 600; }
+
+    .profile-photo-wrap { position: relative; width: 180px; height: 200px; }
+    .profile-photo-circle {
+      width: 180px;
+      height: 200px;
+      border-radius: 24px;
+      border: 2px dashed rgba(0,180,216,0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,180,216,0.05);
+      transition: all 0.22s ease;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .profile-photo-circle:hover {
+      border-color: var(--primary);
+      background: rgba(0,180,216,0.10);
+    }
+    .profile-photo-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 22px;
+      display: none;
+    }
+    .add-photo-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+    }
+    .add-photo-text i { font-size: 2rem; opacity: 0.7; }
+    .add-photo-text span { font-size: 0.82rem; font-weight: 500; opacity: 0.8; }
+    .profile-photo-circle input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .profile-contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+    .contact-item i { color: var(--primary); font-size: 1rem; }
+    .contact-item a { color: var(--muted); transition: color 0.2s; }
+    .contact-item a:hover { color: var(--primary); }
+
+    .profile-stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .profile-stat-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.22s ease;
+    }
+    .profile-stat-box:hover {
+      border-color: rgba(0,180,216,0.3);
+      box-shadow: 0 8px 24px rgba(0,180,216,0.1);
+    }
+    .stat-num {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+
+    .profile-bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .profile-section-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 26px;
+      transition: all 0.22s ease;
+      position: relative;
+    }
+    .profile-section-card:hover {
+      border-color: rgba(0,180,216,0.3);
+      box-shadow: 0 8px 30px rgba(0,180,216,0.1);
+    }
+    .profile-section-card h3 {
+      font-size: 1.2rem;
+      font-weight: normal;
+      color: var(--primary);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
     .edit-section-btn {
       position: absolute;
       top: 18px;
@@ -78,22 +251,16 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      z-index: 2;
     }
-    .edit-section-btn:hover {
-      background: var(--primary);
-      color: #fff;
-    }
+    .edit-section-btn:hover { background: var(--primary); color: #fff; }
     .save-section-btn {
-      background: rgba(16,185,129,0.15);
-      border: 1px solid rgba(16,185,129,0.3);
-      color: #10b981;
+      background: rgba(16,185,129,0.15) !important;
+      border: 1px solid rgba(16,185,129,0.3) !important;
+      color: #10b981 !important;
     }
-    .save-section-btn:hover {
-      background: #10b981;
-      color: #fff;
-    }
+    .save-section-btn:hover { background: #10b981 !important; color: #fff !important; }
 
-    /* ── EDIT INPUTS ── */
     .edit-input {
       width: 100%;
       padding: 8px 12px;
@@ -111,10 +278,7 @@
       border-color: var(--primary);
       box-shadow: 0 0 0 2px rgba(0,180,216,0.12);
     }
-    .edit-textarea {
-      min-height: 80px;
-      resize: vertical;
-    }
+    .edit-textarea { min-height: 80px; resize: vertical; }
     .edit-label {
       font-size: 0.75rem;
       color: var(--primary);
@@ -124,23 +288,157 @@
       margin-bottom: 4px;
       display: block;
     }
-    .edit-hint {
+    .edit-hint { font-size: 0.75rem; color: var(--muted); margin-bottom: 10px; }
+
+    .edu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .edu-name { color: var(--text); font-weight: 600; font-size: 0.95rem; }
+    .edu-sub { color: var(--muted); font-size: 0.85rem; margin-top: 3px; }
+    .edu-badge {
+      background: rgba(0,180,216,0.1);
+      color: var(--primary);
+      border: 1px solid rgba(0,180,216,0.2);
+      padding: 4px 12px;
+      border-radius: 999px;
       font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .skill-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+    .skill-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       color: var(--muted);
-      margin-bottom: 10px;
+      font-size: 0.88rem;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(0,180,216,0.06);
+    }
+    .skill-item i { color: var(--primary); font-size: 0.75rem; opacity: 0.7; }
+    .goal-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .goal-item i { color: var(--primary); margin-top: 3px; flex-shrink: 0; font-size: 0.8rem; }
+    .soft-skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .soft-skill-item {
+      background: rgba(0,180,216,0.06);
+      border: 1px solid rgba(0,180,216,0.12);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .soft-skill-item i { color: var(--primary); font-size: 0.85rem; }
+    .lang-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .lang-badge {
+      background: rgba(0,180,216,0.08);
+      border: 1px solid rgba(0,180,216,0.2);
+      color: var(--primary);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .interest-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .interest-tag {
+      background: rgba(0,180,216,0.06);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.83rem;
+    }
+    .profile-links-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border: 1px solid var(--primary);
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid rgba(0,180,216,0.3);
+    }
+    .btn-secondary:hover { background: rgba(0,180,216,0.1); }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #1e293b;
+      border: 1px solid rgba(16,185,129,0.3);
+      color: #10b981;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      z-index: 9999;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0);   opacity: 1; }
     }
 
+    footer {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      padding: 40px 7% 20px;
+      margin-top: 60px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-bottom: 30px;
+    }
+    .footer-grid h3, .footer-grid h4 { color: var(--primary); margin-bottom: 12px; }
+    .footer-grid p, .footer-grid a {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 8px;
+      transition: color 0.2s;
+    }
+    .footer-grid a:hover { color: var(--primary); }
+    .copyright { text-align: center; color: var(--muted); font-size: 0.82rem; padding-top: 20px; border-top: 1px solid var(--border); }
+
     @media(max-width:768px) {
-      .profile-top { grid-template-columns:1fr; }
-      .profile-photo-wrap { margin:0 auto; }
-      .profile-bottom-grid { grid-template-columns:1fr; }
-      .profile-stats-row { grid-template-columns:1fr 1fr; }
+      .profile-top { grid-template-columns: 1fr; }
+      .profile-photo-wrap { margin: 0 auto; }
+      .profile-bottom-grid { grid-template-columns: 1fr; }
+      .profile-stats-row { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
     }
   </style>
 </head>
 <body>
-
-  <canvas id="particleCanvas"></canvas>
 
   <nav class="navbar">
     <div class="logo">
@@ -155,7 +453,7 @@
       <li><a href="contact.html">Contact</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
-    <div style="display:flex;align-items:center;gap:6px;">
+    <div style="display:flex;align-items:center;gap:8px;">
       <div class="nav-user" id="navUserName">
         <i class="fa-solid fa-user-circle"></i>
         <span>User</span>
@@ -163,21 +461,17 @@
       <button class="logout-btn" onclick="logout()">
         <i class="fa-solid fa-right-from-bracket"></i> Logout
       </button>
-      <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
-        <i class="fa-solid fa-sun"></i>
-      </button>
     </div>
   </nav>
 
   <div class="profile-page-wrap">
 
-    <!-- TOP: About + Photo -->
     <div class="profile-top">
       <div class="profile-about-block">
         <h2>About me</h2>
         <p class="profile-about-text" id="aboutText">
           Hi! My name is <strong id="p-name">Nisha</strong>.<br>
-          I am a <span class="highlight">B.E. CSE (AI & ML)</span> student at
+          I am a <span class="highlight">B.E. CSE (AI &amp; ML)</span> student at
           <strong id="p-uni">Chitkara University</strong>, Punjab.<br><br>
           My objective: Build practical, production-ready web applications that solve
           real student problems. I created StudyPlanner to eliminate deadline anxiety —
@@ -186,32 +480,26 @@
         <div class="profile-contact-row">
           <div class="contact-item">
             <i class="fa-solid fa-envelope"></i>
-            <a href="mailto:nisha3047.beai25@chitkara.edu.in" id="p-email">
-              nisha3047.beai25@chitkara.edu.in
-            </a>
+            <a href="mailto:nisha3047.beai25@chitkara.edu.in">nisha3047.beai25@chitkara.edu.in</a>
           </div>
           <div class="contact-item">
             <i class="fa-brands fa-github"></i>
-            <a href="https://github.com/nishagiri297" target="_blank" rel="noopener noreferrer" id="p-github-link">
-              github.com/nishagiri297
-            </a>
+            <a href="https://github.com/nishagiri297" target="_blank" rel="noopener noreferrer">github.com/nishagiri297</a>
           </div>
           <div class="contact-item">
             <i class="fa-brands fa-linkedin"></i>
-            <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener noreferrer" id="p-linkedin-link">
-              linkedin.com/in/nisha-7903b8386
-            </a>
+            <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener noreferrer">linkedin.com/in/nisha-7903b8386</a>
           </div>
           <div class="contact-item">
             <i class="fa-solid fa-location-dot"></i>
-            <span id="p-location">Punjab, India</span>
+            <span>Punjab, India</span>
           </div>
         </div>
       </div>
 
       <div>
         <div class="profile-photo-wrap">
-          <div class="profile-photo-circle">
+          <div class="profile-photo-circle" id="photoCircle">
             <img id="profileImg" src="" alt="Profile Photo" />
             <div class="add-photo-text" id="addPhotoText">
               <i class="fa-solid fa-camera"></i>
@@ -223,7 +511,6 @@
       </div>
     </div>
 
-    <!-- STATS -->
     <div class="profile-stats-row">
       <div class="profile-stat-box">
         <div class="stat-num" id="profileTotal">0</div>
@@ -239,22 +526,19 @@
       </div>
     </div>
 
-    <!-- BOTTOM GRID -->
     <div class="profile-bottom-grid">
 
       <!-- EDUCATION -->
       <div class="profile-section-card" id="card-education">
         <h3><i class="fa-solid fa-graduation-cap"></i> Education</h3>
-        <button class="edit-section-btn" onclick="toggleEdit('education')">
+        <button class="edit-section-btn" id="btn-education" onclick="toggleEdit('education')">
           <i class="fa-solid fa-pen"></i> Edit
         </button>
-
-        <!-- VIEW MODE -->
         <div id="view-education">
           <div class="edu-item">
             <div>
               <div class="edu-name" id="edu1-name">Chitkara University</div>
-              <div class="edu-sub" id="edu1-sub">B.E. Computer Science (AI & ML)</div>
+              <div class="edu-sub" id="edu1-sub">B.E. Computer Science (AI &amp; ML)</div>
             </div>
             <span class="edu-badge" id="edu1-year">2023 — Now</span>
           </div>
@@ -266,8 +550,6 @@
             <span class="edu-badge" id="edu2-year">2021 — 2023</span>
           </div>
         </div>
-
-        <!-- EDIT MODE -->
         <div id="edit-education" style="display:none;">
           <span class="edit-label">Institution 1</span>
           <input class="edit-input" id="inp-edu1-name" placeholder="University name" />
@@ -283,11 +565,9 @@
       <!-- TECHNICAL SKILLS -->
       <div class="profile-section-card" id="card-skills">
         <h3><i class="fa-solid fa-code"></i> Technical Skills</h3>
-        <button class="edit-section-btn" onclick="toggleEdit('skills')">
+        <button class="edit-section-btn" id="btn-skills" onclick="toggleEdit('skills')">
           <i class="fa-solid fa-pen"></i> Edit
         </button>
-
-        <!-- VIEW MODE -->
         <div id="view-skills">
           <div class="skill-cols" id="skills-list">
             <div class="skill-item"><i class="fa-solid fa-diamond"></i> HTML5</div>
@@ -295,29 +575,25 @@
             <div class="skill-item"><i class="fa-solid fa-diamond"></i> JavaScript</div>
             <div class="skill-item"><i class="fa-solid fa-diamond"></i> Responsive Design</div>
             <div class="skill-item"><i class="fa-solid fa-diamond"></i> localStorage API</div>
-            <div class="skill-item"><i class="fa-solid fa-diamond"></i> Git & GitHub</div>
+            <div class="skill-item"><i class="fa-solid fa-diamond"></i> Git &amp; GitHub</div>
             <div class="skill-item"><i class="fa-solid fa-diamond"></i> UI/UX Design</div>
             <div class="skill-item"><i class="fa-solid fa-diamond"></i> Python (Basics)</div>
           </div>
         </div>
-
-        <!-- EDIT MODE -->
         <div id="edit-skills" style="display:none;">
           <span class="edit-label">Skills</span>
           <p class="edit-hint">Enter each skill on a new line</p>
           <textarea class="edit-input edit-textarea" id="inp-skills"
-            placeholder="HTML5&#10;CSS3&#10;JavaScript&#10;Git & GitHub"></textarea>
+            placeholder="HTML5&#10;CSS3&#10;JavaScript&#10;Git &amp; GitHub"></textarea>
         </div>
       </div>
 
       <!-- ACADEMIC GOALS -->
       <div class="profile-section-card" id="card-goals">
         <h3><i class="fa-solid fa-bullseye"></i> Academic Goals</h3>
-        <button class="edit-section-btn" onclick="toggleEdit('goals')">
+        <button class="edit-section-btn" id="btn-goals" onclick="toggleEdit('goals')">
           <i class="fa-solid fa-pen"></i> Edit
         </button>
-
-        <!-- VIEW MODE -->
         <div id="view-goals">
           <div id="goals-list">
             <div class="goal-item"><i class="fa-solid fa-chevron-right"></i>Submit all assignments before their deadlines</div>
@@ -327,8 +603,6 @@
             <div class="goal-item"><i class="fa-solid fa-chevron-right"></i>Explore AI/ML fundamentals and build one ML project</div>
           </div>
         </div>
-
-        <!-- EDIT MODE -->
         <div id="edit-goals" style="display:none;">
           <span class="edit-label">Goals</span>
           <p class="edit-hint">Enter each goal on a new line</p>
@@ -340,11 +614,9 @@
       <!-- SOFT SKILLS -->
       <div class="profile-section-card" id="card-softskills">
         <h3><i class="fa-solid fa-star"></i> Soft Skills</h3>
-        <button class="edit-section-btn" onclick="toggleEdit('softskills')">
+        <button class="edit-section-btn" id="btn-softskills" onclick="toggleEdit('softskills')">
           <i class="fa-solid fa-pen"></i> Edit
         </button>
-
-        <!-- VIEW MODE -->
         <div id="view-softskills">
           <div class="soft-skill-grid" id="softskills-list">
             <div class="soft-skill-item"><i class="fa-solid fa-users"></i> Teamwork</div>
@@ -355,8 +627,6 @@
             <div class="soft-skill-item"><i class="fa-solid fa-pen"></i> Creativity</div>
           </div>
         </div>
-
-        <!-- EDIT MODE -->
         <div id="edit-softskills" style="display:none;">
           <span class="edit-label">Soft Skills</span>
           <p class="edit-hint">Enter each skill on a new line</p>
@@ -368,65 +638,54 @@
       <!-- INTERESTS -->
       <div class="profile-section-card" id="card-interests">
         <h3><i class="fa-solid fa-heart"></i> Interests</h3>
-        <button class="edit-section-btn" onclick="toggleEdit('interests')">
+        <button class="edit-section-btn" id="btn-interests" onclick="toggleEdit('interests')">
           <i class="fa-solid fa-pen"></i> Edit
         </button>
-
-        <!-- VIEW MODE -->
         <div id="view-interests">
           <div class="interest-row" id="interests-list">
             <span class="interest-tag">Web Development</span>
-            <span class="interest-tag">AI & Machine Learning</span>
+            <span class="interest-tag">AI &amp; Machine Learning</span>
             <span class="interest-tag">UI/UX Design</span>
             <span class="interest-tag">Open Source</span>
             <span class="interest-tag">Design Trends</span>
             <span class="interest-tag">Technology</span>
           </div>
         </div>
-
-        <!-- EDIT MODE -->
         <div id="edit-interests" style="display:none;">
           <span class="edit-label">Interests</span>
           <p class="edit-hint">Enter each interest on a new line</p>
           <textarea class="edit-input edit-textarea" id="inp-interests"
-            placeholder="Web Development&#10;AI & Machine Learning&#10;UI/UX Design"></textarea>
+            placeholder="Web Development&#10;AI &amp; Machine Learning&#10;UI/UX Design"></textarea>
         </div>
       </div>
 
       <!-- LANGUAGES & LINKS -->
       <div class="profile-section-card" id="card-languages">
         <h3><i class="fa-solid fa-language"></i> Languages</h3>
-        <button class="edit-section-btn" onclick="toggleEdit('languages')">
+        <button class="edit-section-btn" id="btn-languages" onclick="toggleEdit('languages')">
           <i class="fa-solid fa-pen"></i> Edit
         </button>
-
-        <!-- VIEW MODE -->
         <div id="view-languages">
           <div class="lang-row" id="languages-list">
             <span class="lang-badge">Hindi — Native</span>
             <span class="lang-badge">English — Proficient</span>
             <span class="lang-badge">Punjabi — Conversational</span>
           </div>
-          <h3 style="margin-top:22px;"><i class="fa-solid fa-link"></i> Links</h3>
+          <h3 style="margin-top:22px; border-top:none; padding-bottom:0; margin-bottom:12px;">
+            <i class="fa-solid fa-link"></i> Links
+          </h3>
           <div class="profile-links-row">
-            <a href="https://github.com/nishagiri297"
-               target="_blank" rel="noopener noreferrer"
-               class="primary-btn" style="font-size:0.85rem;padding:9px 16px;">
+            <a href="https://github.com/nishagiri297" target="_blank" rel="noopener noreferrer" class="btn-link btn-primary">
               <i class="fa-brands fa-github"></i> GitHub
             </a>
-            <a href="https://www.linkedin.com/in/nisha-7903b8386"
-               target="_blank" rel="noopener noreferrer"
-               class="secondary-btn" style="font-size:0.85rem;padding:9px 16px;">
+            <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener noreferrer" class="btn-link btn-secondary">
               <i class="fa-brands fa-linkedin"></i> LinkedIn
             </a>
-            <a href="contact.html"
-               class="secondary-btn" style="font-size:0.85rem;padding:9px 16px;">
+            <a href="contact.html" class="btn-link btn-secondary">
               <i class="fa-solid fa-envelope"></i> Contact Me
             </a>
           </div>
         </div>
-
-        <!-- EDIT MODE -->
         <div id="edit-languages" style="display:none;">
           <span class="edit-label">Languages</span>
           <p class="edit-hint">Enter each language on a new line (e.g. Hindi — Native)</p>
@@ -438,7 +697,7 @@
     </div>
   </div>
 
-  <footer class="footer">
+  <footer>
     <div class="footer-grid">
       <div>
         <h3><i class="fa-solid fa-graduation-cap" style="margin-right:8px;"></i>StudyPlanner</h3>
@@ -446,32 +705,24 @@
       </div>
       <div>
         <h4>Quick Links</h4>
-        <a href="home.html"><i class="fa-solid fa-house"></i> Home</a>
-        <a href="planner.html"><i class="fa-solid fa-list-check"></i> Planner</a>
-        <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+        <a href="home.html"><i class="fa-solid fa-house" style="margin-right:6px;"></i> Home</a>
+        <a href="planner.html"><i class="fa-solid fa-list-check" style="margin-right:6px;"></i> Planner</a>
+        <a href="settings.html"><i class="fa-solid fa-gear" style="margin-right:6px;"></i> Settings</a>
       </div>
       <div>
         <h4>Connect</h4>
-        <a href="mailto:nisha3047.beai25@chitkara.edu.in">
-          <i class="fa-solid fa-envelope"></i> Email
-        </a>
-        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener noreferrer">
-          <i class="fa-brands fa-github"></i> GitHub
-        </a>
-        <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener noreferrer">
-          <i class="fa-brands fa-linkedin"></i> LinkedIn
-        </a>
+        <a href="mailto:nisha3047.beai25@chitkara.edu.in"><i class="fa-solid fa-envelope" style="margin-right:6px;"></i> Email</a>
+        <a href="https://github.com/nishagiri297" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" style="margin-right:6px;"></i> GitHub</a>
+        <a href="https://www.linkedin.com/in/nisha-7903b8386" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin" style="margin-right:6px;"></i> LinkedIn</a>
       </div>
     </div>
-    <p class="copyright">© 2026 StudyPlanner by Nisha · Built with HTML, CSS & JavaScript</p>
+    <p class="copyright">© 2026 StudyPlanner by Nisha · Built with HTML, CSS &amp; JavaScript</p>
   </footer>
 
-  <script src="script.js"></script>
   <script>
-    // ── AUTH ──
-    const user = JSON.parse(localStorage.getItem('sp_loggedIn'));
-    if (!user) window.location.href = 'index.html';
-    else {
+    /* ── AUTH ── */
+    const user = JSON.parse(localStorage.getItem('sp_loggedIn') || 'null');
+    if (user) {
       document.getElementById('navUserName').querySelector('span').textContent = user.name.split(' ')[0];
       const nameEl = document.getElementById('p-name');
       const uniEl  = document.getElementById('p-uni');
@@ -484,7 +735,7 @@
       window.location.href = 'index.html';
     }
 
-    // ── STATS ──
+    /* ── STATS ── */
     const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
     const total = tasks.length;
     const done  = tasks.filter(t => t.completed).length;
@@ -493,10 +744,10 @@
     document.getElementById('profileDone').textContent  = done;
     document.getElementById('profilePct').textContent   = pct + '%';
 
-    // ── PHOTO UPLOAD ──
-    const fileInput = document.getElementById('profileFileInput');
-    const imgEl     = document.getElementById('profileImg');
-    const addText   = document.getElementById('addPhotoText');
+    /* ── PHOTO UPLOAD ── */
+    const fileInput  = document.getElementById('profileFileInput');
+    const imgEl      = document.getElementById('profileImg');
+    const addText    = document.getElementById('addPhotoText');
     const savedPhoto = localStorage.getItem('sp_profilePhoto');
     if (savedPhoto) {
       imgEl.src = savedPhoto;
@@ -516,7 +767,7 @@
       reader.readAsDataURL(file);
     });
 
-    // ── PROFILE DATA STORAGE ──
+    /* ── PROFILE DATA STORAGE ── */
     function getProfileData() {
       return JSON.parse(localStorage.getItem('sp_profileData') || '{}');
     }
@@ -526,47 +777,17 @@
       localStorage.setItem('sp_profileData', JSON.stringify(data));
     }
 
-    // ── LOAD SAVED DATA ON PAGE LOAD ──
-    function loadSavedProfileData() {
-      const data = getProfileData();
-
-      // Education
-      if (data.edu1name) document.getElementById('edu1-name').textContent = data.edu1name;
-      if (data.edu1sub)  document.getElementById('edu1-sub').textContent  = data.edu1sub;
-      if (data.edu1year) document.getElementById('edu1-year').textContent = data.edu1year;
-      if (data.edu2name) document.getElementById('edu2-name').textContent = data.edu2name;
-      if (data.edu2sub)  document.getElementById('edu2-sub').textContent  = data.edu2sub;
-      if (data.edu2year) document.getElementById('edu2-year').textContent = data.edu2year;
-
-      // Skills
-      if (data.skills) renderSkills(data.skills);
-
-      // Goals
-      if (data.goals) renderGoals(data.goals);
-
-      // Soft Skills
-      if (data.softskills) renderSoftSkills(data.softskills);
-
-      // Interests
-      if (data.interests) renderInterests(data.interests);
-
-      // Languages
-      if (data.languages) renderLanguages(data.languages);
-    }
-
-    // ── RENDER FUNCTIONS ──
+    /* ── RENDER FUNCTIONS ── */
     function renderSkills(text) {
       const items = text.split('\n').filter(s => s.trim());
-      const container = document.getElementById('skills-list');
-      container.innerHTML = items.map(s =>
+      document.getElementById('skills-list').innerHTML = items.map(s =>
         `<div class="skill-item"><i class="fa-solid fa-diamond"></i> ${s.trim()}</div>`
       ).join('');
     }
 
     function renderGoals(text) {
       const items = text.split('\n').filter(s => s.trim());
-      const container = document.getElementById('goals-list');
-      container.innerHTML = items.map(s =>
+      document.getElementById('goals-list').innerHTML = items.map(s =>
         `<div class="goal-item"><i class="fa-solid fa-chevron-right"></i>${s.trim()}</div>`
       ).join('');
     }
@@ -574,38 +795,56 @@
     function renderSoftSkills(text) {
       const items = text.split('\n').filter(s => s.trim());
       const icons = ['fa-users','fa-brain','fa-comments','fa-clock','fa-lightbulb','fa-pen','fa-star','fa-heart'];
-      const container = document.getElementById('softskills-list');
-      container.innerHTML = items.map((s, i) =>
+      document.getElementById('softskills-list').innerHTML = items.map((s, i) =>
         `<div class="soft-skill-item"><i class="fa-solid ${icons[i % icons.length]}"></i> ${s.trim()}</div>`
       ).join('');
     }
 
     function renderInterests(text) {
       const items = text.split('\n').filter(s => s.trim());
-      const container = document.getElementById('interests-list');
-      container.innerHTML = items.map(s =>
+      document.getElementById('interests-list').innerHTML = items.map(s =>
         `<span class="interest-tag">${s.trim()}</span>`
       ).join('');
     }
 
     function renderLanguages(text) {
       const items = text.split('\n').filter(s => s.trim());
-      const container = document.getElementById('languages-list');
-      container.innerHTML = items.map(s =>
+      document.getElementById('languages-list').innerHTML = items.map(s =>
         `<span class="lang-badge">${s.trim()}</span>`
       ).join('');
     }
 
-    // ── TOGGLE EDIT ──
+    /* ── LOAD SAVED DATA ── */
+    function loadSavedProfileData() {
+      const data = getProfileData();
+      if (data.edu1name) document.getElementById('edu1-name').textContent = data.edu1name;
+      if (data.edu1sub)  document.getElementById('edu1-sub').textContent  = data.edu1sub;
+      if (data.edu1year) document.getElementById('edu1-year').textContent = data.edu1year;
+      if (data.edu2name) document.getElementById('edu2-name').textContent = data.edu2name;
+      if (data.edu2sub)  document.getElementById('edu2-sub').textContent  = data.edu2sub;
+      if (data.edu2year) document.getElementById('edu2-year').textContent = data.edu2year;
+      if (data.skills)     renderSkills(data.skills);
+      if (data.goals)      renderGoals(data.goals);
+      if (data.softskills) renderSoftSkills(data.softskills);
+      if (data.interests)  renderInterests(data.interests);
+      if (data.languages)  renderLanguages(data.languages);
+    }
+
+    /* ── TOGGLE EDIT ── */
     function toggleEdit(section) {
       const viewEl = document.getElementById('view-' + section);
       const editEl = document.getElementById('edit-' + section);
-      const btn    = document.querySelector('#card-' + section + ' .edit-section-btn');
-      const data   = getProfileData();
+      const btn    = document.getElementById('btn-' + section);
+
+      if (!viewEl || !editEl || !btn) {
+        console.error('Missing element for section:', section);
+        return;
+      }
+
       const isEditing = editEl.style.display !== 'none';
+      const data = getProfileData();
 
       if (!isEditing) {
-        // ENTER EDIT MODE — populate inputs
         viewEl.style.display = 'none';
         editEl.style.display = 'block';
         btn.innerHTML = '<i class="fa-solid fa-check"></i> Save';
@@ -620,28 +859,27 @@
           document.getElementById('inp-edu2-year').value = document.getElementById('edu2-year').textContent;
         }
         if (section === 'skills') {
-          const current = data.skills || 'HTML5\nCSS3\nJavaScript\nResponsive Design\nlocalStorage API\nGit & GitHub\nUI/UX Design\nPython (Basics)';
-          document.getElementById('inp-skills').value = current;
+          document.getElementById('inp-skills').value = data.skills ||
+            'HTML5\nCSS3\nJavaScript\nResponsive Design\nlocalStorage API\nGit & GitHub\nUI/UX Design\nPython (Basics)';
         }
         if (section === 'goals') {
-          const current = data.goals || 'Submit all assignments before their deadlines\nBuild 3 portfolio-worthy frontend projects this semester\nLearn React.js and migrate this project to a React app\nMaintain consistent study streaks using this planner\nExplore AI/ML fundamentals and build one ML project';
-          document.getElementById('inp-goals').value = current;
+          document.getElementById('inp-goals').value = data.goals ||
+            'Submit all assignments before their deadlines\nBuild 3 portfolio-worthy frontend projects this semester\nLearn React.js and migrate this project to a React app\nMaintain consistent study streaks using this planner\nExplore AI/ML fundamentals and build one ML project';
         }
         if (section === 'softskills') {
-          const current = data.softskills || 'Teamwork\nCritical Thinking\nCommunication\nTime Management\nProblem Solving\nCreativity';
-          document.getElementById('inp-softskills').value = current;
+          document.getElementById('inp-softskills').value = data.softskills ||
+            'Teamwork\nCritical Thinking\nCommunication\nTime Management\nProblem Solving\nCreativity';
         }
         if (section === 'interests') {
-          const current = data.interests || 'Web Development\nAI & Machine Learning\nUI/UX Design\nOpen Source\nDesign Trends\nTechnology';
-          document.getElementById('inp-interests').value = current;
+          document.getElementById('inp-interests').value = data.interests ||
+            'Web Development\nAI & Machine Learning\nUI/UX Design\nOpen Source\nDesign Trends\nTechnology';
         }
         if (section === 'languages') {
-          const current = data.languages || 'Hindi — Native\nEnglish — Proficient\nPunjabi — Conversational';
-          document.getElementById('inp-languages').value = current;
+          document.getElementById('inp-languages').value = data.languages ||
+            'Hindi — Native\nEnglish — Proficient\nPunjabi — Conversational';
         }
 
       } else {
-        // SAVE MODE
         viewEl.style.display = 'block';
         editEl.style.display = 'none';
         btn.innerHTML = '<i class="fa-solid fa-pen"></i> Edit';
@@ -669,31 +907,25 @@
         }
         if (section === 'skills') {
           const val = document.getElementById('inp-skills').value;
-          renderSkills(val);
-          saveProfileData('skills', val);
+          renderSkills(val); saveProfileData('skills', val);
         }
         if (section === 'goals') {
           const val = document.getElementById('inp-goals').value;
-          renderGoals(val);
-          saveProfileData('goals', val);
+          renderGoals(val); saveProfileData('goals', val);
         }
         if (section === 'softskills') {
           const val = document.getElementById('inp-softskills').value;
-          renderSoftSkills(val);
-          saveProfileData('softskills', val);
+          renderSoftSkills(val); saveProfileData('softskills', val);
         }
         if (section === 'interests') {
           const val = document.getElementById('inp-interests').value;
-          renderInterests(val);
-          saveProfileData('interests', val);
+          renderInterests(val); saveProfileData('interests', val);
         }
         if (section === 'languages') {
           const val = document.getElementById('inp-languages').value;
-          renderLanguages(val);
-          saveProfileData('languages', val);
+          renderLanguages(val); saveProfileData('languages', val);
         }
 
-        // Show toast
         const t = document.createElement('div');
         t.className = 'toast';
         t.textContent = '✅ Saved successfully!';
@@ -702,7 +934,6 @@
       }
     }
 
-    // Load saved data on page load
     loadSavedProfileData();
   </script>
 
